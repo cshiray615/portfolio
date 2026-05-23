@@ -38,7 +38,7 @@ html { scroll-behavior: smooth; }
   --bg:              #FEF6E4;
   --surf:            #FEF6E4;
   --text:            #1D1D1F;
-  --text-soft:       rgba(29, 29, 31, 0.6);
+  --text-soft:       rgba(29, 29, 31, 0.7);
   --card-dark-bg:    #1D1D1F;          /* the special ink work card on light surface */
   --card-dark-text:  #FEF6E4;
   --tertiary-loud:   var(--plum);
@@ -116,7 +116,7 @@ em { font-family: var(--font-serif); font-style: italic; }
 
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
