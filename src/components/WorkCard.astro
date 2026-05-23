@@ -13,10 +13,10 @@ const href = `/work/${id}`;
 <a class={`work-card work-card--${data.accent}`} href={href}>
   <div class="work-meta">
     <div class="work-tag">{data.tag}</div>
-    <div class="work-title">
+    <h3 class="work-title">
       {data.title.split(' ').slice(0, -1).join(' ')}{' '}
       <span class={`hl hl--${data.accent} tilt-l`}>{data.title.split(' ').slice(-1)[0]}</span>
-    </div>
+    </h3>
     <div class="work-client">{data.client}</div>
     <div class="work-stack">
       {data.stack.map((s) => <span class="chip">{s}</span>)}
@@ -50,7 +50,8 @@ const href = `/work/${id}`;
     padding: 36px;
     transition: transform 0.25s ease;
   }
-  .work-card:hover { transform: translateY(-3px); }
+  .work-card:hover,
+  .work-card:focus-visible { transform: translateY(-3px); }
   @media (max-width: 1024px) {
     .work-card { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
   }
