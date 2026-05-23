@@ -1,0 +1,79 @@
+---
+const cards = [
+  { tag: 'Diagnose first', h: 'Find the real cause.', body: 'Five "whys" before any design move. If the answer is "the process is broken," I say so — and we fix the process, not the people.', accent: 'vermillion' },
+  { tag: 'Design with evidence', h: 'Less box-check.', body: 'Every design choice cites a principle. Cognitive load, signaling, dual channels, generative activity. If it can\'t earn its place, it doesn\'t ship.', accent: 'lime' },
+  { tag: 'Defend the call', h: 'Stakeholders, partnered.', body: 'A design defense isn\'t "no." It\'s "here\'s what this choice costs the learner — and here\'s a better path." Stakeholders become collaborators, not opponents.', accent: 'plum' },
+] as const;
+---
+
+<section class="section" id="philosophy">
+  <div class="container">
+    <div class="section-hdr">
+      <span class="section-num">01</span>
+      <h2>How I <span class="hl hl--vermillion tilt-l">work</span>.</h2>
+    </div>
+    <p class="section-lead">
+      Most learning problems aren't learning problems. They're <strong>process problems</strong>, <strong>tool problems</strong>, or <strong>seventeen-spreadsheets-all-claiming-to-be-the-single-source-of-truth problems</strong>. The work is figuring out which — before anyone builds a course.
+    </p>
+    <div class="philo-grid">
+      {cards.map((c) => (
+        <article class={`philo-card philo-card--${c.accent}`}>
+          <div class="philo-tag">{c.tag}</div>
+          <h3 class="philo-h">{c.h}</h3>
+          <p class="philo-body">{c.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-hdr { display: flex; align-items: baseline; gap: 18px; margin-bottom: 28px; }
+  .section-lead {
+    max-width: 780px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text-soft);
+    margin-bottom: 56px;
+  }
+  .section-lead strong { color: var(--text); font-weight: 700; }
+
+  .philo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 1024px) { .philo-grid { grid-template-columns: 1fr; } }
+
+  .philo-card {
+    background: var(--surf);
+    border: 1.5px solid var(--divider);
+    border-radius: 14px;
+    padding: 28px;
+    border-top: 6px solid var(--vermillion);
+  }
+  .philo-card--lime { border-top-color: var(--lime); }
+  .philo-card--plum { border-top-color: var(--tertiary-loud); }
+
+  .philo-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    color: var(--vermillion);
+  }
+  .philo-card--lime .philo-tag { color: var(--lime); }
+  .philo-card--plum .philo-tag { color: var(--tertiary-loud); }
+
+  .philo-h {
+    font-size: clamp(20px, 2vw, 26px);
+    margin-bottom: 12px;
+  }
+  .philo-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-soft);
+  }
+</style>
