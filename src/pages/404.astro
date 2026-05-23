@@ -1,0 +1,42 @@
+---
+import Base from '~/layouts/Base.astro';
+---
+
+<Base title="404 — Casey Shiray" description="Page not found.">
+  <main class="four-oh-four">
+    <div class="container">
+      <div class="eyebrow">404 — Lost?</div>
+      <h1 class="four-h1">
+        That page <span class="hl hl--vermillion tilt-l">isn't here</span>.
+      </h1>
+      <p class="four-sub">…or did everyone just panic and move it?</p>
+      <div class="four-actions">
+        <a class="cta cta--primary" href="/">Go home</a>
+        <a class="cta cta--ghost" href="/work">See the work</a>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .four-oh-four { padding: 120px 0; text-align: center; min-height: 60vh; }
+  .four-h1 { font-size: clamp(48px, 7vw, 88px); line-height: 0.95; margin-top: 14px; }
+  .four-sub {
+    margin-top: 20px;
+    font-family: var(--font-hand);
+    font-size: clamp(28px, 3vw, 38px);
+    color: var(--tertiary-loud);
+  }
+  .four-actions {
+    margin-top: 40px;
+    display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+  }
+  .cta {
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 16px 28px; border-radius: 8px;
+  }
+  .cta--primary { background: var(--vermillion); color: var(--bg); }
+  .cta--ghost { background: transparent; border: 1.5px solid var(--divider); color: var(--text); }
+</style>
