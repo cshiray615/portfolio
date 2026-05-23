@@ -143,6 +143,40 @@ em { font-family: var(--font-serif); font-style: italic; }
   padding: 24px;
 }
 
+/* --- Focus visibility (WCAG 2.4.7) -------------------------------------
+   Keyboard focus rings visible across all interactive elements. The browser
+   default `:focus` triggers on mouse clicks too (annoying noise); we use
+   `:focus-visible` which only fires for keyboard navigation. */
+:focus-visible {
+  outline: 2px solid var(--vermillion);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+/* On the inverted ink card surface (light) / cream card surface (dark),
+   the vermillion ring stays high-contrast. No per-context override needed. */
+
+/* --- Skip link (WCAG 2.4.1) --------------------------------------------
+   Visually hidden until focused, then slides in at the top-left. Lets
+   keyboard users skip the 6-stop Nav on every page. */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 1000;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 16px; }
+
 /* --- Reduced motion baseline (overrides applied in motion.ts also) --- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -53,8 +53,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <script is:inline set:html={inlineScript}></script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <Nav />
-    <slot />
+    <main id="main">
+      <slot />
+    </main>
     <Footer />
 
     <script>
