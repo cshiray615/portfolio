@@ -58,14 +58,14 @@ const href = `/work/${id}`;
   .work-meta { display: flex; flex-direction: column; gap: 12px; }
   .work-tag {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--vermillion);
   }
   .work-card--lime .work-tag       { color: var(--lime); }
-  .work-card--plum .work-tag       { color: var(--tertiary-loud); }
+  .work-card--plum .work-tag       { color: var(--tertiary-soft); }
 
   .work-title {
     font-family: var(--font-display);
@@ -85,7 +85,7 @@ const href = `/work/${id}`;
   .work-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
   .chip {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -100,7 +100,7 @@ const href = `/work/${id}`;
   .label {
     flex: 0 0 80px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -108,7 +108,7 @@ const href = `/work/${id}`;
   }
   .label--prob { color: var(--vermillion); }
   .label--soln { color: var(--lime); }
-  .label--out  { color: var(--tertiary-loud); }
+  .label--out  { color: var(--tertiary-soft); }
   .txt {
     font-family: var(--font-body);
     font-size: 14px;
@@ -117,7 +117,7 @@ const href = `/work/${id}`;
     flex: 1;
   }
   .row--prob .txt { color: color-mix(in oklab, var(--card-dark-text) 70%, transparent); }
-  .row--out :global(b) { color: var(--tertiary-loud); font-weight: 700; }
+  .row--out :global(b) { color: var(--tertiary-soft); font-weight: 700; }
   .work-link {
     margin-top: 4px;
     font-family: var(--font-mono);
@@ -128,5 +128,8 @@ const href = `/work/${id}`;
     color: var(--vermillion);
   }
   .work-card--lime .work-link { color: var(--lime); }
-  .work-card--plum .work-link { color: var(--tertiary-loud); }
+  .work-card--plum .work-link { color: var(--tertiary-soft); }
+  /* On the special ink-card surface, the plum-block highlight needs to use the soft tertiary
+     (lavender on light, plum on dark — both legible on the card surface). */
+  .work-card--plum .work-title :global(.hl--plum) { background: var(--tertiary-soft); }
 </style>
