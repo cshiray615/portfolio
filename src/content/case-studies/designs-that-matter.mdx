@@ -16,4 +16,42 @@ featured: true
 next: day-one-for-real
 ---
 
-{/* MDX body filled in Task 7.1 once case study components exist */}
+<ProblemBlock>
+
+Most L&D teams know bad training when they see it. They watch a learner click through a course, sigh audibly, then walk back to their desk and ask a colleague the same question they were just "trained" on. The team feels the problem — but they can't name it.
+
+Without a shared vocabulary for *why* something doesn't work, design conversations devolve into preference fights. "I think the slides need more color." "I think there should be a quiz." Stakeholders pile on requests because the only thing they can articulate is *more*. The result is design-by-committee: training that ships with a hundred small additions and not one principled choice.
+
+I wanted a course that gave L&D practitioners — and the stakeholders they work with — a shared language. Not theory for theory's sake. The kind you can use on Monday.
+
+</ProblemBlock>
+
+<ProcessBlock>
+
+Four phases, organized around what you do with a problem when you see one: **Spot it**, **Explain it**, **Fix it**, **Defend it**.
+
+Each phase is three short lessons (10 minutes each), built on Richard Mayer's multimedia learning principles. Concept video → low-stakes activity → reflection. The activities are small on purpose: sort some examples, rewrite a bad slide title, draft a one-paragraph reply to a stakeholder asking for "just one more thing." Nothing that takes longer than a coffee break.
+
+The hardest design decision was what to *cut*. Mayer's research catalogs over 15 principles. I picked five — coherence, signaling, redundancy, modality, generative activity — because those five cover ~80% of the bad-training cases I've seen in the wild. The other ten get a one-paragraph footnote per lesson and a "go deeper" reading list at the end. The course isn't a textbook. It's a tool.
+
+I piloted phase 1 with twelve L&D practitioners before building phases 2–4. Three of them couldn't articulate why a particular example was bad — even though they all agreed it *was* bad. That confirmed the vocabulary gap was real. It also reshaped how I wrote the "Spot it" lessons: less about identifying problems by category, more about asking the right diagnostic questions.
+
+</ProcessBlock>
+
+<OutcomeBlock metrics={[
+  { value: '~90 min', label: 'Total course length' },
+  { value: '9', label: 'Lessons across 4 phases' },
+  { value: '12', label: 'Pilot practitioners' },
+]}>
+
+The course ships as a Rise package with 9 modules, animated SVG diagrams for each principle, and a printable "stakeholder reply" cheatsheet. Pilot practitioners reported they could name the principle behind a bad design choice within two weeks — and that they used the vocabulary in their next deck review with stakeholders.
+
+The unexpected outcome: three of the pilot practitioners asked if they could co-teach the principles to their own teams. The cheatsheet has been screenshotted on LinkedIn enough times that I now find it in other people's slide decks.
+
+</OutcomeBlock>
+
+<LessonsBlock>
+
+I underbuilt the "Defend it" phase in v1. The activities asked practitioners to draft replies to stakeholder pushback, but I didn't give them enough framing for *why* the pushback usually happens. In v2 I'd add a short lesson on the political dynamics of training requests — most of which are really about something else (a manager who needs cover, a process that's broken, a tool that's confusing) — before asking practitioners to defend a design choice.
+
+</LessonsBlock>
