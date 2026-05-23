@@ -129,7 +129,13 @@ const href = `/work/${id}`;
   }
   .work-card--lime .work-link { color: var(--lime); }
   .work-card--plum .work-link { color: var(--tertiary-soft); }
-  /* On the special ink-card surface, the plum-block highlight needs to use the soft tertiary
-     (lavender on light, plum on dark — both legible on the card surface). */
-  .work-card--plum .work-title :global(.hl--plum) { background: var(--tertiary-soft); }
+  /* On the special ink-card surface (light: ink card / dark: cream card), the plum-block
+     highlight needs both the soft tertiary AND a swapped text color so contrast holds:
+       - Light mode: lavender bg + ink text (ink on lavender = 12:1)
+       - Dark mode:  plum bg + cream text (cream on plum = 8.9:1)
+     var(--text) tracks the page text color, which always inverts vs. --tertiary-soft. */
+  .work-card--plum .work-title :global(.hl--plum) {
+    background: var(--tertiary-soft);
+    color: var(--text);
+  }
 </style>
