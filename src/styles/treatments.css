@@ -5,21 +5,37 @@
    browser at hero scale.
    ============================================ */
 
-/* --- Highlighted-block keywords (H1 + section headings) --- */
+/* --- Highlighted-block keywords (H1 + section headings) ----------------
+   The colored "block" is painted by a ::before pseudo-element, not by a
+   background on the .hl itself. This lets us position the colored area
+   precisely around the cap-to-baseline range (with equal breathing above
+   and below the letters) — independent of the font's natural descender
+   fill area that an inline-block background would include.
+   Result: visually symmetric highlight regardless of font metrics. */
 .hl {
+  position: relative;
   display: inline-block;
-  padding: 16px 12px 0;    /* asymmetric: padding-top compensates for League Spartan's font metric asymmetry
-                              (ascender area above cap > descender area below baseline) AND for the descender
-                              filling the line-height area below baseline. 16/0 puts roughly equal gap above and
-                              below the highlight block in the multi-line hero H1. Tuned empirically — keep
-                              testing the hero on narrow viewports if you change line-height. */
-  line-height: 0.85;       /* tightens the inline-block's own content box, reducing how much colored bg extends
-                              below baseline (the natural descender fill area), which would otherwise eat into
-                              external space below the block. */
+  padding: 0 12px;          /* horizontal padding only; vertical bg controlled by ::before */
+  isolation: isolate;        /* contain ::before's z-index -1 to this stacking context */
 }
-.hl--vermillion { background: var(--vermillion);     color: var(--text); }   /* ink in light (5.6:1), cream-->ink override in dark below */
-.hl--lime       { background: var(--lime);           color: var(--text); }   /* light: ink on lime (7.9:1); dark override below */
-.hl--plum       { background: var(--tertiary-loud);  color: var(--bg);  }    /* light: cream on plum (8.9:1); dark: ink on lavender (8.5:1) */
+.hl::before {
+  content: '';
+  position: absolute;
+  /* Values in em units so they scale with hero font-size.
+     0.08em top  ≈ extends to just above cap-top
+     0.18em bot  ≈ extends to just below baseline (skips descender area entirely)
+     Equal breathing of ~5px above caps and ~5px below baseline at FS 120. */
+  inset: 0.08em 0 0.18em 0;
+  z-index: -1;
+}
+/* Per-variant colored block on the ::before, text color on the .hl text itself */
+.hl--vermillion::before { background: var(--vermillion); }
+.hl--lime::before       { background: var(--lime); }
+.hl--plum::before       { background: var(--tertiary-loud); }
+
+.hl--vermillion { color: var(--text); }   /* ink in light (5.6:1); dark override below */
+.hl--lime       { color: var(--text); }   /* light: ink on lime (7.9:1); dark override below */
+.hl--plum       { color: var(--bg);   }   /* light: cream on plum (8.9:1); dark: ink on lavender (8.5:1) */
 
 /* Rotation modifiers — apply on top of .hl */
 .tilt-l { transform: rotate(-1.5deg); }
