@@ -2,7 +2,7 @@
 title: "Sample Tile Project"
 category: costuming
 year: 2023
-cover: "/assets/hobbies/costuming/sample-tile.jpg"
+cover: "/assets/hobbies/costuming/sample-tile.svg"
 caption: "A simpler build — appears as a gallery tile without a detail page."
 favorite: false
 order: 2

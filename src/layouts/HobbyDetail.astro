@@ -1,0 +1,74 @@
+---
+import Base from '~/layouts/Base.astro';
+import type { CollectionEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
+
+export interface Props {
+  project: CollectionEntry<'hobby-projects'>;
+}
+
+const { project } = Astro.props;
+const category = await getEntry('hobby-categories', project.data.category);
+---
+
+<Base
+  title={`${project.data.title} — ${category?.data.name ?? 'Hobby'} — Casey Shiray`}
+  description={project.data.caption}
+>
+  <header class="hd-hero">
+    <div class="container">
+      <div class="cs-breadcrumb">
+        <a href="/hobbies">Hobbies</a>
+        <span aria-hidden="true">/</span>
+        <a href={`/hobbies/${project.data.category}`}>{category?.data.name ?? project.data.category}</a>
+        <span aria-hidden="true">/</span>
+        <span>{project.data.title}</span>
+      </div>
+      <div class="eyebrow">Favorite · {project.data.year}</div>
+      <h1 class="hd-h1">{project.data.title}</h1>
+      <img class="hd-cover" src={project.data.cover} alt={project.data.title} />
+    </div>
+  </header>
+
+  <section class="hd-body">
+    <div class="container">
+      <slot />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hd-hero { padding: 64px 0 32px; }
+  .cs-breadcrumb {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: inline-flex; gap: 8px; align-items: center;
+  }
+  .cs-breadcrumb a { color: var(--text-soft); }
+  .cs-breadcrumb a:hover { color: var(--text); }
+  .cs-breadcrumb span[aria-hidden] { color: var(--tertiary-loud); }
+  .hd-h1 { font-size: clamp(40px, 6vw, 72px); margin-top: 14px; }
+  .hd-cover {
+    margin-top: 32px;
+    width: 100%;
+    border-radius: 14px;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border: 1.5px solid var(--divider);
+  }
+  .hd-body { padding: 48px 0 96px; }
+  .hd-body :global(h2) {
+    margin-top: 40px;
+    margin-bottom: 16px;
+    font-size: clamp(24px, 2.4vw, 32px);
+  }
+  .hd-body :global(p) {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    max-width: 720px;
+  }
+</style>
