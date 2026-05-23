@@ -1,0 +1,32 @@
+---
+---
+
+<section class="cs-block cs-block--proc">
+  <div class="container">
+    <div class="cs-block-label">Process</div>
+    <div class="cs-block-body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cs-block { padding: 48px 0; }
+  .cs-block-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 16px;
+  }
+  .cs-block-body {
+    max-width: 720px;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .cs-block-body :global(p) { margin-bottom: 16px; }
+  .cs-block-body :global(p:last-child) { margin-bottom: 0; }
+  .cs-block-body :global(em) { font-family: var(--font-serif); font-style: italic; }
+</style>

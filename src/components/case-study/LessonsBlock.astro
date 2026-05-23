@@ -1,0 +1,33 @@
+---
+---
+
+<section class="cs-lessons">
+  <div class="container">
+    <div class="lessons-label">What I'd do differently</div>
+    <div class="lessons-body"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .cs-lessons {
+    padding: 64px 0;
+    border-top: 1.5px solid var(--divider);
+  }
+  .lessons-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 16px;
+  }
+  .lessons-body {
+    max-width: 720px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+</style>

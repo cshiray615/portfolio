@@ -1,0 +1,73 @@
+---
+export interface Props {
+  metrics?: Array<{ value: string; label: string }>;
+}
+
+const { metrics } = Astro.props;
+---
+
+<section class="cs-block cs-block--out">
+  <div class="container">
+    <div class="cs-block-label">Outcome</div>
+    {metrics && (
+      <div class="cs-metric-strip">
+        {metrics.map((m) => (
+          <div class="cs-metric">
+            <div class="cs-metric-val">{m.value}</div>
+            <div class="cs-metric-lbl">{m.label}</div>
+          </div>
+        ))}
+      </div>
+    )}
+    <div class="cs-block-body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cs-block { padding: 48px 0; }
+  .cs-block-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tertiary-loud);
+    margin-bottom: 16px;
+  }
+  .cs-metric-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+    padding: 20px 0;
+    border-top: 1.5px solid var(--divider);
+    border-bottom: 1.5px solid var(--divider);
+  }
+  .cs-metric-val {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1;
+    color: var(--tertiary-loud);
+    letter-spacing: -0.02em;
+  }
+  .cs-metric-lbl {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .cs-block-body {
+    max-width: 720px;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .cs-block-body :global(p) { margin-bottom: 16px; }
+  .cs-block-body :global(p:last-child) { margin-bottom: 0; }
+  .cs-block-body :global(b) { color: var(--tertiary-loud); font-weight: 700; }
+</style>

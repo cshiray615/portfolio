@@ -1,0 +1,42 @@
+---
+export interface Props {
+  images: Array<{ src: string; caption?: string; alt?: string }>;
+}
+const { images } = Astro.props;
+---
+
+<section class="cs-gallery">
+  <div class="container">
+    <div class="gallery-grid">
+      {images.map((img) => (
+        <figure class="gallery-item">
+          <img src={img.src} alt={img.alt ?? img.caption ?? ''} loading="lazy" />
+          {img.caption && <figcaption>{img.caption}</figcaption>}
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cs-gallery { padding: 48px 0; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .gallery-item { display: flex; flex-direction: column; gap: 8px; }
+  .gallery-item img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1.5px solid var(--divider);
+  }
+  figcaption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-soft);
+  }
+</style>

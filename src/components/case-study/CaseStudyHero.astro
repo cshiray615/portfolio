@@ -1,0 +1,85 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  caseStudy: CollectionEntry<'case-studies'>;
+}
+
+const { caseStudy } = Astro.props;
+const { data } = caseStudy;
+const titleWords = data.title.split(' ');
+const last = titleWords.pop() ?? data.title;
+const rest = titleWords.join(' ');
+---
+
+<header class="cs-hero">
+  <div class="container">
+    <div class="cs-breadcrumb">
+      <a href="/work">Work</a>
+      <span aria-hidden="true">/</span>
+      <span>{data.title.replace(/\.$/, '')}</span>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom: 14px;">
+      Case Study · {data.tag} · {data.year}
+    </div>
+
+    <h1 class="cs-h1">
+      {rest}{' '}
+      <span class={`hl hl--${data.accent} tilt-l`}>{last}</span>
+    </h1>
+
+    {data.tagline && <p class="cs-tagline">{data.tagline}</p>}
+
+    <div class="cs-meta">
+      <div><strong>Role</strong>{data.role}</div>
+      <div><strong>Year</strong>{data.year}</div>
+      <div><strong>Client</strong>{data.client}</div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .cs-hero { padding: 80px 0 48px; }
+  .cs-breadcrumb {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: inline-flex; gap: 8px; align-items: center;
+  }
+  .cs-breadcrumb a { color: var(--text-soft); }
+  .cs-breadcrumb a:hover { color: var(--text); }
+  .cs-breadcrumb span[aria-hidden] { color: var(--vermillion); }
+
+  .cs-h1 { font-size: clamp(48px, 7vw, 84px); line-height: 0.92; max-width: 1000px; }
+  .cs-tagline {
+    margin-top: 20px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(18px, 1.8vw, 22px);
+    color: var(--text-soft);
+    max-width: 720px;
+  }
+  .cs-meta {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1.5px solid var(--divider);
+    border-bottom: 1.5px solid var(--divider);
+  }
+  @media (max-width: 640px) { .cs-meta { grid-template-columns: 1fr; gap: 16px; } }
+  .cs-meta > div { font-family: var(--font-mono); font-size: 13px; }
+  .cs-meta strong {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+</style>
