@@ -1,0 +1,122 @@
+---
+const roles = [
+  { period: 'Current',  title: 'Senior Tech Instructional Designer', org: 'Independent' },
+  { period: '2022–2024',title: 'Lead Instructional Designer',         org: 'Confidential (healthcare network, 3,200 clinicians)' },
+  { period: '2019–2022',title: 'Senior Learning Designer',            org: 'Fortune 500 retailer' },
+  { period: '2016–2019',title: 'Instructional Designer',              org: 'SaaS scale-up' },
+];
+
+const credentials = [
+  { period: '—',         title: 'M.S. Learning Design & Technology', detail: "Bloom's-anchored" },
+  { period: '—',         title: 'ATD Master Trainer · CPLP',         detail: '' },
+];
+
+const talks = [
+  { period: '2026', title: 'Designs That Matter',                            detail: 'DevLearn conference talk + self-directed course' },
+];
+---
+
+<section class="section" id="resume">
+  <div class="container">
+    <div class="section-hdr">
+      <span class="section-num">03</span>
+      <h2>Work <span class="hl hl--plum tilt-l">history</span>.</h2>
+    </div>
+
+    <div class="history-block">
+      <h3 class="history-h">Roles</h3>
+      <ul class="history-list">
+        {roles.map((r) => (
+          <li>
+            <span class="history-period">{r.period}</span>
+            <span class="history-title">{r.title}</span>
+            <span class="history-org">{r.org}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="history-block">
+      <h3 class="history-h">Credentials</h3>
+      <ul class="history-list">
+        {credentials.map((c) => (
+          <li>
+            <span class="history-period">{c.period}</span>
+            <span class="history-title">{c.title}</span>
+            <span class="history-org">{c.detail}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="history-block">
+      <h3 class="history-h">Talks &amp; publications</h3>
+      <ul class="history-list">
+        {talks.map((t) => (
+          <li>
+            <span class="history-period">{t.period}</span>
+            <span class="history-title">{t.title}</span>
+            <span class="history-org">{t.detail}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <p class="hobbies-line">
+      Outside of work: <a href="/hobbies">board games · video games · dinosaurs · and other things →</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .section-hdr { display: flex; align-items: baseline; gap: 18px; margin-bottom: 40px; }
+  .history-block { margin-bottom: 48px; }
+  .history-block:last-of-type { margin-bottom: 24px; }
+  .history-h {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+    margin-bottom: 18px;
+  }
+  .history-list { display: flex; flex-direction: column; gap: 12px; }
+  .history-list li {
+    display: grid;
+    grid-template-columns: 110px 1fr 1fr;
+    gap: 18px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--divider);
+    align-items: baseline;
+  }
+  @media (max-width: 640px) {
+    .history-list li { grid-template-columns: 1fr; gap: 4px; }
+  }
+  .history-period {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .history-title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .history-org {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-soft);
+  }
+  .hobbies-line {
+    margin-top: 32px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--text-soft);
+  }
+  .hobbies-line a { color: var(--tertiary-loud); }
+  .hobbies-line a:hover { text-decoration: underline; }
+</style>
