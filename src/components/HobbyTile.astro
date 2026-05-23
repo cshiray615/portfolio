@@ -1,0 +1,75 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  project: CollectionEntry<'hobby-projects'>;
+  category: string;
+}
+
+const { project, category } = Astro.props;
+const href = project.data.favorite ? `/hobbies/${category}/${project.id}` : null;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag class="hobby-tile" {...(href ? { href } : {})}>
+  <img class="hobby-img" src={project.data.cover} alt={project.data.title} loading="lazy" />
+  <div class="hobby-body">
+    <div class="hobby-meta">
+      <span class="hobby-year">{project.data.year}</span>
+      {project.data.favorite && <span class="hobby-fav">Favorite</span>}
+    </div>
+    <h3 class="hobby-title">{project.data.title}</h3>
+    <p class="hobby-cap">{project.data.caption}</p>
+    {href && <span class="hobby-link">Read more →</span>}
+  </div>
+</Tag>
+
+<style>
+  .hobby-tile {
+    background: var(--surf);
+    border: 1.5px solid var(--divider);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+  }
+  a.hobby-tile:hover { transform: translateY(-3px); }
+  .hobby-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+  }
+  .hobby-body { padding: 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .hobby-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hobby-fav {
+    background: var(--lime);
+    color: var(--bg);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .hobby-title {
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.1;
+  }
+  .hobby-cap { font-size: 13px; line-height: 1.55; color: var(--text-soft); flex: 1; }
+  .hobby-link {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+  }
+</style>

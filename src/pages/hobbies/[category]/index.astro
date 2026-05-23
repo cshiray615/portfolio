@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import HobbyCategoryPage from '~/components/HobbyCategoryPage.astro';
+
+export async function getStaticPaths() {
+  const cats = await getCollection('hobby-categories');
+  return cats.map((c) => ({ params: { category: c.id }, props: { category: c } }));
+}
+
+const { category } = Astro.props;
+---
+
+<Base
+  title={`${category.data.name} — Casey Shiray`}
+  description={category.data.intro}
+>
+  <HobbyCategoryPage category={category} />
+</Base>
