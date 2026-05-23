@@ -26,7 +26,7 @@
      Negative top extends the block slightly ABOVE the inline-block's content box —
      guarantees caps are fully covered regardless of the font's actual ascent ratio.
      Positive bottom crops the descender area below baseline. */
-  inset: -0.03em 0 0.13em 0;
+  inset: -0.01em 0 0.16em 0;
   z-index: -1;
 }
 /* Per-variant colored block on the ::before, text color on the .hl text itself */
