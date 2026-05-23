@@ -1,0 +1,79 @@
+---
+const metrics = [
+  { num: '62', unit: '%',    label: 'Avg lift in completion rates',          accent: 'vermillion' },
+  { num: '3.4', unit: '×',   label: 'Faster time-to-competence vs baseline', accent: 'lime'       },
+  { num: '41', unit: 'k',    label: 'Learners served across 12 orgs',        accent: 'plum'       },
+  { num: '9',  unit: '/10',  label: 'Stakeholders re-engage on next project',accent: 'vermillion' },
+] as const;
+---
+
+<section class="metrics section">
+  <div class="container">
+    <div class="section-hdr">
+      <span class="section-num">02</span>
+      <h2>The <span class="hl hl--lime tilt-r">numbers</span>.</h2>
+    </div>
+    <p class="section-lead">
+      Outcomes from the last <strong>five years</strong> — across compliance, onboarding, tool adoption, and leadership.
+    </p>
+    <div class="metrics-grid">
+      {metrics.map((m) => (
+        <div class="metric">
+          <div class="metric-num">
+            {m.num}<span class={`metric-unit metric-unit--${m.accent}`}>{m.unit}</span>
+          </div>
+          <div class="metric-lbl">{m.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-hdr {
+    display: flex; align-items: baseline; gap: 18px;
+    margin-bottom: 28px;
+  }
+  .section-lead {
+    max-width: 780px;
+    font-size: 18px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+  .section-lead strong { color: var(--text); font-weight: 700; }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 1024px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .metrics-grid { grid-template-columns: 1fr; } }
+  .metric {
+    background: var(--surf);
+    border: 1.5px solid var(--divider);
+    border-radius: 14px;
+    padding: 28px 22px;
+  }
+  .metric-num {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+  }
+  .metric-unit { font-size: 36px; font-weight: 800; margin-left: 4px; }
+  .metric-unit--vermillion { color: var(--vermillion); }
+  .metric-unit--lime       { color: var(--lime); }
+  .metric-unit--plum       { color: var(--tertiary-loud); }
+  .metric-lbl {
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+</style>
