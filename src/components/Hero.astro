@@ -1,0 +1,110 @@
+---
+// Homepage hero — name badge + eyebrow + H1 with highlighted keywords + Caveat subtitle + meta strip
+---
+
+<header class="hero">
+  <div class="container">
+    <div class="name-badge">Casey Shiray</div>
+    <div class="eyebrow">Senior Tech Instructional Designer</div>
+
+    <h1 class="hero-h1">
+      Is training <span class="hl hl--vermillion tilt-l">actually</span><br />
+      the answer <span class="hl hl--lime tilt-r">here</span>?
+    </h1>
+
+    <p class="hero-sub">…or did everyone just panic and ask for slides?</p>
+
+    <div class="hero-meta">
+      <div class="meta-item">
+        <strong>Based</strong>
+        <span>Remote · Pacific Time</span>
+      </div>
+      <div class="meta-item">
+        <strong>Focus</strong>
+        <span>Learning · Performance · Tech</span>
+      </div>
+      <div class="meta-item">
+        <strong>Available</strong>
+        <span>Q3 2026 onward</span>
+      </div>
+      <div class="meta-item">
+        <strong>Email</strong>
+        <a href="mailto:casey@caseyshiray.com">casey@caseyshiray.com</a>
+      </div>
+    </div>
+  </div>
+
+  <span class="hero-bloom hero-bloom--1" aria-hidden="true"></span>
+  <span class="hero-bloom hero-bloom--2" aria-hidden="true"></span>
+</header>
+
+<style>
+  .hero {
+    position: relative;
+    padding: 96px 0 80px;
+    overflow: hidden;
+  }
+  .name-badge { margin-bottom: 32px; }
+  .eyebrow { margin-bottom: 24px; }
+
+  .hero-h1 {
+    font-size: clamp(56px, 9vw, 120px);
+    line-height: 0.9;
+    max-width: 1100px;
+  }
+
+  .hero-sub {
+    margin-top: 28px;
+    font-family: var(--font-hand);
+    font-size: clamp(28px, 3.4vw, 42px);
+    color: var(--tertiary-loud);  /* swaps plum→lavender on dark */
+    line-height: 1.2;
+  }
+
+  .hero-meta {
+    margin-top: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .meta-item {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+  .meta-item strong {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.75;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .meta-item a { color: inherit; }
+  .meta-item a:hover { color: var(--vermillion); }
+
+  .hero-bloom {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+  }
+  .hero-bloom--1 {
+    top: -120px; right: -120px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255, 94, 58, 0.14) 0%, transparent 70%);
+  }
+  .hero-bloom--2 {
+    bottom: -160px; left: 25%;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(75, 44, 90, 0.18) 0%, transparent 70%);
+  }
+  [data-theme="dark"] .hero-bloom--1 {
+    background: radial-gradient(circle, rgba(255, 94, 58, 0.18) 0%, transparent 70%);
+  }
+  [data-theme="dark"] .hero-bloom--2 {
+    background: radial-gradient(circle, rgba(200, 180, 208, 0.12) 0%, transparent 70%);
+  }
+</style>
