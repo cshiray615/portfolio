@@ -1,6 +1,7 @@
 ---
 import '~/styles/global.css';
 import '~/styles/treatments.css';
+import { inlineScript } from '~/lib/theme-init';
 
 export interface Props {
   title: string;
@@ -47,7 +48,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       rel="stylesheet"
     />
 
-    <!-- Theme-init script will be inlined here in Phase 2. Placeholder for now. -->
+    <script is:inline set:html={inlineScript}></script>
   </head>
   <body>
     <slot />
