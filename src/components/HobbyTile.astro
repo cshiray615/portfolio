@@ -34,7 +34,8 @@ const Tag = href ? 'a' : 'div';
     flex-direction: column;
     transition: transform 0.2s ease;
   }
-  a.hobby-tile:hover { transform: translateY(-3px); }
+  a.hobby-tile:hover,
+  a.hobby-tile:focus-visible { transform: translateY(-3px); }
   .hobby-img {
     width: 100%;
     aspect-ratio: 4/3;

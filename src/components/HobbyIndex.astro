@@ -53,7 +53,8 @@ const cats = (await getCollection('hobby-categories')).sort((a, b) => a.data.ord
   }
   .cat-tile--lime { border-top-color: var(--lime); }
   .cat-tile--plum { border-top-color: var(--tertiary-loud); }
-  .cat-tile:hover { transform: translateY(-3px); }
+  .cat-tile:hover,
+  .cat-tile:focus-visible { transform: translateY(-3px); }
 
   .cat-name {
     font-family: var(--font-display);
