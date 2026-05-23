@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Casey Shiray — Senior Tech Instructional Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --S:'League Spartan',sans-serif;
+  --M:'IBM Plex Mono',monospace;
+  --H:'Caveat',cursive;
+  /* THEME-DRIVEN TOKENS (overridden by [data-theme]) */
+  --bg:#1C0E2E;
+  --surf:#281440;
+  --surf2:#361C52;
+  --bdr:#4A2868;
+  --text:#F0EAF8;
+  --muted:#8A7498;
+  --acc:#88C23E;
+  --acc-soft:rgba(136,194,62,.10);
+  --acc-bloom:rgba(136,194,62,.14);
+  --accent-secondary:#E83558;
+  --accent-tertiary:#7A5490;
+  --accent-quaternary:#5BA8F0;
+  --accent-quinary:#F5C540;
+  --hero-text:#F0EAF8;
+  --on-acc:#1C0E2E;
+  /* fixed brand palette (always available) */
+  --dark-bg:#1C0E2E;
+  --dark-surf:#281440;
+  --dark-surf2:#361C52;
+  --dark-bdr:#4A2868;
+  --dark-text:#F0EAF8;
+  --dark-muted:#8A7498;
+  --light-bg:#F5F2EE;
+  --light-text:#1C0E2E;
+  --light-muted:#7A6888;
+  --light-bdr:#E0D8E8;
+  --lime:#88C23E;
+  --lime-dk:#4A7A1A;
+  --plum:#7A5490;
+  --lavender:#C8B4D0;
+  --pink:#E83558;
+  --pink-dk:#B01A33;
+  --amber:#F5C540;
+  --sky:#5BA8F0;
+}
+
+/* —— THEMES —— */
+/* Default is lime-forest (no override). */
+body[data-theme="pink-studio"]{
+  --acc:var(--pink);--acc-soft:rgba(232,53,88,.10);--acc-bloom:rgba(232,53,88,.16);
+  --accent-secondary:var(--lime);--accent-tertiary:var(--plum);--accent-quaternary:var(--sky);--accent-quinary:var(--amber);
+}
+body[data-theme="sky-notebook"]{
+  --acc:var(--sky);--acc-soft:rgba(91,168,240,.10);--acc-bloom:rgba(91,168,240,.16);
+  --accent-secondary:var(--amber);--accent-tertiary:var(--pink);--accent-quaternary:var(--lime);--accent-quinary:var(--plum);
+}
+body[data-theme="amber-workshop"]{
+  --acc:var(--amber);--acc-soft:rgba(245,197,64,.10);--acc-bloom:rgba(245,197,64,.16);
+  --accent-secondary:var(--pink);--accent-tertiary:var(--plum);--accent-quaternary:var(--lime);--accent-quinary:var(--sky);
+  --bg:#2A1840;--surf:#3A2356;--surf2:#4A2D6C;--bdr:#5A3A7C;
+}
+body[data-theme="cream-plum"]{
+  --bg:var(--light-bg);
+  --surf:#FFFFFF;--surf2:#F8F5F0;
+  --bdr:#D8CFC2;
+  --text:var(--light-text);
+  --muted:#5A4A68;
+  --acc:var(--plum);
+  --acc-soft:rgba(122,84,144,.08);--acc-bloom:rgba(122,84,144,.14);
+  --accent-secondary:var(--pink);--accent-tertiary:var(--lime-dk);--accent-quaternary:#1E5FAA;--accent-quinary:#A07B00;
+  --on-acc:#FFFFFF;
+  --hero-text:var(--light-text);
+}
+body[data-theme="midnight"]{
+  --bg:#0E0820;--surf:#1A0F32;--surf2:#251741;--bdr:#3A2660;
+  --acc:var(--lavender);--acc-soft:rgba(200,180,208,.10);--acc-bloom:rgba(200,180,208,.16);
+  --accent-secondary:var(--lime);--accent-tertiary:var(--pink);--accent-quaternary:var(--sky);--accent-quinary:var(--amber);
+  --on-acc:#0E0820;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--M);font-size:16px;line-height:1.65;
+  overflow-x:hidden;
+  transition:background .35s ease,color .35s ease;
+}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+
+/* —— NAV ——————————————————— */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:color-mix(in oklab, var(--bg) 82%, transparent);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--bdr);
+  padding:18px 56px;display:flex;align-items:center;justify-content:space-between;
+}
+.nav-brand{display:flex;align-items:center;gap:12px;font-family:var(--S);font-weight:800;font-size:18px;letter-spacing:-.01em;color:var(--text);}
+.nav-brand .pip{width:10px;height:10px;border-radius:50%;background:var(--acc);}
+.nav-links{display:flex;gap:8px;}
+.nav-link{
+  font-family:var(--M);font-size:13px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+  padding:8px 14px;border-radius:6px;transition:color .15s,background .15s;
+}
+.nav-link:hover{color:var(--text);background:color-mix(in oklab, var(--text) 6%, transparent);}
+.nav-cta{
+  font-family:var(--M);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:10px 20px;border-radius:6px;background:var(--acc);color:var(--on-acc);
+  border:none;
+}
+
+/* —— HERO —————————————————— */
+.hero{
+  position:relative;padding:200px 56px 140px;
+  border-bottom:1px solid var(--bdr);
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-120px;right:-120px;width:600px;height:600px;
+  background:radial-gradient(circle,var(--acc-bloom) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-160px;left:30%;width:520px;height:520px;
+  background:radial-gradient(circle,color-mix(in oklab, var(--accent-tertiary) 18%, transparent) 0%,transparent 70%);
+  pointer-events:none;
+}
+.bar-acc{position:absolute;top:0;left:0;right:0;height:6px;background:var(--acc);}
+.hero-inner{max-width:1280px;margin:0 auto;position:relative;}
+.hero .eyebrow{
+  font-family:var(--M);font-size:14px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--acc);margin-bottom:28px;
+  display:inline-flex;align-items:center;gap:12px;
+}
+.hero .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--acc);}
+.hero h1{
+  font-family:var(--S);font-weight:900;font-size:120px;line-height:.9;
+  letter-spacing:-.025em;color:var(--hero-text);max-width:1100px;
+}
+.hero h1 .pink{color:var(--accent-secondary);}
+.hero h1 .lime{color:var(--acc);}
+.hero .sub{
+  margin-top:32px;font-family:var(--H);font-size:42px;color:var(--accent-tertiary);
+  line-height:1.2;letter-spacing:.01em;
+}
+.hero .meta{
+  margin-top:48px;display:flex;flex-wrap:wrap;gap:32px;
+}
+.hero .meta-item{font-family:var(--M);font-size:13px;color:var(--muted);}
+.hero .meta-item strong{
+  display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text);margin-bottom:4px;opacity:.7;
+}
+
+/* —— SECTION ————————————————— */
+.section{padding:120px 56px;border-bottom:1px solid var(--bdr);position:relative;}
+.section-inner{max-width:1280px;margin:0 auto;}
+.section-hdr{display:flex;align-items:baseline;gap:18px;margin-bottom:48px;}
+.section-num{
+  font-family:var(--M);font-size:13px;font-weight:600;letter-spacing:.16em;
+  color:var(--acc);
+}
+.section-hdr h2{
+  font-family:var(--S);font-size:56px;font-weight:800;color:var(--text);
+  letter-spacing:-.02em;line-height:1;
+}
+.section-hdr h2 .accent{color:var(--accent-secondary);}
+.section-lead{
+  max-width:780px;font-family:var(--M);font-size:18px;line-height:1.7;
+  color:var(--muted);margin-bottom:64px;
+}
+.section-lead b{color:var(--text);font-weight:700;}
+
+/* —— PHILOSOPHY (3 cards) ———————— */
+.philo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.philo-card{
+  background:var(--surf);border:1px solid var(--bdr);
+  border-top:5px solid var(--acc);border-radius:14px;padding:32px;
+}
+.philo-card:nth-child(2){border-top-color:var(--accent-secondary);}
+.philo-card:nth-child(3){border-top-color:var(--accent-tertiary);}
+.philo-tag{
+  font-family:var(--M);font-size:12px;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--acc);margin-bottom:14px;
+}
+.philo-card:nth-child(2) .philo-tag{color:var(--accent-secondary);}
+.philo-card:nth-child(3) .philo-tag{color:var(--accent-tertiary);}
+.philo-h{
+  font-family:var(--S);font-size:32px;font-weight:800;line-height:1.1;
+  color:var(--text);margin-bottom:14px;letter-spacing:-.01em;
+}
+.philo-body{font-family:var(--M);font-size:15px;color:var(--muted);line-height:1.7;}
+
+/* —— WORK (case studies) ——————————— */
+.work-list{display:flex;flex-direction:column;gap:32px;}
+.work-card{
+  display:grid;grid-template-columns:1fr 1.4fr;gap:48px;
+  background:var(--surf);border:1px solid var(--bdr);
+  border-radius:18px;padding:48px;overflow:hidden;position:relative;
+  transition:transform .25s ease,border-color .25s ease;
+}
+.work-card:hover{transform:translateY(-3px);border-color:var(--acc);}
+.work-card.accent-pink:hover{border-color:var(--accent-secondary);}
+.work-card.accent-sky:hover{border-color:var(--accent-quaternary);}
+.work-card.accent-amber:hover{border-color:var(--accent-quinary);}
+.work-meta{display:flex;flex-direction:column;gap:16px;}
+.work-tag{
+  font-family:var(--M);font-size:12px;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--acc);
+}
+.work-card.accent-pink .work-tag{color:var(--accent-secondary);}
+.work-card.accent-sky .work-tag{color:var(--accent-quaternary);}
+.work-card.accent-amber .work-tag{color:var(--accent-quinary);}
+.work-title{
+  font-family:var(--S);font-size:42px;font-weight:800;line-height:1.0;
+  color:var(--text);letter-spacing:-.015em;
+}
+.work-client{font-family:var(--M);font-size:13px;color:var(--muted);letter-spacing:.06em;}
+.work-stack{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;
+}
+.work-stack .chip{
+  font-family:var(--M);font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;padding:5px 10px;border-radius:4px;
+  background:color-mix(in oklab, var(--text) 6%, transparent);
+  border:1px solid var(--bdr);color:var(--muted);
+}
+.work-body{display:flex;flex-direction:column;gap:20px;}
+.work-prob, .work-soln, .work-out{display:flex;gap:14px;align-items:flex-start;}
+.work-prob .label, .work-soln .label, .work-out .label{
+  flex:0 0 80px;font-family:var(--M);font-size:11px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;padding-top:2px;
+}
+.work-prob .label{color:var(--accent-secondary);}
+.work-soln .label{color:var(--acc);}
+.work-out .label{color:var(--accent-quinary);}
+.work-prob .text, .work-soln .text, .work-out .text{
+  font-family:var(--M);font-size:14px;color:var(--text);line-height:1.7;flex:1;
+}
+.work-prob .text{color:var(--muted);}
+.work-out .text b{color:var(--accent-quinary);font-weight:700;}
+.work-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--M);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--acc);align-self:flex-start;margin-top:8px;
+}
+.work-link::after{content:"→";opacity:.7;}
+
+/* —— METRICS —————————————————— */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.metric{
+  background:var(--surf);border:1px solid var(--bdr);
+  border-radius:14px;padding:36px 28px;text-align:left;
+  position:relative;overflow:hidden;
+}
+.metric .num{
+  font-family:var(--S);font-weight:900;font-size:88px;line-height:.95;
+  color:var(--text);letter-spacing:-.025em;
+}
+.metric .num .unit{font-size:36px;color:var(--acc);font-weight:800;margin-left:4px;}
+.metric:nth-child(1) .num .unit{color:var(--acc);}
+.metric:nth-child(2) .num .unit{color:var(--accent-secondary);}
+.metric:nth-child(3) .num .unit{color:var(--accent-quaternary);}
+.metric:nth-child(4) .num .unit{color:var(--accent-quinary);}
+.metric .lbl{
+  margin-top:14px;font-family:var(--M);font-size:11px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);line-height:1.5;
+}
+
+/* —— PROCESS —————————————————— */
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.proc-step{
+  position:relative;padding:32px 28px;
+  background:var(--surf);border:1px solid var(--bdr);border-radius:14px;
+}
+.proc-num{
+  font-family:var(--S);font-weight:900;font-size:42px;color:var(--acc);
+  line-height:1;letter-spacing:-.02em;
+}
+.proc-step:nth-child(2) .proc-num{color:var(--accent-quaternary);}
+.proc-step:nth-child(3) .proc-num{color:var(--accent-secondary);}
+.proc-step:nth-child(4) .proc-num{color:var(--accent-tertiary);}
+.proc-h{
+  margin-top:16px;font-family:var(--S);font-weight:800;font-size:24px;line-height:1.1;
+  color:var(--text);letter-spacing:-.01em;
+}
+.proc-body{
+  margin-top:10px;font-family:var(--M);font-size:13px;color:var(--muted);line-height:1.65;
+}
+
+/* —— ABOUT ————————————————— */
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center;}
+.about-quote{
+  font-family:var(--S);font-weight:800;font-size:48px;line-height:1.1;
+  color:var(--text);letter-spacing:-.015em;
+}
+.about-quote .pink{color:var(--accent-secondary);}
+.about-quote .lime{color:var(--acc);}
+.about-card{
+  background:var(--surf);border:1px solid var(--bdr);
+  border-left:5px solid var(--accent-tertiary);border-radius:14px;padding:36px;
+}
+.about-card .tag{
+  font-family:var(--M);font-size:12px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent-tertiary);margin-bottom:14px;
+}
+.about-card .lead{
+  font-family:var(--M);font-size:15px;color:var(--text);line-height:1.7;margin-bottom:18px;
+}
+.about-card .lead b{color:var(--text);font-weight:700;}
+.about-card ul{
+  list-style:none;display:flex;flex-direction:column;gap:10px;
+}
+.about-card ul li{
+  font-family:var(--M);font-size:13px;color:var(--muted);padding-left:18px;position:relative;line-height:1.6;
+}
+.about-card ul li::before{content:"·";position:absolute;left:6px;color:var(--acc);font-weight:700;}
+
+/* —— CONTACT ————————————————— */
+.contact{padding:120px 56px;background:var(--surf);border-bottom:1px solid var(--bdr);}
+.contact-inner{max-width:1080px;margin:0 auto;text-align:center;}
+.contact h2{
+  font-family:var(--S);font-weight:900;font-size:84px;line-height:.95;
+  letter-spacing:-.025em;color:var(--text);
+}
+.contact h2 .accent{color:var(--acc);}
+.contact .lede{
+  margin-top:24px;font-family:var(--H);font-size:38px;color:var(--accent-tertiary);
+}
+.contact .cta-row{
+  margin-top:48px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;
+}
+.cta-primary, .cta-ghost{
+  font-family:var(--M);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  padding:18px 32px;border-radius:8px;
+}
+.cta-primary{background:var(--acc);color:var(--on-acc);}
+.cta-ghost{background:transparent;border:1.5px solid var(--bdr);color:var(--text);}
+.cta-ghost:hover{border-color:var(--acc);}
+
+/* —— FOOTER ———————————————— */
+.footer{
+  padding:48px 56px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+  font-family:var(--M);font-size:12px;color:var(--muted);letter-spacing:.04em;
+}
+.footer strong{color:var(--text);font-family:var(--S);font-weight:800;letter-spacing:-.01em;}
+.footer a:hover{color:var(--text);}
+.footer-links{display:flex;gap:24px;}
+
+/* —— THEME PICKER ———————————————— */
+.theme-picker{
+  position:fixed;right:24px;bottom:24px;z-index:200;
+  display:flex;flex-direction:column;align-items:flex-end;gap:10px;
+  font-family:var(--M);
+}
+.theme-toggle{
+  background:var(--surf);border:1px solid var(--bdr);
+  color:var(--text);font-family:var(--M);font-size:11px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  padding:10px 16px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:10px;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
+.theme-toggle .toggle-dot{width:10px;height:10px;border-radius:50%;background:var(--acc);}
+.theme-list{
+  background:var(--surf);border:1px solid var(--bdr);border-radius:14px;
+  padding:10px;display:none;flex-direction:column;gap:4px;
+  box-shadow:0 16px 48px rgba(0,0,0,.5);min-width:220px;
+}
+.theme-picker.open .theme-list{display:flex;}
+.theme-btn{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:8px;cursor:pointer;
+  background:transparent;border:none;color:var(--text);
+  font-family:var(--M);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;text-align:left;width:100%;
+}
+.theme-btn:hover{background:color-mix(in oklab, var(--text) 6%, transparent);}
+.theme-btn.active{background:color-mix(in oklab, var(--acc) 14%, transparent);}
+.theme-swatches{display:flex;gap:3px;flex-shrink:0;}
+.theme-swatches span{width:14px;height:18px;border-radius:3px;display:block;}
+.theme-btn-name{font-family:var(--S);font-size:14px;font-weight:700;text-transform:none;letter-spacing:-.005em;}
+
+/* —— RESPONSIVE ———————————————— */
+@media (max-width: 1100px){
+  .hero h1{font-size:88px;}
+  .philo-grid{grid-template-columns:1fr;}
+  .work-card{grid-template-columns:1fr;gap:28px;padding:36px;}
+  .metrics-grid{grid-template-columns:repeat(2,1fr);}
+  .process-grid{grid-template-columns:repeat(2,1fr);}
+  .about-grid{grid-template-columns:1fr;gap:40px;}
+  .contact h2{font-size:56px;}
+}
+@media (max-width: 640px){
+  .nav{padding:14px 24px;}
+  .nav-links{display:none;}
+  .hero{padding:140px 24px 100px;}
+  .hero h1{font-size:60px;}
+  .hero .sub{font-size:28px;}
+  .section{padding:80px 24px;}
+  .section-hdr h2{font-size:36px;}
+  .metrics-grid{grid-template-columns:1fr;}
+  .process-grid{grid-template-columns:1fr;}
+  .contact{padding:80px 24px;}
+  .contact h2{font-size:40px;}
+  .footer{padding:32px 24px;flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- —— NAV —— -->
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="pip"></span>
+    <span>Casey Shiray</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="#philosophy">Philosophy</a>
+    <a class="nav-link" href="#work">Work</a>
+    <a class="nav-link" href="#process">Process</a>
+    <a class="nav-link" href="#about">About</a>
+  </div>
+  <a class="nav-cta" href="#contact">Get in touch</a>
+</nav>
+
+<!-- —— HERO —— -->
+<header class="hero">
+  <div class="bar-acc"></div>
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="dot"></span>Senior Tech Instructional Designer</div>
+    <h1>
+      Is training <span class="pink">actually</span><br>
+      the answer <span class="lime">here</span>?
+    </h1>
+    <div class="sub">…or did everyone just panic and ask for slides?</div>
+    <div class="meta">
+      <div class="meta-item"><strong>Based</strong>Remote · Pacific Time</div>
+      <div class="meta-item"><strong>Focus</strong>Learning · Performance · Tech</div>
+      <div class="meta-item"><strong>Available</strong>Q3 2026 onward</div>
+      <div class="meta-item"><strong>Email</strong>casey@caseyshiray.com</div>
+    </div>
+  </div>
+</header>
+
+<!-- —— PHILOSOPHY —— -->
+<section class="section" id="philosophy">
+  <div class="section-inner">
+    <div class="section-hdr">
+      <span class="section-num">01</span>
+      <h2>How I <span style="color:var(--lime);">work</span>.</h2>
+    </div>
+    <p class="section-lead">
+      Most learning problems aren't learning problems. They're <b>process problems</b>, <b>tool problems</b>, or <b>seventeen-spreadsheets-all-claiming-to-be-the-single-source-of-truth problems</b>. The work is figuring out which — before anyone builds a course.
+    </p>
+
+    <div class="philo-grid">
+      <div class="philo-card">
+        <div class="philo-tag">Diagnose first</div>
+        <div class="philo-h">Find the real cause.</div>
+        <div class="philo-body">
+          Five "whys" before any design move. If the answer is "the process is broken," I say so — and we fix the process, not the people.
+        </div>
+      </div>
+      <div class="philo-card">
+        <div class="philo-tag">Design with evidence</div>
+        <div class="philo-h">Less box-check.</div>
+        <div class="philo-body">
+          Every design choice cites a principle. Cognitive load, signaling, dual channels, generative activity. If it can't earn its place, it doesn't ship.
+        </div>
+      </div>
+      <div class="philo-card">
+        <div class="philo-tag">Defend the call</div>
+        <div class="philo-h">Stakeholders, partnered.</div>
+        <div class="philo-body">
+          A design defense isn't "no." It's "here's what this choice costs the learner — and here's a better path." Stakeholders become collaborators, not opponents.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- —— WORK —— -->
+<section class="section" id="work">
+  <div class="section-inner">
+    <div class="section-hdr">
+      <span class="section-num">02</span>
+      <h2>Selected <span class="accent">work</span>.</h2>
+    </div>
+    <p class="section-lead">
+      A few projects that turned <b>"we need training"</b> into something the business — and the learner — actually wanted.
+    </p>
+
+    <div class="work-list">
+
+      <!-- Case 1 — Designs That Matter -->
+      <article class="work-card">
+        <div class="work-meta">
+          <div class="work-tag">Micro-learning · Course design</div>
+          <div class="work-title">Designs That<br>Matter.</div>
+          <div class="work-client">DevLearn 2026 · self-directed</div>
+          <div class="work-stack">
+            <span class="chip">9 modules</span>
+            <span class="chip">Rise</span>
+            <span class="chip">Mayer</span>
+            <span class="chip">Animated SVG</span>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-prob"><span class="label">Problem</span><span class="text">L&D teams know bad training when they see it — but can't name what's wrong, so they can't fix it. The result: design-by-committee and stakeholders who keep asking for slides.</span></div>
+          <div class="work-soln"><span class="label">Solution</span><span class="text">A 4-phase micro-learning course — Spot it · Explain it · Fix it · Defend it. Built around Mayer's multimedia principles, each lesson pairs a concept video with a low-stakes activity (sort, rewrite, draft a stakeholder reply).</span></div>
+          <div class="work-out"><span class="label">Outcome</span><span class="text"><b>~90 minutes</b> of micro-lessons that ship with a vocabulary stakeholders can hear — and learners can act on, in their next deck review.</span></div>
+          <a class="work-link" href="#">Read the case study</a>
+        </div>
+      </article>
+
+      <!-- Case 2 — Onboarding sim -->
+      <article class="work-card accent-sky">
+        <div class="work-meta">
+          <div class="work-tag">Onboarding · Branching simulation</div>
+          <div class="work-title">"Day One,<br>For Real."</div>
+          <div class="work-client">Fortune 500 retailer · 14k frontline hires/year</div>
+          <div class="work-stack">
+            <span class="chip">Storyline</span>
+            <span class="chip">Branching</span>
+            <span class="chip">Voice-over</span>
+            <span class="chip">SCORM</span>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-prob"><span class="label">Problem</span><span class="text">A 4-hour compliance video had a 38% completion rate. New hires were skipping out — and managers were re-teaching everything in week one anyway.</span></div>
+          <div class="work-soln"><span class="label">Solution</span><span class="text">Cut the video to 22 minutes of essential content. Replaced the rest with a branching shift-simulation where hires made the same decisions they'd face on the floor — with consequences they could feel.</span></div>
+          <div class="work-out"><span class="label">Outcome</span><span class="text">Completion jumped to <b>94%</b>, manager re-teach time dropped <b>~60%</b>, and 30-day retention improved by <b>11 points</b>.</span></div>
+          <a class="work-link" href="#">Read the case study</a>
+        </div>
+      </article>
+
+      <!-- Case 3 — Tool adoption -->
+      <article class="work-card accent-pink">
+        <div class="work-meta">
+          <div class="work-tag">Tool adoption · Performance support</div>
+          <div class="work-title">The Form That<br>Worked.</div>
+          <div class="work-client">Healthcare network · 3,200 clinicians</div>
+          <div class="work-stack">
+            <span class="chip">Workflow audit</span>
+            <span class="chip">EHR redesign</span>
+            <span class="chip">Job aids</span>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-prob"><span class="label">Problem</span><span class="text">Adoption of a new EHR module sat at 41%. Stakeholders blamed clinician resistance and asked for a 90-minute training.</span></div>
+          <div class="work-soln"><span class="label">Solution</span><span class="text">Talked to ten clinicians before designing anything. The form was the problem. Worked with engineering to consolidate three screens into one, then built a 4-minute walkthrough — not a course.</span></div>
+          <div class="work-out"><span class="label">Outcome</span><span class="text">Adoption rose to <b>89%</b> in six weeks. Training spend was reallocated to <b>two other workflow fixes</b> — same approach, same payoff.</span></div>
+          <a class="work-link" href="#">Read the case study</a>
+        </div>
+      </article>
+
+      <!-- Case 4 — Leadership cohort -->
+      <article class="work-card accent-amber">
+        <div class="work-meta">
+          <div class="work-tag">Leadership · Cohort program</div>
+          <div class="work-title">Manager<br>Defense.</div>
+          <div class="work-client">SaaS scale-up · 120 new managers</div>
+          <div class="work-stack">
+            <span class="chip">Cohort design</span>
+            <span class="chip">Coaching</span>
+            <span class="chip">Async + live</span>
+            <span class="chip">Capstone</span>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-prob"><span class="label">Problem</span><span class="text">New managers were promoted on technical chops, then handed a leadership LMS path and a "good luck." 65% reported feeling unprepared at the 90-day check-in.</span></div>
+          <div class="work-soln"><span class="label">Solution</span><span class="text">An 8-week cohort: short async micro-lessons + a live coaching session each Friday, capped by a capstone where managers defended one real decision they'd made in the last 30 days.</span></div>
+          <div class="work-out"><span class="label">Outcome</span><span class="text">90-day "feel prepared" scores climbed from 35% → <b>82%</b>, and the cohort design became the default for every leadership level above.</span></div>
+          <a class="work-link" href="#">Read the case study</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- —— METRICS —— -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-hdr">
+      <span class="section-num">03</span>
+      <h2>The <span style="color:var(--amber);">numbers</span>.</h2>
+    </div>
+    <p class="section-lead">
+      Outcomes from the last <b>five years</b> of work — across compliance, onboarding, tool adoption, and leadership programs.
+    </p>
+
+    <div class="metrics-grid">
+      <div class="metric">
+        <div class="num">62<span class="unit">%</span></div>
+        <div class="lbl">Average lift in completion rates</div>
+      </div>
+      <div class="metric">
+        <div class="num">3.4<span class="unit">×</span></div>
+        <div class="lbl">Faster time-to-competence vs. prior baseline</div>
+      </div>
+      <div class="metric">
+        <div class="num">41<span class="unit">k</span></div>
+        <div class="lbl">Learners served across 12 organizations</div>
+      </div>
+      <div class="metric">
+        <div class="num">9<span class="unit">/10</span></div>
+        <div class="lbl">Stakeholders re-engage on the next project</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- —— PROCESS —— -->
+<section class="section" id="process">
+  <div class="section-inner">
+    <div class="section-hdr">
+      <span class="section-num">04</span>
+      <h2>How a <span style="color:var(--lime);">project</span> runs.</h2>
+    </div>
+    <p class="section-lead">
+      Four phases, in order. Most projects skip phase 4 — that's usually why they don't stick. <b>I won't.</b>
+    </p>
+
+    <div class="process-grid">
+      <div class="proc-step">
+        <div class="proc-num">01</div>
+        <div class="proc-h">Spot it.</div>
+        <div class="proc-body">Interviews + observations. Define the actual performance gap — not the stated training request.</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">02</div>
+        <div class="proc-h">Explain it.</div>
+        <div class="proc-body">Map the cognitive load. Name the principles that apply. Decide whether training is part of the answer at all.</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">03</div>
+        <div class="proc-h">Fix it.</div>
+        <div class="proc-body">Build the lightest intervention that solves the problem — course, simulation, job aid, process change, or a mix.</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">04</div>
+        <div class="proc-h">Defend it.</div>
+        <div class="proc-body">Measure. Adjust. Help stakeholders see why each design choice earned its place. Hand off something they can maintain.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- —— ABOUT —— -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="section-hdr">
+      <span class="section-num">05</span>
+      <h2>About <span style="color:var(--lavender);">Casey</span>.</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-quote">
+        I make <span style="color:var(--light-muted);text-decoration:line-through;text-decoration-color:var(--pink);text-decoration-thickness:5px;">training</span>
+        <span style="font-family:var(--H);color:var(--pink);">solutions</span><br>
+        that <span class="lime">help people do their jobs</span>.
+      </div>
+      <div class="about-card">
+        <div class="tag">Background · in brief</div>
+        <div class="lead">
+          15 years working at the intersection of <b>learning design</b>, <b>performance improvement</b>, <b>technology</b>, and <b>messy business problems</b>. I turn chaos into something useful.
+        </div>
+        <ul>
+          <li>Senior Tech Instructional Designer — current</li>
+          <li>M.S. Learning Design &amp; Technology · Bloom's-anchored</li>
+          <li>ATD Master Trainer · CPLP</li>
+          <li>Author, <em>Designs That Matter</em> (DevLearn 2026)</li>
+          <li>Outside of work: board games · video games · dinosaurs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- —— CONTACT —— -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <h2>Have a project that <span class="accent">earned its place</span>?</h2>
+    <div class="lede">Let's figure out if training is the answer — together.</div>
+    <div class="cta-row">
+      <a class="cta-primary" href="mailto:casey@caseyshiray.com">Email Casey</a>
+      <a class="cta-ghost" href="#">Download portfolio (PDF)</a>
+      <a class="cta-ghost" href="#">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- —— FOOTER —— -->
+<footer class="footer">
+  <div><strong>Casey Shiray</strong> · Senior Tech Instructional Designer</div>
+  <div class="footer-links">
+    <a href="#philosophy">Philosophy</a>
+    <a href="#work">Work</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div style="opacity:.5;">© 2026 · caseyshiray.com</div>
+</footer>
+
+<!-- —— THEME PICKER —— -->
+<div class="theme-picker" id="themePicker">
+  <div class="theme-list" id="themeList">
+    <button class="theme-btn active" data-theme="">
+      <span class="theme-swatches">
+        <span style="background:#1C0E2E"></span>
+        <span style="background:#88C23E"></span>
+        <span style="background:#E83558"></span>
+      </span>
+      <span class="theme-btn-name">Lime Forest</span>
+    </button>
+    <button class="theme-btn" data-theme="pink-studio">
+      <span class="theme-swatches">
+        <span style="background:#1C0E2E"></span>
+        <span style="background:#E83558"></span>
+        <span style="background:#88C23E"></span>
+      </span>
+      <span class="theme-btn-name">Pink Studio</span>
+    </button>
+    <button class="theme-btn" data-theme="sky-notebook">
+      <span class="theme-swatches">
+        <span style="background:#1C0E2E"></span>
+        <span style="background:#5BA8F0"></span>
+        <span style="background:#F5C540"></span>
+      </span>
+      <span class="theme-btn-name">Sky Notebook</span>
+    </button>
+    <button class="theme-btn" data-theme="amber-workshop">
+      <span class="theme-swatches">
+        <span style="background:#2A1840"></span>
+        <span style="background:#F5C540"></span>
+        <span style="background:#E83558"></span>
+      </span>
+      <span class="theme-btn-name">Amber Workshop</span>
+    </button>
+    <button class="theme-btn" data-theme="cream-plum">
+      <span class="theme-swatches">
+        <span style="background:#F5F2EE;border:1px solid #D8CFC2"></span>
+        <span style="background:#7A5490"></span>
+        <span style="background:#E83558"></span>
+      </span>
+      <span class="theme-btn-name">Cream &amp; Plum</span>
+    </button>
+    <button class="theme-btn" data-theme="midnight">
+      <span class="theme-swatches">
+        <span style="background:#0E0820"></span>
+        <span style="background:#C8B4D0"></span>
+        <span style="background:#88C23E"></span>
+      </span>
+      <span class="theme-btn-name">Midnight</span>
+    </button>
+  </div>
+  <button class="theme-toggle" id="themeToggle">
+    <span class="toggle-dot"></span>
+    <span>Theme</span>
+  </button>
+</div>
+
+<script>
+(function(){
+  const picker = document.getElementById('themePicker');
+  const toggle = document.getElementById('themeToggle');
+  const btns = document.querySelectorAll('.theme-btn');
+  const saved = localStorage.getItem('dtm-theme') || '';
+  if(saved){ document.body.dataset.theme = saved; }
+  btns.forEach(b => {
+    b.classList.toggle('active', (b.dataset.theme || '') === saved);
+    b.addEventListener('click', () => {
+      const t = b.dataset.theme || '';
+      if(t) document.body.dataset.theme = t; else delete document.body.dataset.theme;
+      localStorage.setItem('dtm-theme', t);
+      btns.forEach(x => x.classList.toggle('active', x === b));
+      picker.classList.remove('open');
+    });
+  });
+  toggle.addEventListener('click', e => {
+    e.stopPropagation();
+    picker.classList.toggle('open');
+  });
+  document.addEventListener('click', e => {
+    if(!picker.contains(e.target)) picker.classList.remove('open');
+  });
+})();
+</script>
+
+</body>
+</html>
