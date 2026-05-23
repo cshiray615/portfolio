@@ -22,6 +22,10 @@
 /* On dark surface, .hl--lime needs ink text against the lime block; on light it's the same */
 [data-theme="dark"] .hl--lime { color: var(--bg); }
 
+/* --- Line-break utility: keep adjacent inline-block + trailing punctuation together --- */
+/* Used in Hero H1 so `<span class="hl">here</span>?` doesn't wrap the `?` to a new line */
+.nobreak { white-space: nowrap; }
+
 /* --- Rotated name badge --- */
 .name-badge {
   display: inline-block;
