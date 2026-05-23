@@ -8,7 +8,11 @@
 /* --- Highlighted-block keywords (H1 + section headings) --- */
 .hl {
   display: inline-block;
-  padding: 4px 12px;       /* symmetric 4/4 — letters centered vertically within the block, equal breathing above and below in multi-line contexts (hero H1) */
+  padding: 10px 12px 0;    /* asymmetric 10/0 — compensates for the ~10px discrepancy between League Spartan's
+                              ascent (100%) and cap-height (75%). Symmetric padding leaves more colored space
+                              BELOW the baseline than above the cap (line-height fills descender area), creating
+                              unequal breathing room above/below the block in multi-line contexts. 10/0 cancels
+                              that bias, putting equal gap above and below the block in the hero H1. */
   line-height: 0.9;
 }
 .hl--vermillion { background: var(--vermillion);     color: var(--text); }   /* ink in light (5.6:1), cream-->ink override in dark below */
