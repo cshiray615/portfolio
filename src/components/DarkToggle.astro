@@ -1,0 +1,46 @@
+---
+// Small sun/moon button. Renders the icon for the *current* theme,
+// flips on click. CSS uses [data-theme] to swap icons.
+---
+
+<button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode" type="button">
+  <span class="icon icon--sun" aria-hidden="true">☀</span>
+  <span class="icon icon--moon" aria-hidden="true">☾</span>
+</button>
+
+<style>
+  .dark-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    transition: background 0.15s ease;
+  }
+  .dark-toggle:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  [data-theme="dark"] .dark-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .icon {
+    font-size: 16px;
+    line-height: 1;
+  }
+  /* Show sun in light mode (current theme = light, click would go to dark) */
+  .icon--sun  { display: inline; }
+  .icon--moon { display: none; }
+  [data-theme="dark"] .icon--sun  { display: none; }
+  [data-theme="dark"] .icon--moon { display: inline; }
+</style>
+
+<script>
+  import { toggleTheme } from '~/lib/theme-init';
+
+  const btn = document.getElementById('dark-toggle');
+  btn?.addEventListener('click', () => {
+    toggleTheme();
+  });
+</script>
