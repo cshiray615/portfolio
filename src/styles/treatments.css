@@ -16,16 +16,17 @@
   position: relative;
   display: inline-block;
   padding: 0 12px;          /* horizontal padding only; vertical bg controlled by ::before */
+  line-height: 1;            /* fixed em-square reference so ::before positioning is predictable across contexts (hero H1, section h2s, etc.) */
   isolation: isolate;        /* contain ::before's z-index -1 to this stacking context */
 }
 .hl::before {
   content: '';
   position: absolute;
-  /* Values in em units so they scale with hero font-size.
-     0.08em top  ≈ extends to just above cap-top
-     0.18em bot  ≈ extends to just below baseline (skips descender area entirely)
-     Equal breathing of ~5px above caps and ~5px below baseline at FS 120. */
-  inset: 0.08em 0 0.18em 0;
+  /* The colored block is positioned in em units (scales with font-size).
+     Negative top extends the block slightly ABOVE the inline-block's content box —
+     guarantees caps are fully covered regardless of the font's actual ascent ratio.
+     Positive bottom crops the descender area below baseline. */
+  inset: -0.06em 0 0.10em 0;
   z-index: -1;
 }
 /* Per-variant colored block on the ::before, text color on the .hl text itself */
