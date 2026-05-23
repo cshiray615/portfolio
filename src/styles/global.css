@@ -51,7 +51,7 @@ html { scroll-behavior: smooth; }
   --bg:              #1C1820;
   --surf:            #261F30;
   --text:            #FAF3E0;
-  --text-soft:       rgba(250, 243, 224, 0.55);
+  --text-soft:       rgba(250, 243, 224, 0.7);  /* WCAG AAA: ~8:1 against the warm near-black bg */
   --card-dark-bg:    #FEF6E4;          /* INVERTED: cream "letter on the table" */
   --card-dark-text:  #1D1D1F;
   --tertiary-loud:   var(--lavender);  /* lavender promoted */
