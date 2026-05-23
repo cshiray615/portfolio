@@ -1,0 +1,22 @@
+---
+import Base from '~/layouts/Base.astro';
+import CaseStudyHero from '~/components/case-study/CaseStudyHero.astro';
+import NextCaseStudy from '~/components/case-study/NextCaseStudy.astro';
+import type { CollectionEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
+
+export interface Props {
+  caseStudy: CollectionEntry<'case-studies'>;
+}
+
+const { caseStudy } = Astro.props;
+const { data } = caseStudy;
+
+const nextEntry = data.next ? await getEntry('case-studies', data.next) : null;
+---
+
+<Base title={`${data.title} — Casey Shiray`} description={data.tagline ?? data.summary.problem}>
+  <CaseStudyHero caseStudy={caseStudy} />
+  <slot />
+  {nextEntry && <NextCaseStudy next={nextEntry} />}
+</Base>

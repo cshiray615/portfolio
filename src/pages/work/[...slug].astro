@@ -1,0 +1,21 @@
+---
+import { getCollection, render } from 'astro:content';
+import CaseStudy from '~/layouts/CaseStudy.astro';
+import ProblemBlock from '~/components/case-study/ProblemBlock.astro';
+import ProcessBlock from '~/components/case-study/ProcessBlock.astro';
+import OutcomeBlock from '~/components/case-study/OutcomeBlock.astro';
+import ArtifactsGallery from '~/components/case-study/ArtifactsGallery.astro';
+import LessonsBlock from '~/components/case-study/LessonsBlock.astro';
+
+export async function getStaticPaths() {
+  const studies = await getCollection('case-studies');
+  return studies.map((cs) => ({ params: { slug: cs.id }, props: { caseStudy: cs } }));
+}
+
+const { caseStudy } = Astro.props;
+const { Content } = await render(caseStudy);
+---
+
+<CaseStudy caseStudy={caseStudy}>
+  <Content components={{ ProblemBlock, ProcessBlock, OutcomeBlock, ArtifactsGallery, LessonsBlock }} />
+</CaseStudy>
