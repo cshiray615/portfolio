@@ -15,4 +15,40 @@ order: 3
 next: manager-defense
 ---
 
-{/* MDX body filled in Task 7.3 */}
+<ProblemBlock>
+
+Adoption of a new EHR module at a 3,200-clinician healthcare network sat at forty-one percent six weeks after launch. Stakeholders had a confident diagnosis: the clinicians were resistant to change, and the solution was a ninety-minute mandatory training.
+
+I asked if I could talk to ten clinicians first before designing anything. I knew the answer wasn't going to be a ninety-minute training, because nobody resists change for ninety minutes' worth of reasons. People resist change when the new thing makes their job harder, or when they don't trust the people asking them to change. I wanted to know which.
+
+</ProblemBlock>
+
+<ProcessBlock>
+
+Ten clinician interviews, twenty minutes each, over two weeks. Nine of the ten said the same thing in slightly different words: the new module had three screens for what used to be one. They weren't resisting the change. They were resisting paying a thirty-second tax on every patient encounter.
+
+The form was the problem. Not the training. Not the clinicians. The form.
+
+I took that finding to the engineering team and to the product manager for the EHR. After two weeks of pushback ("but the three screens map to the three regulatory domains") and a session walking them through ten clinician examples, we got to a redesigned single screen that consolidated the three. Then — and only then — did I build a four-minute walkthrough video. Not a course. A walkthrough.
+
+The walkthrough was deliberately short because the form was now intuitive enough that anything longer was insulting. The video covered three things: where the consolidated screen lives in the workflow, what changed about the underlying data (it hadn't, but clinicians wanted to know), and a one-paragraph reassurance from the CMO that this was the new official version.
+
+</ProcessBlock>
+
+<OutcomeBlock metrics={[
+  { value: '89%', label: 'Adoption (up from 41%) within 6 weeks' },
+  { value: '4 min', label: 'Walkthrough length (vs 90-min planned training)' },
+  { value: '2', label: 'Other workflows audited using the same approach' },
+]}>
+
+Adoption rose to eighty-nine percent within six weeks of the form redesign. The four-minute walkthrough was watched once by ninety-three percent of clinicians (we didn't make it mandatory) and re-watched by less than two percent — which is exactly the engagement profile you want for a short reference video.
+
+The compliance lead reallocated the training budget that would have gone toward the ninety-minute mandatory course to two other workflow fixes the clinicians had flagged in the same interviews. Same approach, same payoff. The phrase "is this actually a training problem?" became something the L&D team got asked, instead of having to ask.
+
+</OutcomeBlock>
+
+<LessonsBlock>
+
+I should have presented the ten-interview finding to the executive sponsor in person, not in a deck. The deck version (which I led with) made it look like an L&D recommendation; the in-person version (which I followed up with) made it land as a clinical leadership recommendation. Same content, very different reception. The lesson is about *who needs to feel ownership of the finding* — and I'd build a stakeholder map up front next time.
+
+</LessonsBlock>
