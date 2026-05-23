@@ -1,0 +1,51 @@
+---
+import Base from '~/layouts/Base.astro';
+import PhilosophySection from '~/components/PhilosophySection.astro';
+import ProcessSection from '~/components/ProcessSection.astro';
+import WorkHistory from '~/components/WorkHistory.astro';
+import ContactBlock from '~/components/ContactBlock.astro';
+---
+
+<Base
+  title="About — Casey Shiray"
+  description="How Casey works. The principles, the process, and the career behind the portfolio."
+>
+  <header class="about-hero">
+    <div class="container">
+      <div class="eyebrow">About</div>
+      <h1 class="about-h1">
+        I make <s class="strike">training</s>
+        <span class="solutions">solutions</span><br />
+        that <span class="hl hl--lime tilt-r">help people do their jobs</span>.
+      </h1>
+    </div>
+  </header>
+
+  <PhilosophySection />
+  <ProcessSection />
+  <WorkHistory />
+  <ContactBlock />
+</Base>
+
+<style>
+  .about-hero { padding: 80px 0 64px; }
+  .about-h1 {
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: 0.95;
+    margin-top: 18px;
+  }
+  .strike {
+    text-decoration: line-through;
+    text-decoration-color: var(--vermillion);
+    text-decoration-thickness: 5px;
+    color: var(--text-soft);
+  }
+  .solutions {
+    font-family: var(--font-hand);
+    color: var(--vermillion);
+    font-weight: 700;
+    font-style: normal;
+    text-transform: none;
+    font-size: 0.95em;
+  }
+</style>
