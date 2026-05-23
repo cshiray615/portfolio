@@ -1,0 +1,41 @@
+/* ============================================
+   Casey Shiray — Playful treatments
+   Per spec §6.3 — LOCKED VALUES, do not adjust
+   without re-checking optical alignment in the
+   browser at hero scale.
+   ============================================ */
+
+/* --- Highlighted-block keywords (H1 + section headings) --- */
+.hl {
+  display: inline-block;
+  padding: 6px 12px 2px;   /* LOCKED: lifted 6/2 compensates for all-caps having no descenders */
+  line-height: 0.9;
+}
+.hl--vermillion { background: var(--vermillion);     color: var(--bg);  }
+.hl--lime       { background: var(--lime);           color: var(--text); }   /* light: ink on lime; dark: cream on lime — both legible */
+.hl--plum       { background: var(--tertiary-loud);  color: var(--bg);  }    /* swaps to lavender on dark via token */
+
+/* Rotation modifiers — apply on top of .hl */
+.tilt-l { transform: rotate(-1.5deg); }
+.tilt-r { transform: rotate( 1deg);   }
+
+/* On dark surface, .hl--lime needs ink text against the lime block; on light it's the same */
+[data-theme="dark"] .hl--lime { color: var(--bg); }
+
+/* --- Rotated name badge --- */
+.name-badge {
+  display: inline-block;
+  background: var(--text);          /* ink on cream, cream on dark — high contrast either way */
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  transform: rotate(-2deg);
+}
+.name-badge::after {
+  content: ' ✺';
+  color: var(--lime);               /* signature accent */
+}
