@@ -24,7 +24,8 @@ const { next } = Astro.props;
     margin-top: 64px;
     transition: transform 0.25s ease;
   }
-  .next-case:hover { transform: translateY(-2px); }
+  .next-case:hover,
+  .next-case:focus-visible { transform: translateY(-2px); }
   .next-eyebrow {
     font-family: var(--font-mono);
     font-size: 12px;
