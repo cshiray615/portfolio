@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import WorkCard from './WorkCard.astro';
+
+const all = (await getCollection('case-studies')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-hdr">
+      <span class="section-num">·</span>
+      <h2>All <span class="hl hl--vermillion tilt-l">work</span>.</h2>
+    </div>
+    <p class="section-lead">
+      Every project that earned a write-up. Problem → solution → outcome. Click any card for the full story.
+    </p>
+    <div class="work-list">
+      {all.map((cs) => <WorkCard caseStudy={cs} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .work-list { display: flex; flex-direction: column; gap: 28px; }
+  .section-hdr {
+    display: flex; align-items: baseline; gap: 18px; margin-bottom: 28px;
+  }
+  .section-lead {
+    max-width: 780px;
+    font-size: 18px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+</style>
