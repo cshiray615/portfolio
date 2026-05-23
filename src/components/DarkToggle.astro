@@ -3,7 +3,13 @@
 // flips on click. CSS uses [data-theme] to swap icons.
 ---
 
-<button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode" type="button">
+<button
+  class="dark-toggle"
+  id="dark-toggle"
+  type="button"
+  aria-label="Toggle dark mode"
+  aria-pressed="false"
+>
   <span class="icon icon--sun" aria-hidden="true">☀</span>
   <span class="icon icon--moon" aria-hidden="true">☾</span>
 </button>
@@ -40,7 +46,19 @@
   import { toggleTheme } from '~/lib/theme-init';
 
   const btn = document.getElementById('dark-toggle');
+
+  // Sync aria-pressed with the current theme on load (theme-init runs inline in <head>
+  // and may have already applied data-theme="dark"). This makes screen readers announce
+  // the correct state on first interaction.
+  function syncPressed() {
+    if (!btn) return;
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+  }
+  syncPressed();
+
   btn?.addEventListener('click', () => {
     toggleTheme();
+    syncPressed();
   });
 </script>
