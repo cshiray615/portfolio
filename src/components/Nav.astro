@@ -1,0 +1,107 @@
+---
+import DarkToggle from './DarkToggle.astro';
+
+const links = [
+  { href: '/work', label: 'Work' },
+  { href: '/about', label: 'About' },
+  { href: '/hobbies', label: 'Hobbies' },
+];
+
+const currentPath = Astro.url.pathname;
+function isActive(href: string): boolean {
+  if (href === '/' && currentPath === '/') return true;
+  if (href !== '/' && currentPath.startsWith(href)) return true;
+  return false;
+}
+---
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="nav-brand" href="/">
+      <span class="nav-dot" aria-hidden="true"></span>
+      <span class="nav-name">Casey Shiray</span>
+    </a>
+
+    <div class="nav-links">
+      {links.map((l) => (
+        <a class={`nav-link${isActive(l.href) ? ' nav-link--active' : ''}`} href={l.href}>{l.label}</a>
+      ))}
+    </div>
+
+    <div class="nav-right">
+      <a class="nav-cta" href="/about#contact">Get in touch</a>
+      <DarkToggle />
+    </div>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: color-mix(in oklab, var(--bg) 82%, transparent);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--divider);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 56px;
+  }
+  @media (max-width: 640px) { .nav-inner { padding: 12px 24px; } }
+
+  .nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .nav-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--vermillion);
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+  }
+  @media (max-width: 640px) { .nav-links { display: none; } }
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .nav-link:hover { color: var(--text); background: rgba(0,0,0,0.05); }
+  [data-theme="dark"] .nav-link:hover { background: rgba(255,255,255,0.06); }
+  .nav-link--active { color: var(--text); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 9px 16px;
+    border-radius: 6px;
+    background: var(--vermillion);
+    color: var(--bg);
+  }
+  @media (max-width: 640px) { .nav-cta { display: none; } }
+</style>

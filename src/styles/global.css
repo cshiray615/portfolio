@@ -67,6 +67,11 @@ body {
   line-height: 1.65;
   overflow-x: hidden;
   transition: background 0.35s ease, color 0.35s ease;
+  padding-top: 64px;
+}
+
+@media (max-width: 640px) {
+  body { padding-top: 56px; }
 }
 
 /* --- Base typography --- */
