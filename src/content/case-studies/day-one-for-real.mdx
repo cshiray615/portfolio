@@ -15,4 +15,40 @@ order: 2
 next: the-form-that-worked
 ---
 
-{/* MDX body filled in Task 7.2 */}
+<ProblemBlock>
+
+Fourteen thousand frontline hires a year. A four-hour day-one compliance video. A thirty-eight percent completion rate.
+
+The video had been the standard for six years. Nobody loved it, but nobody had a better idea, and switching tools meant a six-month procurement cycle. So new hires sat through it, mostly didn't finish, and managers spent week one re-teaching the parts the new hires had skipped. The compliance team thought we had a learner-engagement problem. The operations leaders thought we had a content problem. Both were partially right and neither was the real problem.
+
+The real problem was that the format had nothing to do with the job. Day one on the floor is fast, social, and full of small decisions a video can't simulate. Watching someone else make those decisions on a screen is not how anyone learns them.
+
+</ProblemBlock>
+
+<ProcessBlock>
+
+I started by riding along with three regional ops managers for a week. Every time they corrected a week-one hire, I wrote down the correction. By the end of the week I had ninety-three. When I sorted them, eighty-seven fell into four buckets: customer escalation handling, register-and-cash discrepancies, safety-and-incident reporting, and shift handoff.
+
+Those four became the simulation. We kept the legally-required compliance content as a 22-minute video — short enough to actually watch, with the regulatory content the lawyers needed verbatim. Everything else became a branching scenario built in Storyline: hires played a fictional shift, made the same calls they'd face on the floor, and saw consequences play out over the next "two hours" of simulated time.
+
+The hardest design decision was how *consequential* to make the wrong choices. Too soft and the sim feels like a video game where everyone wins. Too punitive and hires get demoralized in their first hour. I landed on "consequences they could feel but not be hurt by": a wrong escalation lost them a customer (and a coaching moment from a virtual manager), but not a job. We tested the calibration on a small group before rolling out.
+
+</ProcessBlock>
+
+<OutcomeBlock metrics={[
+  { value: '94%', label: 'Completion rate (up from 38%)' },
+  { value: '~60%', label: 'Reduction in week-one re-teach time' },
+  { value: '+11pt', label: '30-day retention vs prior cohort' },
+]}>
+
+Completion jumped to ninety-four percent in the first month, and held there. Manager re-teach time dropped roughly sixty percent — they could spend week one coaching on edge cases instead of re-teaching cash handling. Thirty-day retention improved by eleven points compared to the prior year's cohort, which translates to a meaningful number when you multiply by fourteen thousand hires.
+
+The simulation file became the template for three other markets the company runs in. We translated the scripts (not the simulation engine) and rolled it to the international ops org six months later.
+
+</OutcomeBlock>
+
+<LessonsBlock>
+
+In retrospect, I wish I'd built the analytics dashboard alongside the simulation, not three months after. The completion rate was easy to track from the LMS, but the *which branch did hires choose* data — the part that would have let us iterate on the calibration — wasn't visible to the design team until I built a separate report. Next time the dashboard ships with v1.
+
+</LessonsBlock>
