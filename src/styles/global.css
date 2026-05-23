@@ -1,0 +1,148 @@
+/* ============================================
+   Casey Shiray Portfolio — Global Styles
+   Palette: one brand, two surfaces (light + dark)
+   ============================================ */
+
+/* --- Font preconnect handled in <head> via Base.astro --- */
+
+/* --- Reset + base --- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+img, picture, svg, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; background: none; border: none; padding: 0; color: inherit; cursor: pointer; }
+html { scroll-behavior: smooth; }
+
+/* --- Font stack variables --- */
+:root {
+  --font-display: 'League Spartan', system-ui, sans-serif;
+  --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, monospace;
+  --font-serif:   'IBM Plex Serif', Georgia, serif;
+  --font-hand:    'Caveat', cursive;
+}
+
+/* --- Brand accent colors — surface-independent --- */
+:root {
+  --vermillion:      #FF5E3A;
+  --lime:            #88C23E;
+  --plum:            #4B2C5A;
+  --lavender:        #C8B4D0;
+  --vermillion-deep: #A8462B;
+  --lime-deep:       #4A7A1A;  /* used inside the cream work card on dark surface */
+}
+
+/* --- Light surface (default) --- */
+:root {
+  --bg:              #FEF6E4;
+  --surf:            #FEF6E4;
+  --text:            #1D1D1F;
+  --text-soft:       rgba(29, 29, 31, 0.6);
+  --card-dark-bg:    #1D1D1F;          /* the special ink work card on light surface */
+  --card-dark-text:  #FEF6E4;
+  --tertiary-loud:   var(--plum);
+  --tertiary-soft:   var(--lavender);
+  --divider:         #1D1D1F;
+}
+
+/* --- Dark surface --- */
+[data-theme="dark"] {
+  --bg:              #1C1820;
+  --surf:            #261F30;
+  --text:            #FAF3E0;
+  --text-soft:       rgba(250, 243, 224, 0.55);
+  --card-dark-bg:    #FEF6E4;          /* INVERTED: cream "letter on the table" */
+  --card-dark-text:  #1D1D1F;
+  --tertiary-loud:   var(--lavender);  /* lavender promoted */
+  --tertiary-soft:   var(--plum);
+  --divider:         rgba(250, 243, 224, 0.18);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+/* --- Base typography --- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+h1 { font-size: clamp(48px, 7vw, 88px); font-weight: 900; line-height: 0.9; }
+h2 { font-size: clamp(36px, 4.5vw, 56px); }
+h3 { font-size: clamp(20px, 2.2vw, 28px); }
+
+p { font-family: var(--font-body); }
+
+em { font-family: var(--font-serif); font-style: italic; }
+
+/* --- Layout primitives --- */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 56px;
+}
+@media (max-width: 640px) {
+  .container { padding: 0 24px; }
+}
+
+.section {
+  padding: 96px 0;
+  border-top: 1.5px solid var(--divider);
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vermillion);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--vermillion-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+[data-theme="dark"] .eyebrow { color: var(--vermillion); }
+
+.eyebrow::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--vermillion);
+}
+
+/* --- Cards --- */
+.card {
+  background: var(--surf);
+  border: 1.5px solid var(--divider);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+/* --- Reduced motion baseline (overrides applied in motion.ts also) --- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+  }
+}
