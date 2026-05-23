@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import WorkCard from './WorkCard.astro';
+
+const all = await getCollection('case-studies');
+const featured = all
+  .sort((a, b) => a.data.order - b.data.order)
+  .filter((c) => c.data.featured)
+  .slice(0, 3);
+
+// If fewer than 3 are marked featured, fall back to first 3 by order
+const display = featured.length >= 3 ? featured : all.sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-hdr">
+      <span class="section-num">03</span>
+      <h2>Selected <span class="hl hl--vermillion tilt-l">work</span>.</h2>
+    </div>
+    <p class="section-lead">
+      A few projects that turned <strong>"we need training"</strong> into something the business — and the learner — actually wanted.
+    </p>
+    <div class="work-list">
+      {display.map((cs) => <WorkCard caseStudy={cs} />)}
+    </div>
+    <a class="see-all" href="/work">See all work →</a>
+  </div>
+</section>
+
+<style>
+  .work-list {
+    display: flex; flex-direction: column; gap: 28px;
+  }
+  .see-all {
+    display: inline-block;
+    margin-top: 36px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+    padding-bottom: 4px;
+    border-bottom: 1.5px solid var(--vermillion);
+  }
+</style>

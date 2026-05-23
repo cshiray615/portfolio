@@ -1,0 +1,132 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  caseStudy: CollectionEntry<'case-studies'>;
+}
+
+const { caseStudy } = Astro.props;
+const { data, id } = caseStudy;
+const href = `/work/${id}`;
+---
+
+<a class={`work-card work-card--${data.accent}`} href={href}>
+  <div class="work-meta">
+    <div class="work-tag">{data.tag}</div>
+    <div class="work-title">
+      {data.title.split(' ').slice(0, -1).join(' ')}{' '}
+      <span class={`hl hl--${data.accent} tilt-l`}>{data.title.split(' ').slice(-1)[0]}</span>
+    </div>
+    <div class="work-client">{data.client}</div>
+    <div class="work-stack">
+      {data.stack.map((s) => <span class="chip">{s}</span>)}
+    </div>
+  </div>
+  <div class="work-body">
+    <div class="row row--prob">
+      <span class="label label--prob">Problem</span>
+      <span class="txt" set:html={data.summary.problem} />
+    </div>
+    <div class="row row--soln">
+      <span class="label label--soln">Solution</span>
+      <span class="txt" set:html={data.summary.solution} />
+    </div>
+    <div class="row row--out">
+      <span class="label label--out">Outcome</span>
+      <span class="txt" set:html={data.summary.outcome} />
+    </div>
+    <span class="work-link">Read the case study →</span>
+  </div>
+</a>
+
+<style>
+  .work-card {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 36px;
+    background: var(--card-dark-bg);
+    color: var(--card-dark-text);
+    border-radius: 18px;
+    padding: 36px;
+    transition: transform 0.25s ease;
+  }
+  .work-card:hover { transform: translateY(-3px); }
+  @media (max-width: 1024px) {
+    .work-card { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
+  }
+
+  .work-meta { display: flex; flex-direction: column; gap: 12px; }
+  .work-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+  }
+  .work-card--lime .work-tag       { color: var(--lime); }
+  .work-card--plum .work-tag       { color: var(--tertiary-loud); }
+
+  .work-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(28px, 3.4vw, 42px);
+    line-height: 1;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    color: var(--card-dark-text);
+  }
+  .work-client {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: color-mix(in oklab, var(--card-dark-text) 60%, transparent);
+    letter-spacing: 0.06em;
+  }
+  .work-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    border: 1px solid color-mix(in oklab, var(--card-dark-text) 30%, transparent);
+    color: color-mix(in oklab, var(--card-dark-text) 70%, transparent);
+  }
+
+  .work-body { display: flex; flex-direction: column; gap: 16px; }
+  .row { display: flex; gap: 14px; align-items: flex-start; }
+  .label {
+    flex: 0 0 80px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+  .label--prob { color: var(--vermillion); }
+  .label--soln { color: var(--lime); }
+  .label--out  { color: var(--tertiary-loud); }
+  .txt {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--card-dark-text);
+    flex: 1;
+  }
+  .row--prob .txt { color: color-mix(in oklab, var(--card-dark-text) 70%, transparent); }
+  .row--out :global(b) { color: var(--tertiary-loud); font-weight: 700; }
+  .work-link {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+  }
+  .work-card--lime .work-link { color: var(--lime); }
+  .work-card--plum .work-link { color: var(--tertiary-loud); }
+</style>
