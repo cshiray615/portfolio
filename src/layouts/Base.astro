@@ -56,5 +56,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <Nav />
     <slot />
     <Footer />
+
+    <script>
+      import { initMotion } from '~/lib/motion';
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMotion);
+      } else {
+        initMotion();
+      }
+    </script>
   </body>
 </html>
