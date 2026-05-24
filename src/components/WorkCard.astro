@@ -17,7 +17,6 @@ const href = `/work/${id}`;
       {data.title.split(' ').slice(0, -1).join(' ')}{' '}
       <span class={`hl hl--${data.accent} tilt-l`}>{data.title.split(' ').slice(-1)[0]}</span>
     </h3>
-    <div class="work-client">{data.client}</div>
     <div class="work-stack">
       {data.stack.map((s) => <span class="chip">{s}</span>)}
     </div>
@@ -26,10 +25,6 @@ const href = `/work/${id}`;
     <div class="row row--prob">
       <span class="label label--prob">Problem</span>
       <span class="txt" set:html={data.summary.problem} />
-    </div>
-    <div class="row row--soln">
-      <span class="label label--soln">Solution</span>
-      <span class="txt" set:html={data.summary.solution} />
     </div>
     <div class="row row--out">
       <span class="label label--out">Outcome</span>
@@ -59,7 +54,7 @@ const href = `/work/${id}`;
   .work-meta { display: flex; flex-direction: column; gap: 12px; }
   .work-tag {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -77,16 +72,10 @@ const href = `/work/${id}`;
     text-transform: uppercase;
     color: var(--card-dark-text);
   }
-  .work-client {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: color-mix(in oklab, var(--card-dark-text) 60%, transparent);
-    letter-spacing: 0.06em;
-  }
   .work-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
   .chip {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -101,14 +90,13 @@ const href = `/work/${id}`;
   .label {
     flex: 0 0 80px;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     padding-top: 2px;
   }
   .label--prob { color: var(--vermillion); }
-  .label--soln { color: var(--lime); }
   .label--out  { color: var(--tertiary-soft); }
   .txt {
     font-family: var(--font-body);
@@ -120,9 +108,10 @@ const href = `/work/${id}`;
   .row--prob .txt { color: color-mix(in oklab, var(--card-dark-text) 70%, transparent); }
   .row--out :global(b) { color: var(--tertiary-soft); font-weight: 700; }
   .work-link {
-    margin-top: 4px;
+    margin-top: auto;
+    padding-top: 16px;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -130,13 +119,5 @@ const href = `/work/${id}`;
   }
   .work-card--lime .work-link { color: var(--lime); }
   .work-card--plum .work-link { color: var(--tertiary-soft); }
-  /* On the special ink-card surface (light: ink card / dark: cream card), the plum-block
-     highlight needs both the soft tertiary AND a swapped text color so contrast holds:
-       - Light mode: lavender bg + ink text (ink on lavender = 12:1)
-       - Dark mode:  plum bg + cream text (cream on plum = 8.9:1)
-     var(--text) tracks the page text color, which always inverts vs. --tertiary-soft. */
-  .work-card--plum .work-title :global(.hl--plum) {
-    background: var(--tertiary-soft);
-    color: var(--text);
-  }
+  /* .hl--plum keeps its global plum+cream coloring on the ink/cream card surface — no override needed. */
 </style>

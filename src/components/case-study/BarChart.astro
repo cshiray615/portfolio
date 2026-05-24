@@ -1,0 +1,137 @@
+---
+export interface Bar {
+  label: string;
+  value: number;
+  suffix?: string;                                   // "%", "pt", "min"
+  accent?: 'vermillion' | 'lime' | 'plum' | 'muted'; // per-bar override
+}
+export interface Props {
+  data: Bar[];
+  accent?: 'vermillion' | 'lime' | 'plum';
+  max?: number;        // y-axis max; default = max(value) * 1.1
+  title?: string;
+  caption?: string;
+}
+const {
+  data,
+  accent = 'vermillion',
+  max,
+  title,
+  caption,
+} = Astro.props;
+
+const computedMax = max ?? (Math.max(...data.map((d) => d.value)) * 1.1 || 100);
+---
+
+<figure class={`cs-bc cs-bc--${accent}`}>
+  {title && <div class="cs-bc-title">{title}</div>}
+  <ul class="cs-bc-list">
+    {data.map((d) => {
+      const pct = Math.max(0, Math.min(100, (d.value / computedMax) * 100));
+      const fillAccent = d.accent ?? accent;
+      return (
+        <li class="cs-bc-row">
+          <span class="cs-bc-label">{d.label}</span>
+          <span class="cs-bc-track">
+            <span class={`cs-bc-fill cs-bc-fill--${fillAccent}`} style={`width:${pct}%`}></span>
+          </span>
+          <span class="cs-bc-value">
+            {d.value}
+            {d.suffix && <span class="cs-bc-suffix">{d.suffix}</span>}
+          </span>
+        </li>
+      );
+    })}
+  </ul>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .cs-bc {
+    margin: 32px 0;
+    max-width: 720px;
+  }
+
+  .cs-bc-title {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 14px;
+  }
+
+  .cs-bc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .cs-bc-row {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    align-items: center;
+    gap: 16px;
+  }
+  @media (max-width: 540px) {
+    .cs-bc-row { grid-template-columns: 80px 1fr auto; gap: 10px; }
+  }
+
+  .cs-bc-label {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-align: right;
+  }
+
+  .cs-bc-track {
+    position: relative;
+    height: 22px;
+    background: color-mix(in oklab, var(--text) 8%, transparent);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .cs-bc-fill {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .cs-bc-fill--vermillion { background: var(--vermillion); }
+  .cs-bc-fill--lime       { background: var(--lime); }
+  .cs-bc-fill--plum       { background: var(--tertiary-loud); }
+  .cs-bc-fill--muted      { background: color-mix(in oklab, var(--text) 35%, transparent); }
+
+  .cs-bc-value {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    min-width: 50px;
+    text-align: right;
+  }
+  .cs-bc-suffix {
+    font-size: 14px;
+    font-weight: 800;
+    margin-left: 1px;
+    color: var(--text-soft);
+  }
+
+  .cs-bc figcaption {
+    margin-top: 14px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-soft);
+  }
+</style>

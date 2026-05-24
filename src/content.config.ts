@@ -20,6 +20,7 @@ const caseStudies = defineCollection({
     order: z.number(),
     featured: z.boolean().default(false),
     cover: z.string().optional(),
+    coverBg: z.string().optional(),
     next: z.string().optional(),
   }),
 });

@@ -1,0 +1,243 @@
+---
+export interface Annotation {
+  x: number;        // 0-100 percentage of image width
+  y: number;        // 0-100 percentage of image height
+  label: string;
+  desc?: string;
+}
+export interface Props {
+  src: string;
+  alt?: string;
+  bg?: string;
+  annotations: Annotation[];
+  accent?: 'vermillion' | 'lime' | 'plum';
+  caption?: string;
+}
+const {
+  src,
+  alt,
+  bg,
+  annotations,
+  accent = 'vermillion',
+  caption,
+} = Astro.props;
+---
+
+<figure class={`cs-annot cs-annot--${accent}`} data-annot-root>
+  <div class="cs-annot-frame" style={bg ? `background:${bg}` : undefined}>
+    <button
+      type="button"
+      class="cs-annot-image"
+      data-lightbox-trigger
+      data-src={src}
+      data-caption={caption ?? alt ?? ''}
+      data-alt={alt ?? ''}
+      aria-label="Open screenshot full size"
+    >
+      <img src={src} alt={alt ?? ''} loading="lazy" />
+    </button>
+    {annotations.map((a, i) => (
+      <button
+        type="button"
+        class="cs-annot-marker"
+        data-annot-idx={i}
+        style={`left:${a.x}%; top:${a.y}%`}
+        aria-label={`Annotation ${i + 1}: ${a.label}`}
+      >
+        {i + 1}
+      </button>
+    ))}
+  </div>
+
+  <ol class="cs-annot-legend">
+    {annotations.map((a, i) => (
+      <li>
+        <button type="button" class="cs-annot-item" data-annot-item={i}>
+          <span class="cs-annot-num">{i + 1}</span>
+          <span class="cs-annot-text">
+            <span class="cs-annot-label">{a.label}</span>
+            {a.desc && <span class="cs-annot-desc">{a.desc}</span>}
+          </span>
+        </button>
+      </li>
+    ))}
+  </ol>
+
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .cs-annot {
+    margin: 40px 0;
+    --cs-annot-accent: var(--vermillion);
+  }
+  .cs-annot--lime { --cs-annot-accent: var(--lime); }
+  .cs-annot--plum { --cs-annot-accent: var(--tertiary-loud); }
+
+  .cs-annot-frame {
+    position: relative;
+    background: var(--surf);
+    border: 1.5px solid var(--divider);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .cs-annot-image {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+  }
+  .cs-annot-image img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: contain;
+  }
+
+  .cs-annot-marker {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    border: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--cs-annot-accent);
+    color: var(--bg);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 3px var(--bg), 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    z-index: 2;
+  }
+  .cs-annot--lime .cs-annot-marker { color: var(--text); }
+  .cs-annot-marker:hover,
+  .cs-annot-marker:focus-visible {
+    transform: translate(-50%, -50%) scale(1.18);
+  }
+  .cs-annot-marker.is-active {
+    transform: translate(-50%, -50%) scale(1.25);
+    box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--cs-annot-accent), 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .cs-annot-legend {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px 24px;
+  }
+  .cs-annot-legend li { margin: 0; }
+
+  .cs-annot-item {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .cs-annot-item:hover {
+    background: color-mix(in oklab, var(--cs-annot-accent) 6%, var(--bg));
+  }
+  .cs-annot-item.is-active {
+    background: color-mix(in oklab, var(--cs-annot-accent) 12%, var(--bg));
+  }
+
+  .cs-annot-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--cs-annot-accent);
+    color: var(--bg);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .cs-annot--lime .cs-annot-num { color: var(--text); }
+
+  .cs-annot-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .cs-annot-label {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .cs-annot-desc {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-soft);
+  }
+
+  .cs-annot figcaption {
+    margin-top: 16px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-soft);
+    max-width: 720px;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-annot-root]').forEach((root) => {
+    const markers = root.querySelectorAll<HTMLButtonElement>('[data-annot-idx]');
+    const items   = root.querySelectorAll<HTMLButtonElement>('[data-annot-item]');
+
+    const setActive = (idx: number | null) => {
+      markers.forEach((m) => m.classList.toggle('is-active', Number(m.dataset.annotIdx) === idx));
+      items.forEach((it) => it.classList.toggle('is-active', Number(it.dataset.annotItem) === idx));
+    };
+
+    const handleClick = (idx: number) => {
+      // Toggle: clicking the already-active annotation clears it
+      const currentlyActive = root.querySelector('.cs-annot-marker.is-active');
+      const wasIdx = currentlyActive ? Number((currentlyActive as HTMLElement).dataset.annotIdx) : null;
+      setActive(wasIdx === idx ? null : idx);
+    };
+
+    markers.forEach((m) => {
+      m.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleClick(Number(m.dataset.annotIdx));
+      });
+    });
+    items.forEach((it) => {
+      it.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleClick(Number(it.dataset.annotItem));
+      });
+    });
+  });
+</script>

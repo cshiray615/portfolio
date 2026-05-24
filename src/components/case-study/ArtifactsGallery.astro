@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  images: Array<{ src: string; caption?: string; alt?: string }>;
+  images: Array<{ src: string; caption?: string; alt?: string; bg?: string }>;
 }
 const { images } = Astro.props;
 ---
@@ -10,7 +10,18 @@ const { images } = Astro.props;
     <div class="gallery-grid">
       {images.map((img) => (
         <figure class="gallery-item">
-          <img src={img.src} alt={img.alt ?? img.caption ?? ''} loading="lazy" />
+          <button
+            type="button"
+            class="gallery-trigger"
+            data-lightbox-trigger
+            data-src={img.src}
+            data-caption={img.caption ?? ''}
+            data-alt={img.alt ?? img.caption ?? ''}
+            style={img.bg ? `background:${img.bg}` : undefined}
+            aria-label={`Open ${img.alt ?? img.caption ?? 'image'} full size`}
+          >
+            <img src={img.src} alt={img.alt ?? img.caption ?? ''} loading="lazy" />
+          </button>
           {img.caption && <figcaption>{img.caption}</figcaption>}
         </figure>
       ))}
@@ -25,17 +36,32 @@ const { images } = Astro.props;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 16px;
   }
-  .gallery-item { display: flex; flex-direction: column; gap: 8px; }
-  .gallery-item img {
+  .gallery-item { display: flex; flex-direction: column; gap: 8px; margin: 0; }
+
+  .gallery-trigger {
+    display: block;
     width: 100%;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    border-radius: 12px;
+    padding: 0;
+    background: var(--surf);
     border: 1.5px solid var(--divider);
+    border-radius: 12px;
+    cursor: zoom-in;
+    overflow: hidden;
+    transition: transform 0.2s ease;
   }
+  .gallery-trigger:hover,
+  .gallery-trigger:focus-visible { transform: translateY(-3px); }
+
+  .gallery-trigger img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+  }
+
   figcaption {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.1em;
     color: var(--text-soft);
   }

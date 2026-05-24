@@ -1,9 +1,7 @@
 ---
-import DarkToggle from './DarkToggle.astro';
-
 const links = [
-  { href: '/work', label: 'Work' },
-  { href: '/about', label: 'About' },
+  { href: '/work', label: 'Work Samples' },
+  { href: '/about', label: 'Resume' },
   { href: '/hobbies', label: 'Hobbies' },
 ];
 
@@ -15,11 +13,11 @@ function isActive(href: string): boolean {
 }
 ---
 
-<nav class="nav">
+<nav class="nav" data-nav-root>
   <div class="container nav-inner">
     <a class="nav-brand" href="/">
-      <span class="nav-dot" aria-hidden="true"></span>
-      <span class="nav-name">Casey Shiray</span>
+      <span class="name-badge">Casey Shiray</span>
+      <span class="eyebrow nav-eyebrow">Senior Tech Instructional Designer</span>
     </a>
 
     <div class="nav-links">
@@ -30,7 +28,28 @@ function isActive(href: string): boolean {
 
     <div class="nav-right">
       <a class="nav-cta" href="/about#contact">Get in touch</a>
-      <DarkToggle />
+    </div>
+
+    <button
+      type="button"
+      class="nav-burger"
+      data-nav-toggle
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="nav-drawer"
+    >
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+    </button>
+  </div>
+
+  <div id="nav-drawer" class="nav-drawer" data-nav-drawer aria-hidden="true">
+    <div class="container nav-drawer-inner">
+      {links.map((l) => (
+        <a class={`nav-drawer-link${isActive(l.href) ? ' nav-drawer-link--active' : ''}`} href={l.href} data-nav-link>{l.label}</a>
+      ))}
+      <a class="nav-drawer-cta" href="/about#contact" data-nav-link>Get in touch</a>
     </div>
   </div>
 </nav>
@@ -55,26 +74,18 @@ function isActive(href: string): boolean {
   .nav-brand {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 16px;
-    letter-spacing: -0.01em;
+    gap: 14px;
     color: var(--text);
+    min-width: 0;
   }
-  .nav-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--vermillion);
-  }
-  .nav-links {
-    display: flex;
-    gap: 4px;
-  }
+  /* Hide the eyebrow on narrow widths so the brand row + burger fit comfortably */
+  @media (max-width: 640px) { .nav-eyebrow { display: none; } }
+
+  .nav-links { display: flex; gap: 4px; }
   @media (max-width: 640px) { .nav-links { display: none; } }
   .nav-link {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -87,14 +98,10 @@ function isActive(href: string): boolean {
   [data-theme="dark"] .nav-link:hover { background: rgba(255,255,255,0.06); }
   .nav-link--active { color: var(--text); }
 
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
   .nav-cta {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -104,4 +111,109 @@ function isActive(href: string): boolean {
     color: var(--bg);
   }
   @media (max-width: 640px) { .nav-cta { display: none; } }
+
+  /* ---------------- Hamburger (mobile only) ---------------- */
+  .nav-burger {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--divider);
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .nav-burger-line {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .nav-burger[aria-expanded="true"] .nav-burger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger[aria-expanded="true"] .nav-burger-line:nth-child(2) { opacity: 0; }
+  .nav-burger[aria-expanded="true"] .nav-burger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  @media (max-width: 640px) { .nav-burger { display: inline-flex; } }
+
+  /* ---------------- Drawer ---------------- */
+  .nav-drawer {
+    display: none;
+    border-top: 1px solid var(--divider);
+    background: var(--bg);
+  }
+  .nav-drawer[aria-hidden="false"] { display: block; }
+  .nav-drawer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 24px 18px;
+  }
+  .nav-drawer-link {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    padding: 12px 6px;
+    border-radius: 6px;
+  }
+  .nav-drawer-link:hover { color: var(--text); background: rgba(0,0,0,0.05); }
+  [data-theme="dark"] .nav-drawer-link:hover { background: rgba(255,255,255,0.06); }
+  .nav-drawer-link--active { color: var(--vermillion); }
+  .nav-drawer-cta {
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    border-radius: 6px;
+    background: var(--vermillion);
+    color: var(--bg);
+    text-align: center;
+  }
 </style>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav-root]');
+  const toggle = nav?.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const drawer = nav?.querySelector<HTMLElement>('[data-nav-drawer]');
+
+  function setOpen(open: boolean) {
+    if (!toggle || !drawer) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    drawer.setAttribute('aria-hidden', String(!open));
+  }
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    setOpen(!isOpen);
+  });
+
+  // Close on link click
+  nav?.querySelectorAll<HTMLAnchorElement>('[data-nav-link]').forEach((a) => {
+    a.addEventListener('click', () => setOpen(false));
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+
+  // Close if viewport widens past mobile (drawer no longer relevant)
+  const mq = window.matchMedia('(min-width: 641px)');
+  mq.addEventListener('change', (e) => {
+    if (e.matches) setOpen(false);
+  });
+</script>

@@ -1,0 +1,66 @@
+---
+import { Code } from 'astro:components';
+import type { BuiltinLanguage } from 'shiki';
+
+export interface Props {
+  code: string;
+  lang?: BuiltinLanguage;   // e.g. 'yaml', 'json', 'css', 'ts', 'tsx', 'bash'
+  label?: string;           // e.g. "Course structure"
+  caption?: string;         // one-line caption below the block
+}
+
+const { code, lang = 'yaml', label, caption } = Astro.props;
+---
+
+<figure class="cs-code">
+  {label && <div class="cs-code-label">{label}</div>}
+  <div class="cs-code-frame">
+    <Code code={code} lang={lang} theme="github-dark" />
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .cs-code {
+    margin: 32px 0;
+    max-width: 720px;
+  }
+
+  .cs-code-label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+    margin-bottom: 8px;
+  }
+
+  .cs-code-frame {
+    border-radius: 10px;
+    border: 1.5px solid var(--divider);
+    overflow: hidden;
+  }
+  .cs-code-frame :global(pre) {
+    margin: 0;
+    padding: 24px 28px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.65;
+    overflow-x: auto;
+  }
+  .cs-code-frame :global(code) {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .cs-code figcaption {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--text-soft);
+  }
+</style>

@@ -1,0 +1,202 @@
+---
+export interface Step {
+  num: string;       // e.g. "01"
+  label: string;     // e.g. "Spot"
+  desc?: string;     // one-line description
+}
+export interface Props {
+  steps: Step[];
+  accent?: 'vermillion' | 'lime' | 'plum';
+  orientation?: 'horizontal' | 'vertical';
+  caption?: string;
+}
+const {
+  steps,
+  accent = 'vermillion',
+  orientation = 'horizontal',
+  caption,
+} = Astro.props;
+---
+
+<figure class={`cs-pd cs-pd--${accent} cs-pd--${orientation}`}>
+  <ol class="cs-pd-track" style={`--cs-pd-cols:${steps.length}`}>
+    {steps.map((s, i) => (
+      <li class={`cs-pd-step${i === steps.length - 1 ? ' cs-pd-step--last' : ''}`}>
+        <div class="cs-pd-node">
+          <span class="cs-pd-num">{s.num}</span>
+        </div>
+        <div class="cs-pd-label">{s.label}</div>
+        {s.desc && <div class="cs-pd-desc">{s.desc}</div>}
+      </li>
+    ))}
+  </ol>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .cs-pd {
+    margin: 40px 0;
+    --cs-pd-accent: var(--vermillion);
+  }
+  .cs-pd--lime { --cs-pd-accent: var(--lime); }
+  .cs-pd--plum { --cs-pd-accent: var(--tertiary-loud); }
+
+  /* ---------------- Shared node styles ---------------- */
+  .cs-pd-track { margin: 0; padding: 0; list-style: none; }
+
+  .cs-pd-node {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--cs-pd-accent);
+    color: var(--bg);
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+  .cs-pd--lime .cs-pd-node { color: var(--text); }
+
+  .cs-pd-num {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  .cs-pd-label {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .cs-pd-desc {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-soft);
+  }
+
+  .cs-pd figcaption {
+    margin-top: 20px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-soft);
+    text-align: center;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ---------------- HORIZONTAL ---------------- */
+  .cs-pd--horizontal .cs-pd-track {
+    display: grid;
+    grid-template-columns: repeat(var(--cs-pd-cols, 4), 1fr);
+    gap: 16px;
+  }
+  .cs-pd--horizontal .cs-pd-step {
+    position: relative;
+    text-align: center;
+    padding-top: 4px;
+  }
+  .cs-pd--horizontal .cs-pd-step:not(.cs-pd-step--last)::after {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: calc(50% + 34px);
+    right: calc(-50% + 34px);
+    height: 3px;
+    background: var(--cs-pd-accent);
+    opacity: 0.55;
+  }
+  .cs-pd--horizontal .cs-pd-label {
+    margin-top: 14px;
+  }
+  .cs-pd--horizontal .cs-pd-desc {
+    margin-top: 6px;
+    max-width: 24ch;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  /* Mobile fallback for horizontal: stack vertically without connectors */
+  @media (max-width: 720px) {
+    .cs-pd--horizontal .cs-pd-track {
+      grid-template-columns: auto 1fr;
+      gap: 14px 18px;
+    }
+    .cs-pd--horizontal .cs-pd-step { display: contents; }
+    .cs-pd--horizontal .cs-pd-step .cs-pd-node {
+      grid-column: 1;
+      grid-row: span 2;
+      align-self: start;
+      margin-top: 2px;
+    }
+    .cs-pd--horizontal .cs-pd-label {
+      grid-column: 2;
+      text-align: left;
+      margin-top: 8px;
+      align-self: end;
+    }
+    .cs-pd--horizontal .cs-pd-desc {
+      grid-column: 2;
+      text-align: left;
+      margin: 0;
+      max-width: none;
+    }
+    .cs-pd--horizontal .cs-pd-step::after { display: none; }
+  }
+
+  /* ---------------- VERTICAL ---------------- */
+  .cs-pd--vertical .cs-pd-track {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 560px;
+  }
+  .cs-pd--vertical .cs-pd-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 18px;
+    row-gap: 4px;
+    align-items: start;
+  }
+  .cs-pd--vertical .cs-pd-node {
+    grid-row: 1 / span 2;
+    grid-column: 1;
+    align-self: start;
+  }
+  .cs-pd--vertical .cs-pd-label {
+    grid-row: 1;
+    grid-column: 2;
+    align-self: center;
+    text-align: left;
+  }
+  .cs-pd--vertical .cs-pd-desc {
+    grid-row: 2;
+    grid-column: 2;
+    text-align: left;
+  }
+  /* Vertical connector: from below node to into the gap above next step */
+  .cs-pd--vertical .cs-pd-step:not(.cs-pd-step--last)::after {
+    content: '';
+    position: absolute;
+    top: 60px;        /* just below the 56px node */
+    bottom: -32px;    /* extends into the 28px gap */
+    left: 28px;       /* center of node */
+    width: 3px;
+    transform: translateX(-50%);
+    background: var(--cs-pd-accent);
+    opacity: 0.55;
+  }
+</style>

@@ -33,17 +33,18 @@ const cards = [
     max-width: 780px;
     font-size: 18px;
     line-height: 1.7;
-    color: var(--text-soft);
+    color: var(--text);
     margin-bottom: 56px;
   }
-  .section-lead strong { color: var(--text); font-weight: 700; }
+  .section-lead strong { font-weight: 700; }
 
   .philo-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
-  @media (max-width: 1024px) { .philo-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 1024px) { .philo-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .philo-grid { grid-template-columns: 1fr; } }
 
   .philo-card {
     background: var(--surf);
@@ -57,7 +58,7 @@ const cards = [
 
   .philo-tag {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -72,7 +73,8 @@ const cards = [
     margin-bottom: 12px;
   }
   .philo-body {
-    font-size: 14px;
+    font-family: var(--font-mono);
+    font-size: 15px;
     line-height: 1.65;
     color: var(--text-soft);
   }

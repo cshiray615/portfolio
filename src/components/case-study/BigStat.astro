@@ -1,0 +1,80 @@
+---
+export interface Props {
+  value: string;                 // e.g. "94%", "+11pt", "~60%"
+  label: string;                 // e.g. "Completion rate"
+  delta?: {
+    direction: 'up' | 'down' | 'flat';
+    amount: string;              // e.g. "+56pt"
+    label?: string;              // e.g. "vs 38% baseline"
+  };
+  accent?: 'vermillion' | 'lime' | 'plum';
+  size?: 'sm' | 'md' | 'lg';     // default 'md'
+}
+const {
+  value,
+  label,
+  delta,
+  accent = 'vermillion',
+  size = 'md',
+} = Astro.props;
+const arrow = delta?.direction === 'up' ? '↑' : delta?.direction === 'down' ? '↓' : '→';
+---
+
+<div class={`cs-stat cs-stat--${accent} cs-stat--${size}`}>
+  <div class="cs-stat-value">{value}</div>
+  <div class="cs-stat-label">{label}</div>
+  {delta && (
+    <div class={`cs-stat-delta cs-stat-delta--${delta.direction}`}>
+      <span class="cs-stat-arrow" aria-hidden="true">{arrow}</span>
+      <span class="cs-stat-amount">{delta.amount}</span>
+      {delta.label && <span class="cs-stat-deltaLbl">· {delta.label}</span>}
+    </div>
+  )}
+</div>
+
+<style>
+  .cs-stat {
+    --cs-stat-accent: var(--vermillion);
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 0;
+  }
+  .cs-stat--lime { --cs-stat-accent: var(--lime); }
+  .cs-stat--plum { --cs-stat-accent: var(--tertiary-loud); }
+
+  .cs-stat-value {
+    font-family: var(--font-display);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--cs-stat-accent);
+  }
+  .cs-stat--sm .cs-stat-value { font-size: clamp(28px, 3vw, 36px); }
+  .cs-stat--md .cs-stat-value { font-size: clamp(36px, 5vw, 56px); }
+  .cs-stat--lg .cs-stat-value { font-size: clamp(56px, 8vw, 96px); }
+
+  .cs-stat-label {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+
+  .cs-stat-delta {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .cs-stat-delta--up   { color: var(--lime); }
+  .cs-stat-delta--down { color: var(--vermillion); }
+  .cs-stat-delta--flat { color: var(--text-soft); }
+  .cs-stat-arrow  { font-size: 14px; font-weight: 800; }
+  .cs-stat-deltaLbl { color: var(--text-soft); font-weight: 500; letter-spacing: 0.04em; }
+</style>

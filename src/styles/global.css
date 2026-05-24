@@ -107,16 +107,16 @@ em { font-family: var(--font-serif); font-style: italic; }
 
 .section-num {
   font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0em;
   text-transform: uppercase;
   color: var(--vermillion);
 }
 
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -127,12 +127,23 @@ em { font-family: var(--font-serif); font-style: italic; }
 }
 [data-theme="dark"] .eyebrow { color: var(--vermillion); }
 
-.eyebrow::before {
-  content: '';
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--vermillion);
+/* --- Sparkline callout: small standalone trend with a caption below --- */
+.cs-spark-callout {
+  margin: 24px 0 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.cs-spark-callout figcaption {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--text-soft);
+}
+.cs-spark-callout figcaption strong {
+  color: var(--text);
+  font-weight: 700;
 }
 
 /* --- Cards --- */
@@ -166,7 +177,7 @@ em { font-family: var(--font-serif); font-style: italic; }
   background: var(--text);
   color: var(--bg);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;

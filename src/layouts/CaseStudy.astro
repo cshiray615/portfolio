@@ -1,9 +1,10 @@
 ---
 import Base from '~/layouts/Base.astro';
 import CaseStudyHero from '~/components/case-study/CaseStudyHero.astro';
-import NextCaseStudy from '~/components/case-study/NextCaseStudy.astro';
+import CaseNavigation from '~/components/case-study/CaseNavigation.astro';
+import Lightbox from '~/components/case-study/Lightbox.astro';
 import type { CollectionEntry } from 'astro:content';
-import { getEntry } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
 export interface Props {
   caseStudy: CollectionEntry<'case-studies'>;
@@ -12,11 +13,17 @@ export interface Props {
 const { caseStudy } = Astro.props;
 const { data } = caseStudy;
 
+// "Next" is the explicit pointer set in frontmatter.
 const nextEntry = data.next ? await getEntry('case-studies', data.next) : null;
+
+// "Previous" is whichever other case study points TO this one via its `next` field.
+const allCases = await getCollection('case-studies');
+const prevEntry = allCases.find((c) => c.data.next === caseStudy.id) ?? null;
 ---
 
 <Base title={`${data.title} — Casey Shiray`} description={data.tagline ?? data.summary.problem}>
   <CaseStudyHero caseStudy={caseStudy} />
   <slot />
-  {nextEntry && <NextCaseStudy next={nextEntry} />}
+  <CaseNavigation prev={prevEntry} next={nextEntry} />
+  <Lightbox />
 </Base>

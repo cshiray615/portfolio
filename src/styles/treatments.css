@@ -26,17 +26,17 @@
      Negative top extends the block slightly ABOVE the inline-block's content box —
      guarantees caps are fully covered regardless of the font's actual ascent ratio.
      Positive bottom crops the descender area below baseline. */
-  inset: 0.04em 0 0.20em 0;
+  inset: -0.10em 0 0.08em 0;
   z-index: -1;
 }
 /* Per-variant colored block on the ::before, text color on the .hl text itself */
 .hl--vermillion::before { background: var(--vermillion); }
 .hl--lime::before       { background: var(--lime); }
-.hl--plum::before       { background: var(--tertiary-loud); }
+.hl--plum::before       { background: var(--plum); }   /* always plum, no theme swap */
 
 .hl--vermillion { color: var(--text); }   /* ink in light (5.6:1); dark override below */
 .hl--lime       { color: var(--text); }   /* light: ink on lime (7.9:1); dark override below */
-.hl--plum       { color: var(--bg);   }   /* light: cream on plum (8.9:1); dark: ink on lavender (8.5:1) */
+.hl--plum       { color: #FEF6E4;     }   /* cream on plum in both modes (8.9:1) */
 
 /* Rotation modifiers — apply on top of .hl */
 .tilt-l { transform: rotate(-1.5deg); }
@@ -65,6 +65,6 @@
   transform: rotate(-2deg);
 }
 .name-badge::after {
-  content: ' ✺';
+  content: '\00A0✺';                /* NBSP so the ✺ stays glued to the last word — wraps as Casey / Shiray ✺ */
   color: var(--lime);               /* signature accent */
 }

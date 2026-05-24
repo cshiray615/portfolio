@@ -1,0 +1,81 @@
+---
+export interface Props {
+  values: number[];                                  // numeric series
+  accent?: 'vermillion' | 'lime' | 'plum';
+  width?: number;                                    // px, default 120
+  height?: number;                                   // px, default 28
+  area?: boolean;                                    // fill area below the line (default true)
+  showDot?: boolean;                                 // dot at last value (default true)
+  ariaLabel?: string;
+}
+const {
+  values,
+  accent = 'vermillion',
+  width = 120,
+  height = 28,
+  area = true,
+  showDot = true,
+  ariaLabel,
+} = Astro.props;
+
+const min = Math.min(...values);
+const max = Math.max(...values);
+const range = max - min || 1;
+const stepX = values.length > 1 ? width / (values.length - 1) : 0;
+const pad = 2;                                       // inset so stroke isn't clipped
+
+const points = values.map((v, i) => {
+  const x = i * stepX;
+  const y = height - pad - ((v - min) / range) * (height - 2 * pad);
+  return [x, y] as const;
+});
+
+const polylinePts = points.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(' ');
+const areaPath = points.length
+  ? `M ${points[0][0].toFixed(2)} ${height} L ${polylinePts.split(' ').join(' L ')} L ${points[points.length - 1][0].toFixed(2)} ${height} Z`
+  : '';
+const lastPt = points[points.length - 1];
+
+const label = ariaLabel ?? `Trend from ${values[0]} to ${values[values.length - 1]}`;
+---
+
+<svg
+  class={`cs-spark cs-spark--${accent}`}
+  viewBox={`0 0 ${width} ${height}`}
+  width={width}
+  height={height}
+  preserveAspectRatio="xMidYMid meet"
+  role="img"
+  aria-label={label}
+>
+  {area && <path class="cs-spark-area" d={areaPath} />}
+  <polyline class="cs-spark-line" points={polylinePts} />
+  {showDot && lastPt && (
+    <circle class="cs-spark-dot" cx={lastPt[0]} cy={lastPt[1]} r="2.6" />
+  )}
+</svg>
+
+<style>
+  .cs-spark {
+    display: inline-block;
+    vertical-align: middle;
+    --cs-spark-accent: var(--vermillion);
+  }
+  .cs-spark--lime { --cs-spark-accent: var(--lime); }
+  .cs-spark--plum { --cs-spark-accent: var(--tertiary-loud); }
+
+  .cs-spark-line {
+    fill: none;
+    stroke: var(--cs-spark-accent);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .cs-spark-area {
+    fill: var(--cs-spark-accent);
+    opacity: 0.18;
+  }
+  .cs-spark-dot {
+    fill: var(--cs-spark-accent);
+  }
+</style>

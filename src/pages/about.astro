@@ -7,17 +7,21 @@ import ContactBlock from '~/components/ContactBlock.astro';
 ---
 
 <Base
-  title="About — Casey Shiray"
+  title="Resume — Casey Shiray"
   description="How Casey works. The principles, the process, and the career behind the portfolio."
 >
   <header class="about-hero">
     <div class="container">
-      <div class="eyebrow">About</div>
+      <div class="eyebrow">Resume</div>
       <h1 class="about-h1">
         I make <s class="strike">training</s>
         <span class="solutions">solutions</span><br />
-        that <span class="hl hl--lime tilt-r">help people do their jobs</span>.
+        that <span class="hl hl--lime tilt-r">help people</span> do <span class="nobreak">their jobs.</span>
       </h1>
+
+      <p class="about-lede">
+        Senior Tech Instructional Designer, <strong>10 years</strong> in. Most of what I get asked for is a course; most of what's needed is something else — a job aid, a checklist, a process change, the right tool, or simply removing the nonsense rock from everyone's shoe. Below: how I think about that gap, and the projects where I had to prove it.
+      </p>
     </div>
   </header>
 
@@ -34,11 +38,37 @@ import ContactBlock from '~/components/ContactBlock.astro';
     line-height: 0.95;
     margin-top: 18px;
   }
+  .about-lede {
+    margin-top: 32px;
+    max-width: 640px;
+    font-family: var(--font-body);
+    font-size: clamp(17px, 1.6vw, 19px);
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .about-lede strong {
+    color: var(--vermillion);
+    font-weight: 700;
+  }
   .strike {
-    text-decoration: line-through;
-    text-decoration-color: var(--vermillion);
-    text-decoration-thickness: 5px;
+    position: relative;
+    display: inline-block;
     color: var(--text-soft);
+    text-decoration: none;
+  }
+  .strike::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 28px;
+    transform: translateY(-50%) rotate(-6deg);
+    transform-origin: center;
+    background: var(--vermillion);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 28' preserveAspectRatio='none'><path d='M3,18 Q50,2 97,19' stroke='black' stroke-width='4' fill='none' stroke-linecap='round' vector-effect='non-scaling-stroke'/></svg>") no-repeat center / 100% 100%;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 28' preserveAspectRatio='none'><path d='M3,18 Q50,2 97,19' stroke='black' stroke-width='4' fill='none' stroke-linecap='round' vector-effect='non-scaling-stroke'/></svg>") no-repeat center / 100% 100%;
+    pointer-events: none;
   }
   .solutions {
     font-family: var(--font-hand);

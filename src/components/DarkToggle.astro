@@ -1,6 +1,6 @@
 ---
-// Small sun/moon button. Renders the icon for the *current* theme,
-// flips on click. CSS uses [data-theme] to swap icons.
+// Floating sun/moon button pinned to the bottom-right of every page.
+// Renders the icon for the *current* theme; flips on click. CSS uses [data-theme] to swap icons.
 ---
 
 <button
@@ -16,30 +16,46 @@
 
 <style>
   .dark-toggle {
-    width: 36px;
-    height: 36px;
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 90;
+    width: 44px;
+    height: 44px;
     border-radius: 999px;
+    border: 1.5px solid var(--divider);
+    background: var(--surf);
+    color: var(--text);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--text);
-    transition: background 0.15s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;
   }
-  .dark-toggle:hover {
-    background: rgba(0, 0, 0, 0.06);
+  .dark-toggle:hover,
+  .dark-toggle:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
   }
-  [data-theme="dark"] .dark-toggle:hover {
-    background: rgba(255, 255, 255, 0.08);
+  [data-theme="dark"] .dark-toggle {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   }
-  .icon {
-    font-size: 16px;
-    line-height: 1;
+  [data-theme="dark"] .dark-toggle:hover,
+  [data-theme="dark"] .dark-toggle:focus-visible {
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
   }
+
+  .icon { font-size: 18px; line-height: 1; }
   /* Show sun in light mode (current theme = light, click would go to dark) */
   .icon--sun  { display: inline; }
   .icon--moon { display: none; }
   [data-theme="dark"] .icon--sun  { display: none; }
   [data-theme="dark"] .icon--moon { display: inline; }
+
+  @media (max-width: 640px) {
+    .dark-toggle { right: 18px; bottom: 18px; width: 42px; height: 42px; }
+  }
 </style>
 
 <script>
@@ -47,9 +63,6 @@
 
   const btn = document.getElementById('dark-toggle');
 
-  // Sync aria-pressed with the current theme on load (theme-init runs inline in <head>
-  // and may have already applied data-theme="dark"). This makes screen readers announce
-  // the correct state on first interaction.
   function syncPressed() {
     if (!btn) return;
     const isDark = document.documentElement.dataset.theme === 'dark';

@@ -16,7 +16,7 @@ const display = featured.length >= 3 ? featured : all.sort((a, b) => a.data.orde
   <div class="container">
     <div class="section-hdr">
       <span class="section-num">03</span>
-      <h2>Selected <span class="hl hl--vermillion tilt-l">work</span>.</h2>
+      <h2>Selected <span class="hl hl--vermillion tilt-l">work samples</span>.</h2>
     </div>
     <p class="section-lead">
       A few projects that turned <strong>"we need training"</strong> into something the business — and the learner — actually wanted.
@@ -24,7 +24,7 @@ const display = featured.length >= 3 ? featured : all.sort((a, b) => a.data.orde
     <div class="work-list">
       {display.map((cs) => <WorkCard caseStudy={cs} />)}
     </div>
-    <a class="see-all" href="/work">See all work →</a>
+    <a class="see-all" href="/work">See all work samples →</a>
   </div>
 </section>
 
@@ -36,7 +36,7 @@ const display = featured.length >= 3 ? featured : all.sort((a, b) => a.data.orde
     display: inline-block;
     margin-top: 36px;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;

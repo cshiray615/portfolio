@@ -1,0 +1,119 @@
+---
+// Parent for a sticky-scroll image swap section.
+// Compose with <ScrollScene image="..." bg="#..." alt="..."> child components.
+export interface Props {
+  mediaSide?: 'left' | 'right';   // which side the sticky image sits on (default 'left')
+  ratio?: string;                  // image frame aspect ratio (default '4 / 3')
+}
+const { mediaSide = 'left', ratio = '4 / 3' } = Astro.props;
+---
+
+<section
+  class={`cs-scroll cs-scroll--media-${mediaSide}`}
+  data-scroll-story
+  style={`--cs-scroll-ratio:${ratio};`}
+>
+  <div class="cs-scroll-media" data-scroll-media>
+    <!-- Images are injected by the script from child scene data-attributes -->
+  </div>
+  <div class="cs-scroll-scenes">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .cs-scroll {
+    display: grid;
+    gap: 40px;
+    margin: 80px 0;
+  }
+  .cs-scroll--media-left  { grid-template-columns: 1fr 1fr; }
+  .cs-scroll--media-right { grid-template-columns: 1fr 1fr; }
+  .cs-scroll--media-right .cs-scroll-media { order: 2; }
+
+  .cs-scroll-media {
+    position: sticky;
+    top: 96px;
+    height: calc(100vh - 160px);
+    max-height: 720px;
+    align-self: start;
+    border-radius: 16px;
+    border: 1.5px solid var(--divider);
+    overflow: hidden;
+    background: var(--surf);
+    transition: background 0.5s ease;
+  }
+  .cs-scroll-media :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+  }
+  .cs-scroll-media :global(img.is-active) { opacity: 1; }
+
+  .cs-scroll-scenes {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 900px) {
+    .cs-scroll--media-left,
+    .cs-scroll--media-right { grid-template-columns: 1fr; }
+    .cs-scroll-media { display: none; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-scroll-story]').forEach((story) => {
+    const media = story.querySelector<HTMLElement>('[data-scroll-media]');
+    const scenes = story.querySelectorAll<HTMLElement>('[data-scroll-scene]');
+    if (!media || scenes.length === 0) return;
+
+    // Inject one <img> per scene, stacked. Activate the first by default.
+    const imgs: HTMLImageElement[] = [];
+    scenes.forEach((scene, i) => {
+      scene.dataset.idx = String(i);
+      const img = document.createElement('img');
+      img.src = scene.dataset.image ?? '';
+      img.alt = scene.dataset.alt ?? '';
+      img.loading = 'lazy';
+      if (i === 0) img.classList.add('is-active');
+      media.appendChild(img);
+      imgs.push(img);
+    });
+
+    // Set the media background to the first scene's bg if provided.
+    const firstBg = scenes[0]?.dataset.bg;
+    if (firstBg) media.style.background = firstBg;
+
+    const setActive = (idx: number) => {
+      imgs.forEach((img, i) => img.classList.toggle('is-active', i === idx));
+      const bg = scenes[idx]?.dataset.bg;
+      if (bg) media.style.background = bg;
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Pick the scene that's most "in" the trigger band (middle 20% of viewport).
+        let bestIdx = -1;
+        let bestRatio = 0;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
+            bestIdx = Number((entry.target as HTMLElement).dataset.idx);
+            bestRatio = entry.intersectionRatio;
+          }
+        });
+        if (bestIdx >= 0) setActive(bestIdx);
+      },
+      {
+        rootMargin: '-40% 0px -40% 0px',  // trigger band = middle 20% of viewport
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      }
+    );
+
+    scenes.forEach((scene) => observer.observe(scene));
+  });
+</script>

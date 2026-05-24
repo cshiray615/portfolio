@@ -10,7 +10,7 @@ stack: ["Storyline", "Branching", "Voice-over", "SCORM"]
 summary:
   problem: "A 4-hour compliance video had a 38% completion rate. New hires were skipping out — and managers were re-teaching everything in week one anyway."
   solution: "Cut the video to 22 minutes of essential content. Replaced the rest with a branching shift-simulation where hires made the same decisions they'd face on the floor — with consequences they could feel."
-  outcome: "Completion jumped to **94%**, manager re-teach time dropped **~60%**, and 30-day retention improved by **11 points**."
+  outcome: "Completion jumped to <b>94%</b>, manager re-teach time dropped <b>~60%</b>, and 30-day retention improved by <b>11 points</b>."
 order: 2
 next: the-form-that-worked
 ---
@@ -29,7 +29,41 @@ The real problem was that the format had nothing to do with the job. Day one on 
 
 I started by riding along with three regional ops managers for a week. Every time they corrected a week-one hire, I wrote down the correction. By the end of the week I had ninety-three. When I sorted them, eighty-seven fell into four buckets: customer escalation handling, register-and-cash discrepancies, safety-and-incident reporting, and shift handoff.
 
-Those four became the simulation. We kept the legally-required compliance content as a 22-minute video — short enough to actually watch, with the regulatory content the lawyers needed verbatim. Everything else became a branching scenario built in Storyline: hires played a fictional shift, made the same calls they'd face on the floor, and saw consequences play out over the next "two hours" of simulated time.
+<ScrollStory mediaSide="right" ratio="3/4">
+
+  <ScrollScene
+    image="https://placehold.co/800x1066/1D1D1F/FEF6E4?text=4-hour+video"
+    bg="#1D1D1F"
+    alt="The legacy 4-hour compliance video"
+  >
+  **What we inherited.** A four-hour compliance video, ninety percent of which was a static slide deck with voice-over. Thirty-eight percent of new hires finished it. Managers spent week one re-teaching the parts hires had skipped — usually cash handling and escalation.
+  </ScrollScene>
+
+  <ScrollScene
+    image="https://placehold.co/800x1066/FF5E3A/FEF6E4?text=Ride-along+notes"
+    bg="#FF5E3A"
+    alt="The 93 corrections, sorted into four buckets"
+  >
+  **The four buckets.** Riding along with three regional ops managers for a week produced ninety-three corrections. Eighty-seven of them sorted cleanly into four buckets: *customer escalation, cash discrepancies, safety reporting, shift handoff.* Those four became the simulation.
+  </ScrollScene>
+
+  <ScrollScene
+    image="https://placehold.co/800x1066/88C23E/1D1D1F?text=Branching+sim"
+    bg="#88C23E"
+    alt="The branching simulation in Storyline"
+  >
+  **The simulation.** Hires play a fictional shift in Storyline — they make the same calls they'd face on the floor, then watch the next "two hours" of simulated time play out. A wrong escalation costs them a customer; a missed cash count triggers a coaching moment. Consequences they can feel, but not be hurt by.
+  </ScrollScene>
+
+  <ScrollScene
+    image="https://placehold.co/800x1066/4B2C5A/FEF6E4?text=22-min+video"
+    bg="#4B2C5A"
+    alt="The trimmed compliance video"
+  >
+  **What stayed a video.** The legally-required compliance content — twenty-two minutes, exactly the verbatim regulatory language the lawyers required. Short enough to actually watch. Everything else became the branching shift sim.
+  </ScrollScene>
+
+</ScrollStory>
 
 The hardest design decision was how *consequential* to make the wrong choices. Too soft and the sim feels like a video game where everyone wins. Too punitive and hires get demoralized in their first hour. I landed on "consequences they could feel but not be hurt by": a wrong escalation lost them a customer (and a coaching moment from a virtual manager), but not a job. We tested the calibration on a small group before rolling out.
 
@@ -43,12 +77,22 @@ The hardest design decision was how *consequential* to make the wrong choices. T
 
 Completion jumped to ninety-four percent in the first month, and held there. Manager re-teach time dropped roughly sixty percent — they could spend week one coaching on edge cases instead of re-teaching cash handling. Thirty-day retention improved by eleven points compared to the prior year's cohort, which translates to a meaningful number when you multiply by fourteen thousand hires.
 
+<BarChart
+  title="Day-one completion"
+  accent="lime"
+  data={[
+    { label: 'Before', value: 38, suffix: '%', accent: 'muted' },
+    { label: 'After',  value: 94, suffix: '%', accent: 'lime'  },
+  ]}
+  caption="A 4-hour compliance video versus a 22-minute video plus a branching shift sim."
+/>
+
 The simulation file became the template for three other markets the company runs in. We translated the scripts (not the simulation engine) and rolled it to the international ops org six months later.
 
 </OutcomeBlock>
 
 <LessonsBlock>
 
-In retrospect, I wish I'd built the analytics dashboard alongside the simulation, not three months after. The completion rate was easy to track from the LMS, but the *which branch did hires choose* data — the part that would have let us iterate on the calibration — wasn't visible to the design team until I built a separate report. Next time the dashboard ships with v1.
+In retrospect, I wish I'd built the analytics dashboard alongside the simulation, not three months after. The completion rate was easy to track from the Learning Management System (LMS), but the *which branch did hires choose* data — the part that would have let us iterate on the calibration — wasn't visible to the design team until I built a separate report. Next time the dashboard ships with v1.
 
 </LessonsBlock>

@@ -3,31 +3,42 @@
 
 <section class="cs-lessons">
   <div class="container">
-    <h2 class="lessons-label">What I'd do differently</h2>
-    <div class="lessons-body"><slot /></div>
+    <aside class="lessons-callout">
+      <h2 class="lessons-label">What I'd do differently</h2>
+      <div class="lessons-body"><slot /></div>
+    </aside>
   </div>
 </section>
 
 <style>
-  .cs-lessons {
-    padding: 64px 0;
-    border-top: 1.5px solid var(--divider);
+  .cs-lessons { padding: 24px 0 64px; }
+
+  .lessons-callout {
+    max-width: 720px;
+    padding: 28px 32px;
+    background: color-mix(in oklab, var(--text) 5%, var(--bg));
+    border-radius: 14px;
+    border-left: 4px solid var(--vermillion);
   }
+
   .lessons-label {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--text-soft);
-    margin-bottom: 16px;
+    color: var(--vermillion);
+    margin-bottom: 14px;
   }
+
   .lessons-body {
-    max-width: 720px;
     font-family: var(--font-serif);
     font-style: italic;
     font-size: 18px;
     line-height: 1.7;
     color: var(--text);
   }
+
+  .lessons-body :global(p) { margin: 0 0 14px; }
+  .lessons-body :global(p:last-child) { margin-bottom: 0; }
 </style>

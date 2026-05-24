@@ -1,0 +1,78 @@
+---
+export interface Props {
+  title?: string;     // override the default "References" label
+}
+const { title = 'References' } = Astro.props;
+---
+
+<section class="cs-refs">
+  <div class="container">
+    <h2 class="cs-refs-label">{title}</h2>
+    <div class="cs-refs-body"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .cs-refs {
+    padding: 32px 0 64px;
+  }
+
+  .cs-refs-label {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 18px;
+  }
+
+  .cs-refs-body {
+    max-width: 720px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-soft);
+  }
+
+  /* MDX renders the slot's markdown list as <ol>/<ul> — style for a citation-list look. */
+  .cs-refs-body :global(ol),
+  .cs-refs-body :global(ul) {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    counter-reset: ref;
+  }
+  .cs-refs-body :global(li) {
+    position: relative;
+    padding-left: 32px;
+    counter-increment: ref;
+  }
+  .cs-refs-body :global(li)::before {
+    content: counter(ref);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--vermillion);
+    padding-top: 3px;
+  }
+  .cs-refs-body :global(em) { font-family: var(--font-serif); font-style: italic; }
+  .cs-refs-body :global(a) {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--vermillion) 60%, transparent);
+    text-underline-offset: 3px;
+  }
+  .cs-refs-body :global(a:hover) {
+    text-decoration-color: var(--vermillion);
+  }
+</style>

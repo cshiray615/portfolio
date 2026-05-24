@@ -1,9 +1,9 @@
 ---
 const steps = [
-  { num: '01', h: 'Spot it.',    body: 'Interviews + observations. Define the actual performance gap — not the stated training request.', accent: 'vermillion' },
-  { num: '02', h: 'Explain it.', body: 'Map the cognitive load. Name the principles that apply. Decide whether training is part of the answer at all.', accent: 'lime' },
-  { num: '03', h: 'Fix it.',     body: 'Build the lightest intervention that solves the problem — course, simulation, job aid, process change, or a mix.', accent: 'plum' },
-  { num: '04', h: 'Defend it.',  body: 'Measure. Adjust. Help stakeholders see why each design choice earned its place. Hand off something they can maintain.', accent: 'vermillion' },
+  { num: '01', h: 'Spot it.',    body: 'Look at the whole system. "We need training" is a symptom; the cause is usually in the process, the tools, the incentives, or the way the work is structured.', accent: 'vermillion' },
+  { num: '02', h: 'Explain it.', body: 'The cause is environmental (tools, feedback, incentives) or individual (skill, capacity, motivation). Most of the time it\'s environmental — and training won\'t touch it.', accent: 'lime' },
+  { num: '03', h: 'Fix it.',     body: 'Match the intervention to the cause — training, job aid, process change, performance support, incentive shift, or a blend. Bake feasibility and sustainability into the business case before you bake anything else.', accent: 'plum' },
+  { num: '04', h: 'Defend it.',  body: 'Measure what changes a decision, not what fills a dashboard. Defend every choice — to stakeholders, to leadership, to whoever maintains it next.', accent: 'vermillion' },
 ] as const;
 ---
 
@@ -14,7 +14,7 @@ const steps = [
       <h2>How a <span class="hl hl--lime tilt-r">project</span> runs.</h2>
     </div>
     <p class="section-lead">
-      Four phases, in order. Most projects skip phase 4 — that's usually why they don't stick. <strong>I won't.</strong>
+      Four phases, in order, wrapped in <strong>change management</strong>. The mistake most projects make isn't skipping the work — it's skipping the diagnosis and committing to an intervention that addresses the wrong cause.
     </p>
     <div class="process-grid">
       {steps.map((s) => (
@@ -34,10 +34,10 @@ const steps = [
     max-width: 780px;
     font-size: 18px;
     line-height: 1.7;
-    color: var(--text-soft);
+    color: var(--text);
     margin-bottom: 56px;
   }
-  .section-lead strong { color: var(--text); font-weight: 700; }
+  .section-lead strong { font-weight: 700; }
   .process-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -69,7 +69,7 @@ const steps = [
   .proc-body {
     margin-top: 10px;
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 15px;
     color: var(--text-soft);
     line-height: 1.65;
   }

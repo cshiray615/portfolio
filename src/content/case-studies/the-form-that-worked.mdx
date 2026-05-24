@@ -8,16 +8,16 @@ tag: "Tool adoption · Performance support"
 accent: plum
 stack: ["Workflow audit", "EHR redesign", "Job aids"]
 summary:
-  problem: "Adoption of a new EHR module sat at 41%. Stakeholders blamed clinician resistance and asked for a 90-minute training."
+  problem: "Adoption of a new Electronic Health Record (EHR) module sat at 41%. Stakeholders blamed clinician resistance and asked for a 90-minute training."
   solution: "Talked to ten clinicians before designing anything. The form was the problem. Worked with engineering to consolidate three screens into one, then built a 4-minute walkthrough — not a course."
-  outcome: "Adoption rose to **89%** in six weeks. Training spend was reallocated to **two other workflow fixes** — same approach, same payoff."
+  outcome: "Adoption rose to <b>89%</b> in six weeks. Training spend was reallocated to <b>two other workflow fixes</b> — same approach, same payoff."
 order: 3
 next: manager-defense
 ---
 
 <ProblemBlock>
 
-Adoption of a new EHR module at a 3,200-clinician healthcare network sat at forty-one percent six weeks after launch. Stakeholders had a confident diagnosis: the clinicians were resistant to change, and the solution was a ninety-minute mandatory training.
+Adoption of a new Electronic Health Record (EHR) module at a 3,200-clinician healthcare network sat at forty-one percent six weeks after launch. Stakeholders had a confident diagnosis: the clinicians were resistant to change, and the solution was a ninety-minute mandatory training.
 
 I asked if I could talk to ten clinicians first before designing anything. I knew the answer wasn't going to be a ninety-minute training, because nobody resists change for ninety minutes' worth of reasons. People resist change when the new thing makes their job harder, or when they don't trust the people asking them to change. I wanted to know which.
 
@@ -25,13 +25,39 @@ I asked if I could talk to ten clinicians first before designing anything. I kne
 
 <ProcessBlock>
 
+<ProcessDiagram
+  accent="plum"
+  caption="Four steps, in order — and the order matters. Skip step 02 and you ship the wrong intervention."
+  steps={[
+    { num: '01', label: 'Spot',     desc: 'Ten clinician interviews, twenty minutes each' },
+    { num: '02', label: 'Diagnose', desc: 'It’s the form — not the training, not the people' },
+    { num: '03', label: 'Fix',      desc: 'Consolidate three screens into one' },
+    { num: '04', label: 'Train',    desc: 'A 4-minute walkthrough, not a course' },
+  ]}
+/>
+
 Ten clinician interviews, twenty minutes each, over two weeks. Nine of the ten said the same thing in slightly different words: the new module had three screens for what used to be one. They weren't resisting the change. They were resisting paying a thirty-second tax on every patient encounter.
 
 The form was the problem. Not the training. Not the clinicians. The form.
 
 I took that finding to the engineering team and to the product manager for the EHR. After two weeks of pushback ("but the three screens map to the three regulatory domains") and a session walking them through ten clinician examples, we got to a redesigned single screen that consolidated the three. Then — and only then — did I build a four-minute walkthrough video. Not a course. A walkthrough.
 
-The walkthrough was deliberately short because the form was now intuitive enough that anything longer was insulting. The video covered three things: where the consolidated screen lives in the workflow, what changed about the underlying data (it hadn't, but clinicians wanted to know), and a one-paragraph reassurance from the CMO that this was the new official version.
+<BeforeAfter
+  ratio="16/9"
+  before={{
+    src: 'https://placehold.co/1280x720/4B2C5A/FEF6E4?text=3+screens',
+    alt: 'Original EHR module — three screens per encounter',
+    bg: '#4B2C5A',
+  }}
+  after={{
+    src: 'https://placehold.co/1280x720/88C23E/1D1D1F?text=1+screen',
+    alt: 'Redesigned EHR module — single consolidated screen',
+    bg: '#88C23E',
+  }}
+  caption="Drag to compare — three screens per encounter became one. The regulatory domains still map; they’re just visually grouped."
+/>
+
+The walkthrough was deliberately short because the form was now intuitive enough that anything longer was insulting. The video covered three things: where the consolidated screen lives in the workflow, what changed about the underlying data (it hadn't, but clinicians wanted to know), and a one-paragraph reassurance from the Chief Medical Officer (CMO) that this was the new official version.
 
 </ProcessBlock>
 
@@ -43,7 +69,18 @@ The walkthrough was deliberately short because the form was now intuitive enough
 
 Adoption rose to eighty-nine percent within six weeks of the form redesign. The four-minute walkthrough was watched once by ninety-three percent of clinicians (we didn't make it mandatory) and re-watched by less than two percent — which is exactly the engagement profile you want for a short reference video.
 
-The compliance lead reallocated the training budget that would have gone toward the ninety-minute mandatory course to two other workflow fixes the clinicians had flagged in the same interviews. Same approach, same payoff. The phrase "is this actually a training problem?" became something the L&D team got asked, instead of having to ask.
+<figure class="cs-spark-callout">
+  <SparklineTrend
+    accent="plum"
+    values={[41, 47, 58, 71, 82, 86, 89]}
+    width={320}
+    height={56}
+    ariaLabel="Adoption climbed from 41% to 89% across six weeks"
+  />
+  <figcaption>Weekly adoption: <strong>41% → 89%</strong> over six weeks.</figcaption>
+</figure>
+
+The compliance lead reallocated the training budget that would have gone toward the ninety-minute mandatory course to two other workflow fixes the clinicians had flagged in the same interviews. Same approach, same payoff. The phrase "is this actually a training problem?" became something the Learning & Development (L&D) team got asked, instead of having to ask.
 
 </OutcomeBlock>
 

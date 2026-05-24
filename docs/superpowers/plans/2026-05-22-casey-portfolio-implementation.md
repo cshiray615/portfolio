@@ -1213,7 +1213,6 @@ const year = new Date().getFullYear();
   .footer {
     margin-top: 96px;
     padding: 48px 0;
-    border-top: 1.5px solid var(--divider);
   }
   .footer-inner {
     display: flex;

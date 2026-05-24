@@ -8,22 +8,34 @@ tag: "Leadership · Cohort program"
 accent: vermillion
 stack: ["Cohort design", "Coaching", "Async + live", "Capstone"]
 summary:
-  problem: "New managers were promoted on technical chops, then handed a leadership LMS path and a 'good luck.' 65% reported feeling unprepared at the 90-day check-in."
+  problem: "New managers were promoted on technical chops, then handed a leadership Learning Management System (LMS) path and a 'good luck.' 65% reported feeling unprepared at the 90-day check-in."
   solution: "An 8-week cohort: short async micro-lessons + a live coaching session each Friday, capped by a capstone where managers defended one real decision they'd made in the last 30 days."
-  outcome: "90-day 'feel prepared' scores climbed from 35% → **82%**, and the cohort design became the default for every leadership level above."
+  outcome: "90-day 'feel prepared' scores climbed from 35% → <b>82%</b>, and the cohort design became the default for every leadership level above."
 order: 4
-next: designs-that-matter
+next: let-ai-do-the-heavy-lifting
 ---
 
 <ProblemBlock>
 
-A SaaS scale-up was promoting forty new managers a quarter — most of them strong individual contributors who had earned the title by being technically excellent. The company knew the gap. They had bought a leadership LMS path and assigned it as part of the promotion package. Then they handed each new manager a calendar invite to the LMS, a Slack channel for peer questions, and "good luck."
+A Software-as-a-Service (SaaS) scale-up was promoting forty new managers a quarter — most of them strong individual contributors who had earned the title by being technically excellent. The company knew the gap. They had bought a leadership Learning Management System (LMS) path and assigned it as part of the promotion package. Then they handed each new manager a calendar invite to the LMS, a Slack channel for peer questions, and "good luck."
 
 At the ninety-day mark, sixty-five percent of new managers reported feeling unprepared for the role. The LMS completion rate was high — they were earnest about it — but completion wasn't the same as confidence. The content was *correct* and the format was *wrong*. You don't learn to make hard decisions by watching someone else describe how to make them.
 
 </ProblemBlock>
 
 <ProcessBlock>
+
+<ProcessDiagram
+  orientation="vertical"
+  accent="vermillion"
+  caption="Eight weeks, three rhythms — and one capstone that decides whether judgment actually shifted."
+  steps={[
+    { num: '01', label: 'Kickoff',     desc: 'Cohort sets expectations + names one real decision each member will eventually defend.' },
+    { num: '02', label: 'Async core',  desc: 'Twice-weekly micro-lessons (15–20 min) on feedback, escalation, hiring, performance.' },
+    { num: '03', label: 'Friday live', desc: 'Ninety-minute live coaching: case discussion, peer-coaching, or manager autopsy.' },
+    { num: '04', label: 'Capstone',    desc: 'Each manager walks the cohort through their decision and fields fifteen minutes of questions.' },
+  ]}
+/>
 
 An eight-week cohort, built around a single load-bearing constraint: every manager would defend, in front of their cohort and a coach, **one real decision they made in the previous thirty days.**
 
@@ -41,7 +53,15 @@ I built the program with two senior leaders — a VP of Engineering and a VP of 
   { value: '40', label: 'Real decisions defended per cohort' },
 ]}>
 
-Ninety-day "feel prepared" scores climbed from thirty-five to eighty-two percent across the first three cohorts. More importantly, the *retention of new managers* through their first year improved meaningfully — and the cohort design became the default for every leadership level above (senior manager, director, VP) within twelve months.
+Ninety-day "feel prepared" scores climbed from thirty-five to eighty-two percent across the first three cohorts.
+
+<BigStat
+  size="lg"
+  accent="vermillion"
+  value="82%"
+  label="Feel-prepared at 90 days"
+  delta={{ direction: 'up', amount: '+47pt', label: 'vs 35% baseline' }}
+/> More importantly, the *retention of new managers* through their first year improved meaningfully — and the cohort design became the default for every leadership level above (senior manager, director, VP) within twelve months.
 
 The capstones generated a quiet secondary effect: senior leaders began asking to sit in on cohort defenses, partly out of curiosity and partly because the defense quality forced them to clarify how *they* were making decisions. The capstone format spread laterally, into product review and design critique, before any of us suggested it should.
 

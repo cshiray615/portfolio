@@ -1,0 +1,64 @@
+---
+export interface Props {
+  src: string;
+  caption?: string;
+  alt?: string;
+  bg?: string;
+  align?: 'left' | 'right' | 'center';
+}
+const { src, caption, alt, bg, align = 'center' } = Astro.props;
+---
+
+<figure class={`cs-figure cs-figure--${align}`}>
+  <button
+    type="button"
+    class="cs-figure-trigger"
+    data-lightbox-trigger
+    data-src={src}
+    data-caption={caption ?? ''}
+    data-alt={alt ?? caption ?? ''}
+    style={bg ? `background:${bg}` : undefined}
+    aria-label={`Open ${alt ?? caption ?? 'image'} full size`}
+  >
+    <img src={src} alt={alt ?? caption ?? ''} loading="lazy" />
+  </button>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .cs-figure {
+    margin: 32px 0;
+    max-width: 720px;
+  }
+  .cs-figure--center { margin-left: auto; margin-right: auto; }
+
+  .cs-figure-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    background: var(--surf);
+    border: 1.5px solid var(--divider);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+  }
+  .cs-figure-trigger:hover,
+  .cs-figure-trigger:focus-visible { transform: translateY(-3px); }
+
+  .cs-figure-trigger img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: contain;
+  }
+
+  .cs-figure figcaption {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    color: var(--text-soft);
+  }
+</style>

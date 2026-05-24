@@ -1,0 +1,112 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  prev: CollectionEntry<'case-studies'> | null;
+  next: CollectionEntry<'case-studies'> | null;
+}
+const { prev, next } = Astro.props;
+---
+
+{(prev || next) && (
+  <nav class="cs-nav" aria-label="Case study navigation">
+    <div class="container cs-nav-grid">
+      {prev ? (
+        <a class={`cs-nav-card cs-nav-card--prev cs-nav-card--${prev.data.accent}`} href={`/work/${prev.id}`}>
+          <div class="cs-nav-eyebrow">← Previous case study</div>
+          <div class="cs-nav-title">{prev.data.title}</div>
+          <div class="cs-nav-tag">{prev.data.tag}</div>
+        </a>
+      ) : (
+        <div class="cs-nav-card cs-nav-card--empty" aria-hidden="true"></div>
+      )}
+
+      {next ? (
+        <a class={`cs-nav-card cs-nav-card--next cs-nav-card--${next.data.accent}`} href={`/work/${next.id}`}>
+          <div class="cs-nav-eyebrow">Next case study →</div>
+          <div class="cs-nav-title">{next.data.title}</div>
+          <div class="cs-nav-tag">{next.data.tag}</div>
+        </a>
+      ) : (
+        <div class="cs-nav-card cs-nav-card--empty" aria-hidden="true"></div>
+      )}
+    </div>
+  </nav>
+)}
+
+<style>
+  .cs-nav {
+    background: var(--card-dark-bg);
+    color: var(--card-dark-text);
+    margin-top: 64px;
+  }
+  .cs-nav-grid {
+    display: grid;
+    grid-template-columns: 1fr 2.4fr;
+    gap: 1px;
+    background: color-mix(in oklab, var(--card-dark-text) 18%, transparent);
+    padding: 0;
+  }
+  @media (max-width: 720px) {
+    .cs-nav-grid { grid-template-columns: 1fr; }
+  }
+
+  .cs-nav-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--card-dark-bg);
+    color: var(--card-dark-text);
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  .cs-nav-card--next {
+    padding: 56px 32px;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .cs-nav-card--prev {
+    padding: 28px 24px;
+    text-align: left;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .cs-nav-card--empty { padding: 0; background: transparent; }
+
+  a.cs-nav-card:hover,
+  a.cs-nav-card:focus-visible {
+    background: color-mix(in oklab, var(--card-dark-bg) 88%, var(--card-dark-text));
+  }
+
+  .cs-nav-eyebrow {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+  }
+  .cs-nav-card--next .cs-nav-eyebrow { font-size: 14px; }
+  .cs-nav-card--prev .cs-nav-eyebrow { font-size: 14px; opacity: 0.85; }
+  .cs-nav-card--lime .cs-nav-eyebrow { color: var(--lime); }
+  .cs-nav-card--plum .cs-nav-eyebrow { color: var(--tertiary-soft); }
+
+  .cs-nav-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  .cs-nav-card--next .cs-nav-title { font-size: clamp(28px, 4vw, 48px); }
+  .cs-nav-card--prev .cs-nav-title { font-size: clamp(15px, 1.6vw, 18px); letter-spacing: -0.01em; }
+
+  .cs-nav-tag {
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+    color: color-mix(in oklab, var(--card-dark-text) 60%, transparent);
+  }
+  .cs-nav-card--next .cs-nav-tag { font-size: 14px; }
+  .cs-nav-card--prev .cs-nav-tag { font-size: 14px; }
+</style>

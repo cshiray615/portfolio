@@ -1,0 +1,55 @@
+---
+title: "Let AI Do the Heavy Lifting."
+tagline: "Automating Storyline content inventory so designers can do design work again."
+role: "Designer, Author"
+year: 2025
+client: "DevLearn 2025 · self-directed"
+tag: "AI automation · Content inventory"
+accent: lime
+stack: ["Articulate Storyline", "Generative AI", "ChatGPT", "Claude", "Python"]
+summary:
+  problem: "Auditing legacy Storyline content takes weeks of manual click-through-every-slide work — and the audit is usually the gating step before any meaningful redesign can start."
+  solution: "Built a Storyline → AI pipeline that extracts slide text, narration, and structure from .story files, then runs them through an LLM for inventory, classification, and gap detection. Designers review the output instead of building it from scratch."
+  outcome: "Content inventories that previously took 2–3 weeks per course collapsed to hours of designer review time — freeing the team to spend the saved capacity on actual redesign work."
+order: 5
+featured: false
+next: designs-that-matter
+---
+
+{/* TODO: expand each block with the talk's actual content + screenshots from the DevLearn deck. */}
+
+<ProblemBlock>
+
+Most legacy Storyline content lives in a folder somewhere with no inventory, no metadata, and no shared understanding of what's still accurate. Before you can redesign a course, retire a module, or even answer "what do we have on topic X," you have to crack open each `.story` file and look at every slide.
+
+That audit work is the gating step. It eats weeks of designer time before any actual design happens — and because it's manual, it tends to be incomplete, inconsistent across reviewers, and immediately stale.
+
+</ProblemBlock>
+
+<ProcessBlock>
+
+The .story format is a zipped archive of XML, audio, and assets. Extracting structured content from it doesn't require Articulate's runtime — just the right parser and some patience.
+
+I built a small pipeline: extract slide text, narration scripts, and structural metadata from each `.story` file, then run the extracted content through an LLM for inventory tasks the audit used to do by hand — classify each slide by topic, flag dead links, detect duplicate content across modules, surface objectives that don't map to any slide.
+
+The output is a CSV plus a one-page summary the designer reads in twenty minutes instead of two weeks. The designer still owns the judgment calls (is this still accurate? does this still belong?) — the AI just stops them having to *find* the questions first.
+
+</ProcessBlock>
+
+<OutcomeBlock metrics={[
+  { value: 'hours', label: 'Review time per course (was weeks)' },
+  { value: '200+', label: 'DevLearn 2025 attendees' },
+  { value: '1', label: 'Designer instead of three' },
+]}>
+
+The pipeline collapsed a multi-week manual audit into hours of designer review. The team got their pre-design time back — and started using it for the part of the job that actually requires a human (designing).
+
+Presented the approach at DevLearn 2025 to about 200 attendees. The repeat question afterward wasn't "how does the AI work?" — it was "how do I get my org to stop treating audit work as design work?"
+
+</OutcomeBlock>
+
+<LessonsBlock>
+
+The pipeline is the easy part. The harder part is convincing the team that AI-summarized inventory is *trustworthy enough to act on* — which mostly came down to keeping a designer-in-the-loop review step for any decision that retired or rewrote content. Speed without that step is a liability.
+
+</LessonsBlock>

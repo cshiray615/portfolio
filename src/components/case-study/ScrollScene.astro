@@ -1,0 +1,73 @@
+---
+export interface Props {
+  image: string;
+  alt?: string;
+  bg?: string;        // optional background color behind transparent images
+}
+const { image, alt, bg } = Astro.props;
+---
+
+<article
+  class="cs-scroll-scene"
+  data-scroll-scene
+  data-image={image}
+  data-alt={alt ?? ''}
+  data-bg={bg ?? ''}
+>
+  <div class="cs-scroll-scene-mobile-media" style={bg ? `background:${bg}` : undefined} aria-hidden="true">
+    <img src={image} alt={alt ?? ''} loading="lazy" />
+  </div>
+  <div class="cs-scroll-scene-body">
+    <slot />
+  </div>
+</article>
+
+<style>
+  .cs-scroll-scene {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    align-items: center;
+    padding: 60px 0;
+  }
+  .cs-scroll-scene:first-child { padding-top: 0; }
+  .cs-scroll-scene:last-child  { padding-bottom: 0; min-height: auto; }
+
+  .cs-scroll-scene-body {
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 480px;
+  }
+  .cs-scroll-scene-body :global(p) { margin: 0 0 14px; }
+  .cs-scroll-scene-body :global(p:last-child) { margin-bottom: 0; }
+  .cs-scroll-scene-body :global(strong) { font-weight: 700; }
+  .cs-scroll-scene-body :global(em) { font-family: var(--font-serif); font-style: italic; }
+
+  /* Desktop: the sticky media in ScrollStory handles imagery — hide the per-scene mobile image. */
+  .cs-scroll-scene-mobile-media { display: none; }
+
+  /* Mobile: the sticky media is hidden by ScrollStory; render each scene's image inline above its text. */
+  @media (max-width: 900px) {
+    .cs-scroll-scene {
+      min-height: auto;
+      padding: 32px 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 18px;
+    }
+    .cs-scroll-scene-mobile-media {
+      display: block;
+      border-radius: 12px;
+      border: 1.5px solid var(--divider);
+      overflow: hidden;
+    }
+    .cs-scroll-scene-mobile-media img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+    }
+    .cs-scroll-scene-body { max-width: none; }
+  }
+</style>

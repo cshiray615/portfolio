@@ -1,18 +1,70 @@
 ---
 const roles = [
-  { period: 'Current',  title: 'Senior Tech Instructional Designer', org: 'Independent' },
-  { period: '2022–2024',title: 'Lead Instructional Designer',         org: 'Confidential (healthcare network, 3,200 clinicians)' },
-  { period: '2019–2022',title: 'Senior Learning Designer',            org: 'Fortune 500 retailer' },
-  { period: '2016–2019',title: 'Instructional Designer',              org: 'SaaS scale-up' },
+  {
+    period: '2025–Present',
+    title: 'Senior Tech Instructional Designer',
+    org: 'Amazon · Central Learning Solutions',
+    impact: [
+      'Owned strategy and roadmap for an AI-enabled leadership certification scoped to 70,000 Operations managers across 4 tiers — projected $38M annualized impact via 30% attrition reduction and 10% promotion lift.',
+      'Designed 14 digital badges (3 standard-work exams × 3 capabilities × 3 behaviors), translating capability standards into measurable behaviors, assessment rubrics, and pilot success metrics.',
+      'Designed and built a centralized Learning Experience Design (LXD) Hub integrating Quality Assurance (QA), translation, prioritization, and file-management tools through AWS for a 7-designer team — reclaimed 16 hours/week per designer (95% QA-time reduction).',
+      'Architected an AWS-powered Content Management System (CMS) with version control and metadata tagging handling 200+ files across 6 languages — cut file-management time by 80%.',
+    ],
+  },
+  {
+    period: '2022–2025',
+    title: 'Tech Instructional Designer',
+    org: 'Amazon · Operations',
+    impact: [
+      'Scaled the app-integrated Just-in-Time training program into Spain Operations as a new international business line — reached 100K+ learners and delivered $2.3M in productivity gains plus reduced trainer costs.',
+      'Established a Learning Intake Prioritization Rubric processing 100+ intake requests/year, compressing decision-making from 3–4 business days to 6 minutes per request.',
+      'Authored a custom Right-to-Left CSS script and implementation guide for Articulate Rise — saving ~12 minutes per course for designers building Rise courses in RTL languages.',
+      'Developed a Content Continuous Improvement strategy that retired 399 outdated courses, reclaimed 4,390 designer hours (~$220K at fully-loaded rate), and eliminated 14,450 hours of redundant time-in-training for learners.',
+      'Introduced Scrum and Agile to a 14-person learning team, improving adaptability to shifting priorities and project throughput.',
+      'Built a Content Curation Database tracking learning assets across 9 business lines — giving designers a single source of truth for inventory, ownership, and review status.',
+    ],
+  },
+  {
+    period: '2021–2022',
+    title: 'Learning Experience Designer',
+    org: 'Amazon · Specialty Fulfillment',
+    impact: [
+      'Launched an app-integrated Just-in-Time training program across 5 operational processes in 7 countries (US, Mexico, England, France, Germany, Italy, Spain) — generated $12.6MM in annualized savings with a 20% learning-curve reduction.',
+      'Rebuilt a proctored safety program with professional voiceover and open captions — improved knowledge-transfer scores by 25%.',
+      'Designed a bilingual storage training program that lifted trainee confidence to perform tasks independently by 87%.',
+      'Refreshed 10 critical training courses ahead of peak (5 personally updated) — drove a 15% operational efficiency improvement.',
+      'Assessed 3 Specialty Fulfillment business lines and closed 9 process learning gaps within 3 months.',
+      'Partnered with business analysts to build reporting dashboards evaluating training impact on operational performance, and provided design oversight to junior designers on concurrent projects.',
+    ],
+  },
+  {
+    period: '2016–2021',
+    title: 'Instructional Designer',
+    org: 'BNY Mellon · Technology Service Centre',
+    impact: [
+      'Authored manuals, how-to guides, and job aids for technical issue resolution across enterprise services for 50,000+ global employees — shifted Technology Services learners toward self-service issue resolution.',
+      'Provided design oversight and mentorship to junior instructional designers across concurrent technical-learning projects in the Technology Services Group.',
+      'Designed and facilitated multi-modal onboarding (instructor-led training [ILT], virtual, self-led, in-person) for 7–8 cohorts/year of 20–30 new hires across Software-as-a-Service (SaaS) products and internal processes.',
+      'Onboarded the Articulate 360 authoring suite to establish the first online learning program for the service desk.',
+      'Freelance (2019): produced a software/tools video training series and change-management job aids supporting a corporate tooling rollout; designed and facilitated a virtual-meeting etiquette ILT for C-suite reports.',
+    ],
+  },
 ];
 
 const credentials = [
-  { period: '—',         title: 'M.S. Learning Design & Technology', detail: "Bloom's-anchored" },
-  { period: '—',         title: 'ATD Master Trainer · CPLP',         detail: '' },
+  { period: 'In progress',  title: 'M.S. Organizational Performance & Workplace Learning', detail: 'Boise State University' },
+  { period: 'Graduated',    title: 'B.A. Japanese · Minor in Multimedia Design',           detail: 'Miami University of Ohio' },
+  { period: '2024',         title: 'AWS Certified AI Practitioner',                        detail: 'Amazon Web Services' },
 ];
 
 const talks = [
-  { period: '2026', title: 'Designs That Matter',                            detail: 'DevLearn conference talk + self-directed course' },
+  { period: '2025', title: 'Designs that Matter — Creativity Backed by Science', detail: 'DevLearn 2025 · 200+ attendees', href: '/work/designs-that-matter' },
+  { period: '2025', title: 'Let AI Do the Heavy Lifting',                         detail: 'DevLearn 2025 · Automating Storyline content inventory', href: '/work/let-ai-do-the-heavy-lifting' },
+];
+
+const memberships = [
+  { period: 'Member', title: 'Association for Talent Development (ATD)',           detail: 'The largest US professional org for talent development and L&D practitioners.' },
+  { period: 'Member', title: 'International Society for Performance Improvement (ISPI)', detail: 'The professional org behind the HPT model and the Certified Performance Technologist (CPT) designation.' },
 ];
 ---
 
@@ -25,12 +77,28 @@ const talks = [
 
     <div class="history-block">
       <h3 class="history-h">Roles</h3>
-      <ul class="history-list">
+      <ul class="history-list history-list--roles">
         {roles.map((r) => (
           <li>
-            <span class="history-period">{r.period}</span>
-            <span class="history-title">{r.title}</span>
-            <span class="history-org">{r.org}</span>
+            <details class="history-details">
+              <summary class="history-summary">
+                <div class="history-row">
+                  <span class="history-chevron" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span class="history-period">{r.period}</span>
+                  <span class="history-title">{r.title}</span>
+                  <span class="history-org">{r.org}</span>
+                </div>
+              </summary>
+              {r.impact && (
+                <ul class="history-impact">
+                  {r.impact.map((bullet) => <li>{bullet}</li>)}
+                </ul>
+              )}
+            </details>
           </li>
         ))}
       </ul>
@@ -55,8 +123,23 @@ const talks = [
         {talks.map((t) => (
           <li>
             <span class="history-period">{t.period}</span>
-            <span class="history-title">{t.title}</span>
+            <span class="history-title">
+              {t.href ? <a href={t.href} class="history-link">{t.title} <span class="history-link-arrow" aria-hidden="true">→</span></a> : t.title}
+            </span>
             <span class="history-org">{t.detail}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="history-block">
+      <h3 class="history-h">Memberships</h3>
+      <ul class="history-list">
+        {memberships.map((m) => (
+          <li>
+            <span class="history-period">{m.period}</span>
+            <span class="history-title">{m.title}</span>
+            <span class="history-org">{m.detail}</span>
           </li>
         ))}
       </ul>
@@ -74,42 +157,136 @@ const talks = [
   .history-block:last-of-type { margin-bottom: 24px; }
   .history-h {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 700;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--vermillion);
     margin-bottom: 18px;
   }
+
   .history-list { display: flex; flex-direction: column; gap: 12px; }
+  /* Default row (non-expandable sections) keeps the original 3-col grid */
   .history-list li {
     display: grid;
-    grid-template-columns: 110px 1fr 1fr;
+    grid-template-columns: 140px 1fr 1fr;
     gap: 18px;
     padding: 12px 0;
-    border-bottom: 1px solid var(--divider);
+    border-bottom: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
     align-items: baseline;
+  }
+  /* Roles uses <details> inside <li>, so override the li grid here */
+  .history-list--roles li {
+    display: block;
+    padding: 0;
   }
   @media (max-width: 640px) {
     .history-list li { grid-template-columns: 1fr; gap: 4px; }
   }
+
   .history-period {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--text-soft);
+    white-space: nowrap;
   }
   .history-title {
     font-family: var(--font-body);
     font-weight: 600;
     font-size: 15px;
   }
+  .history-link {
+    color: var(--text);
+    border-bottom: 1.5px solid color-mix(in oklab, var(--vermillion) 50%, transparent);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .history-link:hover { border-bottom-color: var(--vermillion); color: var(--vermillion); }
+  .history-link-arrow { color: var(--vermillion); margin-left: 4px; }
   .history-org {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     color: var(--text-soft);
   }
+
+  /* ---- Expandable role row ---- */
+  .history-details { display: block; }
+
+  .history-summary {
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    padding: 14px 0;
+    border-bottom: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
+    transition: background 0.15s ease;
+  }
+  .history-summary::-webkit-details-marker { display: none; }
+  .history-summary::marker { content: ''; }
+  .history-summary:hover { background: color-mix(in oklab, var(--text) 3%, transparent); }
+
+  .history-row {
+    display: grid;
+    grid-template-columns: 18px 140px 1fr 1fr;
+    gap: 18px;
+    align-items: baseline;
+  }
+
+  .history-chevron {
+    color: var(--text-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+    align-self: center;
+    margin-top: 4px;
+  }
+  .history-details[open] .history-chevron {
+    transform: rotate(90deg);
+    color: var(--vermillion);
+  }
+
+  .history-impact {
+    margin: 14px 0 22px;
+    padding: 0 0 0 128px;       /* aligns bullets with the title column on desktop */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+  }
+  .history-impact li {
+    display: list-item;          /* override the grid-row default for outer li */
+    position: relative;
+    padding: 0 0 0 22px;
+    border: 0;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .history-impact li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0.65em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--vermillion);
+  }
+
+  @media (max-width: 640px) {
+    .history-row {
+      grid-template-columns: 18px 1fr;
+      gap: 6px 12px;
+    }
+    .history-row .history-period,
+    .history-row .history-title,
+    .history-row .history-org { grid-column: 2; }
+    .history-row .history-chevron { grid-column: 1; grid-row: 1 / span 3; align-self: start; margin-top: 6px; }
+    .history-impact { padding-left: 6px; }
+  }
+
   .hobbies-line {
     margin-top: 32px;
     font-family: var(--font-serif);

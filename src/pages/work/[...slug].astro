@@ -5,7 +5,20 @@ import ProblemBlock from '~/components/case-study/ProblemBlock.astro';
 import ProcessBlock from '~/components/case-study/ProcessBlock.astro';
 import OutcomeBlock from '~/components/case-study/OutcomeBlock.astro';
 import ArtifactsGallery from '~/components/case-study/ArtifactsGallery.astro';
+import Figure from '~/components/case-study/Figure.astro';
+import CodeSample from '~/components/case-study/CodeSample.astro';
+import BeforeAfter from '~/components/case-study/BeforeAfter.astro';
+import PullQuote from '~/components/case-study/PullQuote.astro';
+import ProcessDiagram from '~/components/case-study/ProcessDiagram.astro';
+import ScrollStory from '~/components/case-study/ScrollStory.astro';
+import ScrollScene from '~/components/case-study/ScrollScene.astro';
+import AnnotatedScreenshot from '~/components/case-study/AnnotatedScreenshot.astro';
+import BigStat from '~/components/case-study/BigStat.astro';
+import BarChart from '~/components/case-study/BarChart.astro';
+import SparklineTrend from '~/components/case-study/SparklineTrend.astro';
 import LessonsBlock from '~/components/case-study/LessonsBlock.astro';
+import References from '~/components/case-study/References.astro';
+import Appendix from '~/components/case-study/Appendix.astro';
 
 export async function getStaticPaths() {
   const studies = await getCollection('case-studies');
@@ -17,5 +30,5 @@ const { Content } = await render(caseStudy);
 ---
 
 <CaseStudy caseStudy={caseStudy}>
-  <Content components={{ ProblemBlock, ProcessBlock, OutcomeBlock, ArtifactsGallery, LessonsBlock }} />
+  <Content components={{ ProblemBlock, ProcessBlock, OutcomeBlock, ArtifactsGallery, Figure, CodeSample, BeforeAfter, PullQuote, ProcessDiagram, ScrollStory, ScrollScene, AnnotatedScreenshot, BigStat, BarChart, SparklineTrend, LessonsBlock, References, Appendix }} />
 </CaseStudy>

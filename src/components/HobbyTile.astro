@@ -4,73 +4,111 @@ import type { CollectionEntry } from 'astro:content';
 export interface Props {
   project: CollectionEntry<'hobby-projects'>;
   category: string;
+  accent?: 'vermillion' | 'lime' | 'plum';
 }
 
-const { project, category } = Astro.props;
+const { project, category, accent = 'vermillion' } = Astro.props;
 const href = project.data.favorite ? `/hobbies/${category}/${project.id}` : null;
 const Tag = href ? 'a' : 'div';
 ---
 
-<Tag class="hobby-tile" {...(href ? { href } : {})}>
-  <img class="hobby-img" src={project.data.cover} alt={project.data.title} loading="lazy" />
-  <div class="hobby-body">
-    <div class="hobby-meta">
-      <span class="hobby-year">{project.data.year}</span>
-      {project.data.favorite && <span class="hobby-fav">Favorite</span>}
+<Tag class={`hobby-tile hobby-tile--${accent}`} {...(href ? { href } : {})}>
+  <div class="hobby-tile-media">
+    <img src={project.data.cover} alt={project.data.title} loading="lazy" />
+  </div>
+  <div class="hobby-tile-body">
+    <div class="hobby-tile-meta">
+      <span class="hobby-tile-year">{project.data.year}</span>
+      {project.data.favorite && <span class="hobby-tile-fav">Favorite</span>}
     </div>
-    <h3 class="hobby-title">{project.data.title}</h3>
-    <p class="hobby-cap">{project.data.caption}</p>
-    {href && <span class="hobby-link">Read more →</span>}
+    <h3 class="hobby-tile-title">{project.data.title}</h3>
+    <p class="hobby-tile-cap">{project.data.caption}</p>
+    {href && <span class="hobby-tile-link">Read more →</span>}
   </div>
 </Tag>
 
 <style>
   .hobby-tile {
-    background: var(--surf);
-    border: 1.5px solid var(--divider);
-    border-radius: 14px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s ease;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 36px;
+    background: var(--card-dark-bg);
+    color: var(--card-dark-text);
+    border-radius: 18px;
+    padding: 36px;
+    transition: transform 0.25s ease;
   }
   a.hobby-tile:hover,
   a.hobby-tile:focus-visible { transform: translateY(-3px); }
-  .hobby-img {
+  @media (max-width: 1024px) {
+    .hobby-tile { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
+  }
+
+  .hobby-tile-media {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1.5px solid color-mix(in oklab, var(--card-dark-text) 18%, transparent);
+  }
+  .hobby-tile-media img {
+    display: block;
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
   }
-  .hobby-body { padding: 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-  .hobby-meta {
+
+  .hobby-tile-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: center;
+  }
+
+  .hobby-tile-meta {
     display: flex;
     gap: 10px;
     align-items: center;
     font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.15em;
+    font-size: 14px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--text-soft);
+    color: color-mix(in oklab, var(--card-dark-text) 60%, transparent);
   }
-  .hobby-fav {
+  .hobby-tile-fav {
     background: var(--lime);
-    color: var(--bg);
-    padding: 2px 8px;
+    color: var(--text);
+    padding: 3px 10px;
     border-radius: 3px;
     font-weight: 700;
+    letter-spacing: 0.14em;
   }
-  .hobby-title {
-    font-size: clamp(18px, 1.6vw, 22px);
-    line-height: 1.1;
+
+  .hobby-tile-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(28px, 3.4vw, 42px);
+    line-height: 1;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    color: var(--card-dark-text);
   }
-  .hobby-cap { font-size: 13px; line-height: 1.55; color: var(--text-soft); flex: 1; }
-  .hobby-link {
-    margin-top: 6px;
+
+  .hobby-tile-cap {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    color: color-mix(in oklab, var(--card-dark-text) 75%, transparent);
+  }
+
+  .hobby-tile-link {
+    margin-top: auto;
+    padding-top: 16px;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--vermillion);
   }
+  .hobby-tile--lime .hobby-tile-link { color: var(--lime); }
+  .hobby-tile--plum .hobby-tile-link { color: var(--tertiary-soft); }
 </style>

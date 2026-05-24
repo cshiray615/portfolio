@@ -1,0 +1,121 @@
+---
+export interface Props {
+  quote: string;
+  attribution?: string;             // "Name, Role" or context
+  image?: {
+    src: string;
+    alt?: string;
+    bg?: string;
+  };
+  position?: 'left' | 'right';      // image side; default 'left'
+  accent?: 'vermillion' | 'lime' | 'plum';  // colors the quotation mark
+}
+const {
+  quote,
+  attribution,
+  image,
+  position = 'left',
+  accent = 'vermillion',
+} = Astro.props;
+---
+
+<figure class={`cs-pq cs-pq--${position} cs-pq--${accent}`}>
+  {image && (
+    <div class="cs-pq-media">
+      <button
+        type="button"
+        class="cs-pq-trigger"
+        data-lightbox-trigger
+        data-src={image.src}
+        data-caption={attribution ?? quote}
+        data-alt={image.alt ?? attribution ?? ''}
+        style={image.bg ? `background:${image.bg}` : undefined}
+        aria-label="Open image full size"
+      >
+        <img src={image.src} alt={image.alt ?? attribution ?? ''} loading="lazy" />
+      </button>
+    </div>
+  )}
+
+  <blockquote class="cs-pq-body">
+    <span class="cs-pq-mark" aria-hidden="true">“</span>
+    <p class="cs-pq-text">{quote}</p>
+    {attribution && <footer class="cs-pq-attr">— {attribution}</footer>}
+  </blockquote>
+</figure>
+
+<style>
+  .cs-pq {
+    display: grid;
+    gap: 28px;
+    margin: 40px 0;
+    align-items: center;
+  }
+  .cs-pq--left  { grid-template-columns: 220px 1fr; }
+  .cs-pq--right { grid-template-columns: 1fr 220px; }
+  .cs-pq--right .cs-pq-media { order: 2; }
+
+  @media (max-width: 720px) {
+    .cs-pq--left,
+    .cs-pq--right { grid-template-columns: 1fr; }
+    .cs-pq--right .cs-pq-media { order: 0; }
+    .cs-pq-media { max-width: 220px; }
+  }
+
+  .cs-pq-media { margin: 0; }
+  .cs-pq-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1.5px solid var(--divider);
+    border-radius: 12px;
+    background: var(--surf);
+    cursor: zoom-in;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+  .cs-pq-trigger:hover,
+  .cs-pq-trigger:focus-visible { transform: translateY(-3px); }
+  .cs-pq-trigger img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+  }
+
+  .cs-pq-body {
+    margin: 0;
+    position: relative;
+    padding-left: 26px;
+  }
+  .cs-pq-mark {
+    position: absolute;
+    left: -6px;
+    top: -28px;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 92px;
+    line-height: 1;
+    color: var(--vermillion);
+  }
+  .cs-pq--lime .cs-pq-mark { color: var(--lime); }
+  .cs-pq--plum .cs-pq-mark { color: var(--tertiary-loud); }
+
+  .cs-pq-text {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(20px, 2.2vw, 28px);
+    line-height: 1.45;
+    color: var(--text);
+  }
+  .cs-pq-attr {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+</style>
