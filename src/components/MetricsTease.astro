@@ -1,9 +1,9 @@
 ---
 const metrics = [
-  { num: '62', unit: '%',    label: 'Avg lift in completion rates',          accent: 'vermillion' },
-  { num: '3.4', unit: '×',   label: 'Faster time-to-competence vs baseline', accent: 'lime'       },
-  { num: '41', unit: 'k',    label: 'Learners served across 12 orgs',        accent: 'plum'       },
-  { num: '9',  unit: '/10',  label: 'Stakeholders re-engage on next project',accent: 'vermillion' },
+  { num: '$38',   unit: 'M',  label: 'AI-enabled certification (annualized impact)', accent: 'vermillion' },
+  { num: '$12.6', unit: 'M',  label: 'JIT savings across 7 countries',               accent: 'lime'       },
+  { num: '~95',   unit: '%',  label: 'Translation turnaround reduction (LXD Hub)',   accent: 'plum'       },
+  { num: '100',   unit: 'k+', label: 'Learners reached via Spain JIT expansion',     accent: 'vermillion' },
 ] as const;
 ---
 
@@ -14,7 +14,7 @@ const metrics = [
       <h2>The <span class="hl hl--lime tilt-r">numbers</span>.</h2>
     </div>
     <p class="section-lead">
-      Outcomes from the last <strong>five years</strong> — across compliance, onboarding, tool adoption, and leadership.
+      Outcomes from the last <strong>five years</strong>: onboarding, tool adoption, content systems, and enterprise leadership.
     </p>
     <div class="metrics-grid">
       {metrics.map((m) => (

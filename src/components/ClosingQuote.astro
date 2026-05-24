@@ -1,0 +1,60 @@
+---
+export interface Props {
+  quote: string;
+  attribution: string;
+  accent?: 'vermillion' | 'lime' | 'plum';
+}
+const { quote, attribution, accent = 'lime' } = Astro.props;
+---
+
+<section class={`closing-quote closing-quote--${accent}`}>
+  <div class="container">
+    <figure class="closing-quote-fig">
+      <span class="closing-quote-mark" aria-hidden="true">“</span>
+      <blockquote class="closing-quote-text">{quote}</blockquote>
+      <figcaption class="closing-quote-attr">{attribution}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .closing-quote {
+    padding: 72px 0 96px;
+  }
+  .closing-quote-fig {
+    position: relative;
+    max-width: 880px;
+    margin: 0 auto;
+    padding-left: 48px;
+  }
+  .closing-quote-mark {
+    position: absolute;
+    left: 0;
+    top: -36px;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(72px, 9vw, 124px);
+    line-height: 1;
+    color: var(--lime);
+  }
+  .closing-quote--vermillion .closing-quote-mark { color: var(--vermillion); }
+  .closing-quote--plum .closing-quote-mark { color: var(--tertiary-loud); }
+
+  .closing-quote-text {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.4;
+    color: var(--text);
+  }
+  .closing-quote-attr {
+    margin-top: 28px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+</style>

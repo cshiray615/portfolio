@@ -23,7 +23,7 @@ const display = featured.length >= 3 ? featured : all.sort(byYearDesc).slice(0, 
       <h2>Selected <span class="hl hl--vermillion tilt-l">work samples</span>.</h2>
     </div>
     <p class="section-lead">
-      A few projects that turned <strong>"we need training"</strong> into something the business — and the learner — actually wanted.
+      A few projects that turned <strong>"we need training"</strong> into something the business (and the learner) actually wanted.
     </p>
     <div class="work-list">
       {display.map((cs) => <WorkCard caseStudy={cs} />)}
@@ -33,6 +33,7 @@ const display = featured.length >= 3 ? featured : all.sort(byYearDesc).slice(0, 
 </section>
 
 <style>
+  .section-lead { margin-bottom: 56px; }
   .work-list {
     display: flex; flex-direction: column; gap: 28px;
   }

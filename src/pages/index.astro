@@ -3,6 +3,7 @@ import Base from '~/layouts/Base.astro';
 import Hero from '~/components/Hero.astro';
 import MetricsTease from '~/components/MetricsTease.astro';
 import SelectedWorkTease from '~/components/SelectedWorkTease.astro';
+import ClosingQuote from '~/components/ClosingQuote.astro';
 import ClosingCTA from '~/components/ClosingCTA.astro';
 ---
 
@@ -10,5 +11,10 @@ import ClosingCTA from '~/components/ClosingCTA.astro';
   <Hero />
   <MetricsTease />
   <SelectedWorkTease />
+  <ClosingQuote
+    quote="Casey is a pleasure to work with because she is super clear with her communication and she earns a lot of trust by acting reliably on what she has committed to."
+    attribution="Operations Stakeholder"
+    accent="lime"
+  />
   <ClosingCTA />
 </Base>

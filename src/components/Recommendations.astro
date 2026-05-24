@@ -1,31 +1,14 @@
 ---
-// TODO: replace with real recommendations.
-// Paste from LinkedIn (linkedin.com/in/casey-shiray → "Received" recommendations)
-// or ask former colleagues / managers for a short quote + their title.
+// Anonymous testimonials carried over from the old portfolio. Attribution is by
+// stakeholder role only — names redacted at the source.
 const quotes = [
   {
-    quote: '[Recommendation text goes here. Aim for 2–4 sentences that name something specific you did — a project, a behavior change, a result.]',
-    name: '[Name]',
-    title: '[Title]',
-    company: '[Company]',
-    relationship: 'Former manager',
-    linkedin: '',
+    quote: `Casey is one of the best L&D professionals I've worked with, and one of the most consistent.`,
+    role: 'Safety Stakeholder',
   },
   {
-    quote: '[Second recommendation. Different voice, different angle. Maybe a peer or client this time, so the quotes triangulate rather than echo.]',
-    name: '[Name]',
-    title: '[Title]',
-    company: '[Company]',
-    relationship: 'Peer',
-    linkedin: '',
-  },
-  {
-    quote: '[Third recommendation. Two strong quotes is fine; three is comfortable; four+ starts feeling like the wall.]',
-    name: '[Name]',
-    title: '[Title]',
-    company: '[Company]',
-    relationship: 'Stakeholder',
-    linkedin: '',
+    quote: `Casey's superpower is adaptability. I have watched her dive into ambiguous situations and achieve a level of success that is admirable.`,
+    role: 'Project Manager',
   },
 ];
 ---
@@ -47,13 +30,7 @@ const quotes = [
         <figure class="rec-card">
           <span class="rec-mark" aria-hidden="true">“</span>
           <blockquote class="rec-text">{q.quote}</blockquote>
-          <figcaption class="rec-attr">
-            <div class="rec-name">
-              {q.linkedin ? <a href={q.linkedin} target="_blank" rel="noopener">{q.name}</a> : q.name}
-            </div>
-            <div class="rec-role">{q.title} · {q.company}</div>
-            {q.relationship && <div class="rec-rel">{q.relationship}</div>}
-          </figcaption>
+          <figcaption class="rec-role">{q.role}</figcaption>
         </figure>
       ))}
     </div>
@@ -83,71 +60,51 @@ const quotes = [
   .rec-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
+    column-gap: 56px;
+    row-gap: 64px;
   }
   @media (max-width: 900px) {
-    .rec-grid { grid-template-columns: 1fr; }
+    .rec-grid { grid-template-columns: 1fr; row-gap: 56px; }
   }
 
+  /* PullQuote-style: big display quotation mark, serif italic body, mono attribution.
+     No card background or border — let the typography do the work. */
   .rec-card {
+    position: relative;
     margin: 0;
-    padding: 28px 32px;
-    background: color-mix(in oklab, var(--text) 4%, var(--bg));
-    border-left: 4px solid var(--lime);
-    border-radius: 12px;
+    padding-left: 28px;
     display: flex;
     flex-direction: column;
     gap: 14px;
   }
 
   .rec-mark {
+    position: absolute;
+    left: -8px;
+    top: -32px;
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: 56px;
-    line-height: 0.6;
+    font-size: 92px;
+    line-height: 1;
     color: var(--lime);
-    margin: 0 0 -6px;
   }
 
   .rec-text {
     margin: 0;
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: clamp(16px, 1.4vw, 18px);
-    line-height: 1.55;
+    font-size: clamp(18px, 1.8vw, 22px);
+    line-height: 1.45;
     color: var(--text);
   }
 
-  .rec-attr {
-    border-top: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
-    padding-top: 14px;
-  }
-  .rec-name {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: -0.005em;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .rec-name a {
-    color: var(--text);
-    border-bottom: 1px solid color-mix(in oklab, var(--vermillion) 50%, transparent);
-  }
-  .rec-name a:hover { color: var(--vermillion); border-bottom-color: var(--vermillion); }
   .rec-role {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--text-soft);
-    letter-spacing: 0.04em;
-  }
-  .rec-rel {
     margin-top: 6px;
     font-family: var(--font-mono);
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--lime);
+    color: var(--text-soft);
   }
 </style>
