@@ -28,3 +28,6 @@ Thumbs.db
 # Claude / superpowers (do not commit brainstorm artifacts)
 .superpowers/
 .claude/
+
+# Reference assets pulled from old portfolio (too large for repo)
+Old Portfolio/

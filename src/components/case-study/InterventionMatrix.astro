@@ -1,0 +1,190 @@
+---
+export type InterventionType = 'training' | 'non-training' | 'process' | 'tool';
+
+export interface InterventionItem {
+  gap: string;
+  solution: string;
+  type: InterventionType;
+}
+
+export interface Props {
+  items: InterventionItem[];
+  title?: string;
+  caption?: string;
+}
+const { items, title, caption } = Astro.props;
+
+const TYPE_LABEL: Record<InterventionType, string> = {
+  training: 'Training',
+  'non-training': 'Non-training',
+  process: 'Process',
+  tool: 'Tool',
+};
+
+const trainingCount = items.filter((i) => i.type === 'training').length;
+const nonCount = items.length - trainingCount;
+---
+
+<figure class="cs-im">
+  {title && <div class="cs-im-title">{title}</div>}
+
+  <ol class="cs-im-grid">
+    {items.map((item, i) => (
+      <li class={`cs-im-card cs-im-card--${item.type}`}>
+        <div class="cs-im-head">
+          <span class="cs-im-num">{String(i + 1).padStart(2, '0')}</span>
+          <span class={`cs-im-type cs-im-type--${item.type}`}>{TYPE_LABEL[item.type]}</span>
+        </div>
+
+        <div class="cs-im-row">
+          <div class="cs-im-label">Gap</div>
+          <p class="cs-im-text">{item.gap}</p>
+        </div>
+
+        <div class="cs-im-divider" aria-hidden="true"></div>
+
+        <div class="cs-im-row">
+          <div class="cs-im-label">Intervention</div>
+          <p class="cs-im-text">{item.solution}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <div class="cs-im-summary">
+    <span class="cs-im-summary-dot cs-im-summary-dot--non-training" aria-hidden="true"></span>
+    <strong>{nonCount}</strong> non-training
+    <span class="cs-im-summary-sep" aria-hidden="true">·</span>
+    <span class="cs-im-summary-dot cs-im-summary-dot--training" aria-hidden="true"></span>
+    <strong>{trainingCount}</strong> training
+  </div>
+
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .cs-im {
+    margin: 32px 0;
+    max-width: 880px;
+  }
+
+  .cs-im-title {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 14px;
+  }
+
+  .cs-im-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 720px) {
+    .cs-im-grid { grid-template-columns: 1fr; }
+  }
+
+  .cs-im-card {
+    background: color-mix(in oklab, var(--text) 4%, var(--bg));
+    border: 1.5px solid color-mix(in oklab, var(--text) 12%, transparent);
+    border-radius: 12px;
+    padding: 18px 20px 22px;
+    border-left-width: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cs-im-card--training      { border-left-color: var(--vermillion); }
+  .cs-im-card--non-training  { border-left-color: var(--lime); }
+  .cs-im-card--process       { border-left-color: var(--tertiary-loud); }
+  .cs-im-card--tool          { border-left-color: var(--vermillion-deep); }
+
+  .cs-im-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .cs-im-num {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--text-soft);
+  }
+  .cs-im-type {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .cs-im-type--training     { background: var(--vermillion);    color: var(--bg); }
+  .cs-im-type--non-training { background: var(--lime);          color: var(--text); }
+  .cs-im-type--process      { background: var(--tertiary-loud); color: var(--bg); }
+  .cs-im-type--tool         { background: var(--vermillion-deep); color: var(--bg); }
+
+  .cs-im-row { display: flex; flex-direction: column; gap: 4px; }
+
+  .cs-im-label {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+
+  .cs-im-text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .cs-im-divider {
+    height: 1px;
+    background: color-mix(in oklab, var(--text) 12%, transparent);
+    margin: 2px 0;
+  }
+
+  .cs-im-summary {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .cs-im-summary strong { color: var(--text); font-weight: 700; }
+  .cs-im-summary-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .cs-im-summary-dot--training { background: var(--vermillion); }
+  .cs-im-summary-dot--non-training { background: var(--lime); }
+  .cs-im-summary-sep { padding: 0 4px; opacity: 0.5; }
+
+  .cs-im figcaption {
+    margin-top: 14px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-soft);
+  }
+</style>

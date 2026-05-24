@@ -1,55 +1,172 @@
 ---
 title: "Let AI Do the Heavy Lifting."
 tagline: "Automating Storyline content inventory so designers can do design work again."
-role: "Designer, Author"
+role: "Speaker"
 year: 2025
-client: "DevLearn 2025 · self-directed"
+client: "DevLearn"
 tag: "AI automation · Content inventory"
 accent: lime
 stack: ["Articulate Storyline", "Generative AI", "ChatGPT", "Claude", "Python"]
 summary:
-  problem: "Auditing legacy Storyline content takes weeks of manual click-through-every-slide work — and the audit is usually the gating step before any meaningful redesign can start."
+  problem: "Auditing legacy Storyline content takes weeks of manual click-through-every-slide work, and the audit is usually the gating step before any meaningful redesign can start."
   solution: "Built a Storyline → AI pipeline that extracts slide text, narration, and structure from .story files, then runs them through an LLM for inventory, classification, and gap detection. Designers review the output instead of building it from scratch."
-  outcome: "Content inventories that previously took 2–3 weeks per course collapsed to hours of designer review time — freeing the team to spend the saved capacity on actual redesign work."
+  outcome: "Content inventories that previously took 2 to 3 weeks per course collapsed to hours of designer review. Saved capacity moved to actual redesign work."
 order: 5
 featured: false
-next: designs-that-matter
+cover: /case-studies/let-ai-do-the-heavy-lifting/title-slide.png
+next: finding-non-training-solutions
 ---
-
-{/* TODO: expand each block with the talk's actual content + screenshots from the DevLearn deck. */}
 
 <ProblemBlock>
 
-Most legacy Storyline content lives in a folder somewhere with no inventory, no metadata, and no shared understanding of what's still accurate. Before you can redesign a course, retire a module, or even answer "what do we have on topic X," you have to crack open each `.story` file and look at every slide.
+This might feel familiar.
 
-That audit work is the gating step. It eats weeks of designer time before any actual design happens — and because it's manual, it tends to be incomplete, inconsistent across reviewers, and immediately stale.
+You've inherited a Storyline file system that made no sense before you got there. 200 files, each translated into five different languages, buried in nested folders passed down through generations of designer. It's a mess, and your team doesn't have the time or budget to keep up with it.
+
+Then a stakeholder asks: *"We need to find everywhere we use the word 'client' in our training and change it to 'defendant.'"*
+
+That's when you realize your content isn't just messy. It's *unmanageable*. The audit work is the gating step before any meaningful redesign can start. It eats weeks of designer time, and because it's manual, it tends to be incomplete, inconsistent across reviewers, and immediately stale.
+
+Sure, you could pay hundreds of thousands a year for a Learning Content Management System (LCMS). Most Learning & Development (L&D) teams don't have that kind of budget.
+
+That's where AI comes in. A ChatGPT subscription is a tiny fraction of an LCMS, and most of us already have access. Instead of paying for expensive tooling, we get AI to do the heavy lifting. Less time filing, more time designing.
 
 </ProblemBlock>
 
 <ProcessBlock>
 
-The .story format is a zipped archive of XML, audio, and assets. Extracting structured content from it doesn't require Articulate's runtime — just the right parser and some patience.
+<Figure
+  src="/case-studies/let-ai-do-the-heavy-lifting/thesis-slide.png"
+  alt="Slide: If you can write objectives, you can write AI prompts. If you can design learning, you can design solutions."
+  caption="The talk's thesis. Instructional designers already have the muscle for this work. The medium changed, not the discipline."
+  align="center"
+/>
 
-I built a small pipeline: extract slide text, narration scripts, and structural metadata from each `.story` file, then run the extracted content through an LLM for inventory tasks the audit used to do by hand — classify each slide by topic, flag dead links, detect duplicate content across modules, surface objectives that don't map to any slide.
+The .story format is a zipped archive of XML, audio, and assets. Extracting structured content from it doesn't require Articulate's runtime, just the right parser and some patience.
 
-The output is a CSV plus a one-page summary the designer reads in twenty minutes instead of two weeks. The designer still owns the judgment calls (is this still accurate? does this still belong?) — the AI just stops them having to *find* the questions first.
+So I wrote a schema. A small JSON file that maps where the interesting content lives inside a `.story` archive across Storyline versions, with fallbacks for when the content isn't where it usually is. The AI doesn't have to guess.
+
+<CodeSample
+  lang="json"
+  label="Schema excerpt · slide_title field"
+  code={`"slide_title": {
+  "priority": [
+    {
+      "type": "xpath",
+      "expr": [
+        "//textBox[@name='&Title']//plain/text()",
+        "//textBox[@name='&amp;Title']//plain/text()"
+      ],
+      "notes": "Primary title textbox (v3.x encoding variations)"
+    },
+    {
+      "type": "xpath",
+      "expr": ["//textBox[ph/@type='title']//plain/text()"],
+      "notes": "Placeholder-typed or legacy naming"
+    },
+    {
+      "type": "heuristic",
+      "method": "largest_font_text_run",
+      "params": { "top_n": 1, "min_length": 3 },
+      "notes": "Font-size based detection when explicit markers missing"
+    }
+  ],
+  "postprocessing": ["strip_whitespace", "merge_adjacent_runs"],
+  "implementation": "lxml preferred; ET.find() fallback"
+}`}
+  caption="Three ways to find a slide title across Storyline versions. Known XPath first, then placeholder-typed XPath, then fall back to 'largest font text run.' The AI tries them in order."
+/>
+
+The schema is the easy part. Coding the actual app around it is where it gets interesting. Building this tool meant working with an AI coding agent, and "just vibe with it" doesn't work. You can't accept whatever the model spits out. So I gave the room the framework I'd built for myself: *Vibe Check Coding*.
+
+<ProcessDiagram
+  accent="lime"
+  orientation="horizontal"
+  steps={[
+    { num: '01', label: 'Architect', desc: 'Plan thoroughly. Describe the shape of the solution before any code.' },
+    { num: '02', label: 'Generate',  desc: 'Let AI scaffold the code. Ask it to comment each part as it goes.' },
+    { num: '03', label: 'Vibe Check', desc: 'Have AI explain what it built. Refine intentionally. Never just paste and pray.' },
+  ]}
+  caption="Don't just vibe. Vibe check. The framework keeps the designer in control while AI carries the weight. Mad-lib prompts for each step are in the download below."
+/>
 
 </ProcessBlock>
 
 <OutcomeBlock metrics={[
-  { value: 'hours', label: 'Review time per course (was weeks)' },
-  { value: '200+', label: 'DevLearn 2025 attendees' },
-  { value: '1', label: 'Designer instead of three' },
+  { value: 'Weeks → Hours', label: 'Time per content audit' },
+  { value: '3 → 1', label: 'Designers needed to run an audit' },
 ]}>
 
-The pipeline collapsed a multi-week manual audit into hours of designer review. The team got their pre-design time back — and started using it for the part of the job that actually requires a human (designing).
+The pipeline collapsed a multi-week manual audit into hours of designer review.
 
-Presented the approach at DevLearn 2025 to about 200 attendees. The repeat question afterward wasn't "how does the AI work?" — it was "how do I get my org to stop treating audit work as design work?"
+<ProcessDiagram
+  accent="lime"
+  orientation="horizontal"
+  steps={[
+    { num: '01', label: 'Extract',   desc: 'Pull slide text, narration, and structural metadata from .story XML.' },
+    { num: '02', label: 'Classify',  desc: 'LLM tags topic, flags dead links, finds duplicate content across modules.' },
+    { num: '03', label: 'Summarize', desc: 'One CSV plus a one-page summary the designer reads in 20 minutes.' },
+    { num: '04', label: 'Decide',    desc: 'Designer owns the judgment calls. Keep, rewrite, or retire.' },
+  ]}
+  caption="The pipeline does the finding. Designers still do the deciding."
+/>
+
+The team got their pre-design time back, and started using it for the part of the job that actually requires a human (designing).
+
+I presented the approach at DevLearn 2025. The repeat question afterward wasn't "how does the AI work?" It was "how do I get my org to stop treating audit work as design work?"
+
+I shared three take-home resources for anyone wanting to start their own AI-assisted build, no coding experience required.
+
+<DownloadCard
+  href="/case-studies/let-ai-do-the-heavy-lifting/devlearn-2025-let-ai-do-the-heavy-lifting.pdf"
+  title="DevLearn 2025: Let AI Do the Heavy Lifting"
+  description="The full session deck. Pipeline architecture, prompts, and case examples from the talk."
+  filetype="PDF"
+  meta={["Session deck", "DevLearn 2025"]}
+  cta="Download the deck"
+  accent="lime"
+/>
+
+<DownloadCard
+  href="/case-studies/let-ai-do-the-heavy-lifting/agents.md"
+  title="AGENTS.md"
+  description="Rules for how AI should explain code back to you. Drop this in your project and the model adapts."
+  thumb="/case-studies/let-ai-do-the-heavy-lifting/agents-md-preview.png"
+  thumbAlt="Preview of the AGENTS.md teaching style guide file"
+  filetype="MD"
+  meta={["Template", "Vibecode-friendly"]}
+  cta="Download AGENTS.md"
+  accent="lime"
+/>
+
+<DownloadCard
+  href="/case-studies/let-ai-do-the-heavy-lifting/vibe-check-coding-prompts.png"
+  title="Vibe-Check Coding Prompts"
+  description="Mad-lib style prompts for each phase of working with AI. Architect, Generate, Vibe Check."
+  thumb="/case-studies/let-ai-do-the-heavy-lifting/vibe-check-preview.png"
+  thumbAlt="Vibe Check Coding cover: AI prompts that teach you while you build"
+  filetype="PNG"
+  meta={["Prompt library", "Architect · Generate · Vibe Check"]}
+  cta="Download the prompts"
+  accent="lime"
+/>
+
+<DownloadCard
+  href="/case-studies/let-ai-do-the-heavy-lifting/storyline_schema.zip"
+  title="Storyline Schema"
+  description="A map of where the interesting content lives inside a .story archive. Lets an LLM find slide text, narration, and structure across Storyline versions without guessing."
+  thumb="/case-studies/let-ai-do-the-heavy-lifting/schema-master.png"
+  thumbAlt="Excerpt of the storyline schema JSON"
+  filetype="ZIP"
+  meta={["v3.104 + v3.105", "Schema files"]}
+  cta="Download the schema"
+  accent="lime"
+/>
 
 </OutcomeBlock>
 
 <LessonsBlock>
 
-The pipeline is the easy part. The harder part is convincing the team that AI-summarized inventory is *trustworthy enough to act on* — which mostly came down to keeping a designer-in-the-loop review step for any decision that retired or rewrote content. Speed without that step is a liability.
+The pipeline is the easy part. The harder part is convincing the team that AI-summarized inventory is *trustworthy enough to act on*. Which mostly came down to keeping a designer-in-the-loop review step for any decision that retired or rewrote content. Speed without that step is a liability.
 
 </LessonsBlock>

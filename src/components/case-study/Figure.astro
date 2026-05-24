@@ -6,7 +6,7 @@ export interface Props {
   bg?: string;
   align?: 'left' | 'right' | 'center';
 }
-const { src, caption, alt, bg, align = 'center' } = Astro.props;
+const { src, caption, alt, bg, align = 'left' } = Astro.props;
 ---
 
 <figure class={`cs-figure cs-figure--${align}`}>
@@ -29,12 +29,12 @@ const { src, caption, alt, bg, align = 'center' } = Astro.props;
   .cs-figure {
     margin: 32px 0;
     max-width: 720px;
+    width: fit-content;
   }
   .cs-figure--center { margin-left: auto; margin-right: auto; }
 
   .cs-figure-trigger {
     display: block;
-    width: 100%;
     padding: 0;
     background: var(--surf);
     border: 1.5px solid var(--divider);
@@ -42,15 +42,15 @@ const { src, caption, alt, bg, align = 'center' } = Astro.props;
     overflow: hidden;
     cursor: zoom-in;
     transition: transform 0.2s ease;
+    line-height: 0;
   }
   .cs-figure-trigger:hover,
   .cs-figure-trigger:focus-visible { transform: translateY(-3px); }
 
   .cs-figure-trigger img {
     display: block;
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    object-fit: contain;
+    max-width: 100%;
+    height: auto;
   }
 
   .cs-figure figcaption {

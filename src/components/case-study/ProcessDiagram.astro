@@ -58,6 +58,9 @@ const {
     flex-shrink: 0;
   }
   .cs-pd--lime .cs-pd-node { color: var(--text); }
+  /* In dark mode --text flips to cream — keep ink on lime for legibility (matches .hl--lime).
+     :global() prevents Astro from scoping [data-theme="dark"] (which lives on <html>) to this component. */
+  :global([data-theme="dark"]) .cs-pd--lime .cs-pd-node { color: var(--bg); }
 
   .cs-pd-num {
     font-family: var(--font-display);

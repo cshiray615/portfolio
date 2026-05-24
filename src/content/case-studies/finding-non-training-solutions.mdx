@@ -1,0 +1,110 @@
+---
+title: "The Onboarding That Wasn't About Training."
+tagline: "Central Operations didn't need more training. They needed less."
+role: "Lead Designer"
+year: 2022
+client: "Amazon · Central Operations"
+tag: "Onboarding · Performance support · Non-training intervention"
+accent: plum
+stack: ["Performance gap analysis", "Learner profiles", "Interactive video", "Job aids"]
+summary:
+  problem: "Central Operations was getting the same warehouse onboarding as every other business, and getting blamed for it. Stakeholders flagged relevancy and length. The ask was: shorter, more relevant training."
+  solution: "Performance gap analysis first. Most of the gap was environmental, not knowledge. I built a system of non-training supports, then trimmed the onboarding course to only what training actually needed to carry."
+  outcome: "Total time-in-training dropped <b>14%</b> (about 25 min per new hire) even after adding new role-specific content. The redesigned onboarding course alone fell from <b>56 minutes to 18</b>."
+order: 6
+featured: false
+next: from-shared-drive-to-platform
+---
+
+<ProblemBlock>
+
+Central Operations functions more like a corporate office than the warehouses my team usually supports, but they were being on-boarded with the same generic warehouse training as everyone else. Stakeholders said the obvious things: it was too long, and it wasn't relevant to the actual job.
+
+The ask was a shorter, more relevant training. My first question was the same one I always start with: is training the right intervention here? Before I cut a slide or recorded a video, I wanted to see the real gap.
+
+</ProblemBlock>
+
+<ProcessBlock>
+
+I ran a Performance Gap Analysis (PGA). Current behavior versus expected behavior, triangulated from stakeholder input. The goal was to see what was actually driving the underperformance, not what stakeholders *said* was driving it.
+
+<ProcessDiagram
+  orientation="vertical"
+  accent="plum"
+  caption="The PGA logic: every project starts here. Skip any step and the intervention is a guess."
+  steps={[
+    { num: '01', label: 'Map current',     desc: 'What associates actually do today. Stakeholder reports + floor observation.' },
+    { num: '02', label: 'Map expected',    desc: 'What good performance looks like. Pulled from job descriptions, SME interviews, and the actual operational definition of success.' },
+    { num: '03', label: 'Identify the gap', desc: 'The delta between current and expected. Quantify where you can; describe where you can\'t.' },
+    { num: '04', label: 'Diagnose cause',  desc: 'Is the gap environmental (tools, signals, incentives) or individual (skill, knowledge, motivation)? Most are environmental.' },
+    { num: '05', label: 'Match intervention', desc: 'The cause type dictates the fix. Training only works for skill/knowledge gaps. Everything else needs something else.' },
+  ]}
+/>
+
+Then learner profiles. I interviewed subject-matter experts and Tier 1 associates to understand the day-to-day: what they look up, what they get stuck on, what their managers correct most often. The gap was mostly *environmental*. Missing job aids, unclear expectations, no signals or consequences when steps got skipped. Not a skill or knowledge gap. So most of the fix wasn't going to be training.
+
+<LearnerCard
+  accent="plum"
+  name="Tier 1 Associate"
+  setting="Central Operations · Corporate-office environment, not warehouse floor"
+  daily={[
+    "Regulatory tasks and compliance reporting",
+    "Coordinating across business lines from a desk, not a dock",
+    "Cross-functional support and ad-hoc requests",
+  ]}
+  painPoints={[
+    "Onboarding content built for warehouse work they don't do",
+    "No job aids for the office-specific procedures they actually use",
+    "Managers re-explain context-specific steps every onboarding cycle",
+  ]}
+  needs={[
+    "Job aids that match the actual workflow",
+    "Clear expectations and signals on the floor (so steps don't get skipped silently)",
+    "A quick way to look up compliance updates without scrolling a 56-min video",
+  ]}
+  caption="Tier 1 Associate profile, built from SME interviews and floor observation."
+/>
+
+I designed the system of non-training supports first (the job aids, the signals, the cadence), and *only after that* trimmed the onboarding course to cover what was genuinely a knowledge gap. I collaborated with Workplace Health and Safety to keep the regulatory content verbatim while cutting everything that could live in a job aid instead.
+
+<InterventionMatrix
+  title="Gaps and the right kind of fix for each"
+  caption="The proposed system of interventions, mapped back to the gaps. Most aren't training. The ones that are, are short and specific."
+  items={[
+    { gap: 'Onboarding content was built for warehouse work, not the office context Central Operations actually does.', solution: 'Cut the warehouse-only content. Rebuild what stayed for the office context.', type: 'training' },
+    { gap: 'No job aids for office-specific procedures associates do every day.', solution: 'Build a job-aid library for the procedures associates actually use.', type: 'non-training' },
+    { gap: 'Managers re-explain compliance updates every onboarding cycle and to existing staff.', solution: 'Weekly compliance-update digest, owned by the compliance lead.', type: 'non-training' },
+    { gap: 'No clear introduction to the eight different work groups associates rotate through.', solution: 'Eight short interactive videos, one per work group, with a 100% knowledge check.', type: 'training' },
+    { gap: 'Cross-training is ad-hoc when associates move between work groups.', solution: 'Reuse the work-group videos as cross-training. No separate training event.', type: 'process' },
+  ]}
+/>
+
+<BarChart
+  title="Onboarding course length"
+  accent="plum"
+  data={[
+    { label: 'Before', value: 56, suffix: ' min', accent: 'muted' },
+    { label: 'After',  value: 18, suffix: ' min', accent: 'plum'  },
+  ]}
+  caption="What I cut: redundant warehouse content, irrelevant safety modules, and duplicate compliance walks. What stayed: the regulatory-required minimum, kept verbatim where it had to be."
+/>
+
+</ProcessBlock>
+
+<OutcomeBlock metrics={[
+  { value: '14%', label: 'Total time-in-training reduction per new hire (~25 min)' },
+  { value: '56 → 18', label: 'Onboarding course length in minutes' },
+  { value: '8', label: 'Work-group intro videos with 100% knowledge check' },
+]}>
+
+Total time-in-training per new hire dropped fourteen percent (about twenty-five minutes), even after we *added* new role-specific content. The onboarding course alone shrank from fifty-six minutes to eighteen. The eight work-group intro videos shipped with a mandatory 100% knowledge check, and they double as cross-training when associates move between groups, so there's no separate cross-train event needed.
+
+The non-training supports (job aids, expectation cadence, environmental signals) absorbed the bulk of the original "training gap" without requiring a single new course.
+
+</OutcomeBlock>
+
+<LessonsBlock>
+
+Training was the requested artifact, not the real solution. The only reason this worked is because the performance gap analysis ran *before* anyone built anything. If I'd jumped straight to "make the course shorter and more relevant," I would have shipped a faster version of the wrong intervention.
+
+</LessonsBlock>

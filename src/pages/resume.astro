@@ -1,0 +1,456 @@
+---
+import Base from '~/layouts/Base.astro';
+
+const contact = {
+  email: 'casey.shiray@gmail.com',
+  phone: '+1 (513) 470-1223',
+  linkedin: 'linkedin.com/in/casey-shiray',
+  site: 'caseyshiray.com',
+};
+
+const headline = 'Senior Tech Instructional Designer · Learning Strategy, LXD Platforms, Storyline · Rise · Vyond & Generative AI';
+
+const profile = `Senior Instructional Designer with 10 years building learner-centered training across eLearning, instructor-led, virtual, microlearning, and just-in-time formats — hands-on with Articulate Storyline, Rise, Vyond, and the Adobe Creative Cloud suite. Combines instructional design craft with hands-on AWS and Generative AI fluency to design scalable learning ecosystems (LXD platforms, AWS-powered content management systems, AI-enabled certification programs) that compress time-to-proficiency. Translates business and operations capability standards into measurable behaviors, assessment rubrics, prioritization scorecards, and continuous improvement loops. Career impact includes $12.6MM in annualized JIT savings across 7 countries, a 14-badge AI-enabled certification scoped to 70,000 managers ($38M projected annualized impact), and a content continuous improvement strategy that reclaimed 4,390 designer hours and eliminated 14,450 hours of redundant learner time.`;
+
+const education = [
+  { school: 'Boise State University',  location: 'Boise, ID',    period: '2024 – Present', degree: 'M.S. in Organizational Performance and Workplace Learning (in progress)' },
+  { school: 'Miami University of Ohio', location: 'Oxford, OH',  period: 'Graduated',      degree: 'B.A. in Japanese, Minor in Multimedia Design' },
+  { school: 'Amazon Web Services',     location: 'Online',       period: '2024',           degree: 'AWS Certified AI Practitioner' },
+];
+
+const experience = [
+  {
+    title: 'Senior Tech Instructional Designer · Central Learning Solutions',
+    org: 'Amazon, Nashville, TN',
+    period: 'February 2026 – Present',
+    bullets: [
+      'Certify with Amazon: Owned strategy and roadmap for an AI-enabled leadership certification scoped to 70,000 Operations managers across 4 tiers — projected $38M annualized impact via 30% attrition reduction and 10% promotion lift.',
+      'Designed 14 digital badges (3 standard-work exams × 3 capabilities × 3 behaviors), translating capability standards into measurable behaviors, assessment rubrics, and pilot success metrics for scalable validation, skills visibility, and internal mobility.',
+    ],
+  },
+  {
+    title: 'Senior Tech Instructional Designer · NA Customer Fulfillment',
+    org: 'Amazon, Nashville, TN',
+    period: 'October 2025 – February 2026',
+    bullets: [
+      'LXD Hub Interface: Designed and built a centralized instructional design platform integrating QA, translation, prioritization, and file-management tools through AWS services for a 7-designer team — reclaimed 16 hours per week per designer (95% QA-time reduction).',
+      'Content Management System: Architected an AWS-powered CMS with version control and metadata tagging handling 200+ files across 6 languages — cut file-management time by 80% and enabled seamless integration with QA and translation tools.',
+      'Stood up centralized infrastructure (LXD Hub + AWS-powered CMS) that freed design capacity for higher-value learning work across the team.',
+    ],
+  },
+  {
+    title: 'Tech Instructional Designer · Global Operations',
+    org: 'Amazon, Nashville, TN',
+    period: 'June 2024 – October 2025',
+    bullets: [
+      'Just-in-Time Training Expansion: Scaled the app-integrated JIT program into Spain Operations as a new international business line — reached 100K+ learners and delivered $2.3M in productivity gains and reduced trainer costs.',
+      'Learning Intake Prioritization Rubric: Established a prioritization scorecard processing 100+ intake requests per year, compressing decision-making from 3–4 business days to 6 minutes per request.',
+      'Right-to-Left Support for Articulate Rise: Authored a custom RTL CSS script and implementation guide, saving ~12 minutes per course/guide for designers building Rise courses in RTL languages.',
+    ],
+  },
+  {
+    title: 'Tech Instructional Designer · Rapid & Rural Logistics',
+    org: 'Amazon, Nashville, TN',
+    period: 'December 2022 – June 2024',
+    bullets: [
+      'Content Continuous Improvement Strategy: Developed a content review pipeline that retired 399 outdated courses, reclaiming 4,390 designer hours (~$220K at fully-loaded rate) and eliminating 14,450 hours of redundant time-in-training for learners.',
+      'Agile Project Management Implementation: Introduced Scrum and Agile to a 14-person learning team, improving adaptability to shifting priorities and project throughput.',
+      'Content Curation Database: Built a curation database tracking learning assets across 9 business lines, giving designers a single source of truth for inventory, ownership, and review status.',
+    ],
+  },
+  {
+    title: 'Learning Experience Designer · Specialty Fulfillment',
+    org: 'Amazon, Nashville, TN',
+    period: 'September 2021 – December 2022',
+    bullets: [
+      'Just-in-Time Training: Launched an app-integrated JIT training program across 5 operational processes in 7 countries (US, Mexico, England, France, Germany, Italy, Spain) — generated $12.6MM in annualized savings with a 20% learning-curve reduction.',
+      'Safety Training Overhaul: Rebuilt a proctored safety program with professional voiceover and open captions, improving knowledge-transfer scores by 25%.',
+      'Bilingual Storage Training: Designed a bilingual training program that lifted trainee confidence to perform tasks independently by 87%.',
+      'Peak Content Optimization: Refreshed 10 critical training courses ahead of peak (5 personally updated), driving a 15% operational efficiency improvement.',
+      'Assessed 3 Specialty Fulfillment business lines and closed 9 process learning gaps within 3 months.',
+      'Partnered with business analysts to build reporting dashboards that evaluated training impact on operational performance, and provided design oversight to junior designers on concurrent projects.',
+    ],
+  },
+  {
+    title: 'Freelance Training Coordinator',
+    org: 'Delek US, Remote',
+    period: 'April 2019 – June 2019',
+    bullets: [
+      'Produced a software/tools video training series and change-management job aids supporting a corporate tooling rollout.',
+      'Designed and facilitated a virtual-meeting etiquette ILT for C-suite reports.',
+    ],
+  },
+  {
+    title: 'Instructional Designer · Technology Services Group',
+    org: 'BNY Mellon, Nashville, TN',
+    period: 'June 2019 – September 2021',
+    bullets: [
+      'Learning Materials: Authored manuals, how-to guides, and job aids targeted at technical issue resolution across enterprise services for 50,000+ global employees — shifted Technology Services learners toward self-service issue resolution.',
+      'Provided design oversight and mentorship to junior instructional designers across concurrent technical-learning projects within the Technology Services Group.',
+    ],
+  },
+  {
+    title: 'Service Desk Trainer · Digital Service Centre',
+    org: 'BNY Mellon, Nashville, TN',
+    period: 'November 2016 – June 2019',
+    bullets: [
+      'Designed and facilitated multi-modal onboarding (instructor-led, virtual, self-led, in-person) for 7–8 cohorts/year of 20–30 new hires across SaaS products, internal processes, and new-hire pipelines.',
+      'Developed instructional materials across all four delivery formats (ILT, virtual, self-led, in-person) for SaaS-product training and onboarding programs.',
+      'Onboarded the Articulate 360 authoring suite to establish the first online learning program for the service desk.',
+    ],
+  },
+];
+
+const projects = [
+  {
+    title: 'DevLearn 2025 — Designs that Matter: Creativity Backed by Science',
+    period: '2025',
+    summary: 'Conference session on evidence-based instructional design, connecting cognitive science with learner-centered creativity for ID practitioners.',
+    bullets: ['Presented to 200+ attendees in a packed session at DevLearn, the largest US L&D conference.'],
+  },
+  {
+    title: 'DevLearn 2025 — Let AI Do the Heavy Lifting: Automating Storyline Content Inventory',
+    period: '2025',
+    summary: 'Conference session on applying generative AI to automate content inventory in Articulate Storyline projects.',
+    bullets: ['Presented to 200+ attendees in a packed session at DevLearn 2025.'],
+  },
+];
+
+const skills = [
+  { group: 'Learning Design Tools', items: 'Articulate Storyline · Articulate Rise · Vyond · eLearning Authoring · Instructor-Led Training (ILT) · Virtual Instructor-Led Training (vILT) · Microlearning · Just-in-Time (JIT) Learning · Job Aids' },
+  { group: 'Multimedia Design',     items: 'Adobe Illustrator · Adobe InDesign · Adobe Photoshop · Figma · Visual Communication · Video Production' },
+  { group: 'Learning Strategy',     items: 'Adult Learning Principles · Learning Objectives & Assessment Design · Performance Gap Analysis · Capability Standards Translation · Rubric Design · Content Continuous Improvement · Prioritization Frameworks · Agile / Scrum for Learning Projects · Digital Badging Architecture · Curriculum Mapping' },
+  { group: 'Cloud & AI',            items: 'AWS Amplify · AWS Cognito · AWS DynamoDB · AWS Lambda · Amazon Bedrock · ChatGPT · Claude · Generative AI for Learning · Taxonomy · Metadata Tagging & Version Control' },
+];
+
+const competencies = 'SME & Stakeholder Partnership · Cross-Functional Project Leadership · Design Review Facilitation · Translating Business Requirements into Learning Goals · Visual & Written Storytelling · Risk & Progress Communication · Project Coordination · Quality Assurance · Version Control & Documentation · Rapid Tool Adoption · Continuous Learning Mindset · Feedback Integration';
+
+const affiliations = [
+  { name: 'International Society for Performance Improvement (ISPI)', status: 'Member, Present' },
+  { name: 'Association for Talent Development (ATD)',                 status: 'Member, Present' },
+];
+---
+
+<Base
+  title="Casey Shiray — Resume"
+  description="Senior Tech Instructional Designer · 10 years · Amazon, BNY Mellon."
+>
+  <div class="resume-actions">
+    <div class="container resume-actions-inner">
+      <a class="resume-back" href="/about">← Back to Resume page</a>
+      <button type="button" class="resume-print" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </div>
+
+  <article class="resume">
+    <header class="resume-hdr">
+      <h1 class="resume-name">Casey Shiray</h1>
+      <p class="resume-headline">{headline}</p>
+      <p class="resume-contact">
+        <a href={`mailto:${contact.email}`}>{contact.email}</a> · {contact.phone} · <a href={`https://${contact.linkedin}`}>{contact.linkedin}</a> · <a href={`https://${contact.site}`}>{contact.site}</a>
+      </p>
+    </header>
+
+    <section class="resume-section">
+      <h2 class="resume-h">Profile</h2>
+      <p class="resume-prose">{profile}</p>
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-h">Education</h2>
+      {education.map((e) => (
+        <div class="resume-entry">
+          <div class="resume-entry-line">
+            <strong class="resume-entry-title">{e.school}</strong>
+            <span class="resume-entry-meta">{e.location} · {e.period}</span>
+          </div>
+          <div class="resume-entry-sub">{e.degree}</div>
+        </div>
+      ))}
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-h">Work Experience</h2>
+      {experience.map((r) => (
+        <div class="resume-entry">
+          <div class="resume-entry-line">
+            <strong class="resume-entry-title">{r.title}</strong>
+            <span class="resume-entry-meta">{r.period}</span>
+          </div>
+          <div class="resume-entry-sub">{r.org}</div>
+          <ul class="resume-bullets">
+            {r.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-h">Independent Projects</h2>
+      {projects.map((p) => (
+        <div class="resume-entry">
+          <div class="resume-entry-line">
+            <strong class="resume-entry-title">{p.title}</strong>
+            <span class="resume-entry-meta">{p.period}</span>
+          </div>
+          <p class="resume-entry-summary">{p.summary}</p>
+          <ul class="resume-bullets">
+            {p.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-h">Technical Skills</h2>
+      <dl class="resume-skills">
+        {skills.map((s) => (
+          <>
+            <dt>{s.group}</dt>
+            <dd>{s.items}</dd>
+          </>
+        ))}
+      </dl>
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-h">Core Competencies</h2>
+      <p class="resume-prose">{competencies}</p>
+    </section>
+
+    <section class="resume-section">
+      <h2 class="resume-h">Professional Affiliations</h2>
+      {affiliations.map((a) => (
+        <div class="resume-entry">
+          <div class="resume-entry-line">
+            <strong class="resume-entry-title">{a.name}</strong>
+            <span class="resume-entry-meta">{a.status}</span>
+          </div>
+        </div>
+      ))}
+    </section>
+  </article>
+</Base>
+
+<style>
+  /* ============= Web (screen) view ============= */
+  .resume-actions {
+    background: color-mix(in oklab, var(--text) 5%, var(--bg));
+    border-bottom: 1px solid var(--divider);
+    padding: 14px 0;
+  }
+  .resume-actions-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .resume-back {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .resume-back:hover { color: var(--text); }
+  .resume-print {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background: var(--vermillion);
+    color: var(--bg);
+    cursor: pointer;
+    border: 0;
+    transition: filter 0.15s ease;
+  }
+  .resume-print:hover { filter: brightness(0.92); }
+
+  .resume {
+    max-width: 820px;
+    margin: 40px auto 80px;
+    padding: 0 56px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  @media (max-width: 640px) { .resume { padding: 0 24px; } }
+
+  .resume-hdr {
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 18px;
+    margin-bottom: 28px;
+  }
+  .resume-name {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 44px);
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .resume-headline {
+    font-size: 14px;
+    color: var(--text-soft);
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+  .resume-contact {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-soft);
+    letter-spacing: 0.02em;
+  }
+  .resume-contact a { color: inherit; border-bottom: 1px solid color-mix(in oklab, var(--vermillion) 50%, transparent); }
+  .resume-contact a:hover { color: var(--vermillion); }
+
+  .resume-section { margin-bottom: 28px; }
+
+  .resume-h {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+    border-bottom: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
+    padding-bottom: 4px;
+    margin-bottom: 14px;
+  }
+
+  .resume-prose {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .resume-entry { margin-bottom: 16px; page-break-inside: avoid; }
+  .resume-entry:last-child { margin-bottom: 0; }
+
+  .resume-entry-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .resume-entry-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .resume-entry-meta {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-soft);
+    white-space: nowrap;
+  }
+  .resume-entry-sub {
+    font-size: 14px;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+  .resume-entry-summary {
+    font-size: 14px;
+    margin-top: 4px;
+    color: var(--text);
+  }
+
+  .resume-bullets {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+  }
+  .resume-bullets li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 4px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .resume-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0.65em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--vermillion);
+  }
+
+  .resume-skills {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 18px;
+    margin: 0;
+  }
+  .resume-skills dt {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .resume-skills dd {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  @media (max-width: 640px) {
+    .resume-skills { grid-template-columns: 1fr; gap: 2px 0; }
+    .resume-skills dd { margin-bottom: 10px; }
+  }
+
+  /* ============= Print view ============= */
+  @media print {
+    /* Strip all chrome */
+    :global(nav.nav),
+    :global(footer.footer),
+    :global(.dark-toggle),
+    :global(.skip-link),
+    :global(dialog.lightbox),
+    .resume-actions {
+      display: none !important;
+    }
+    :global(body) {
+      padding-top: 0 !important;
+      background: white !important;
+      color: black !important;
+      font-size: 10pt;
+    }
+    :global(main) { padding: 0 !important; }
+
+    .resume {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      color: black;
+      font-size: 10pt;
+      line-height: 1.4;
+    }
+    .resume-hdr { border-color: black; padding-bottom: 10px; margin-bottom: 16px; }
+    .resume-name { color: black; font-size: 22pt; }
+    .resume-headline, .resume-contact { color: #333; font-size: 9pt; }
+    .resume-contact a { color: inherit; border-bottom: none; }
+
+    .resume-section { margin-bottom: 14px; }
+    .resume-h {
+      color: black;
+      border-bottom-color: black;
+      font-size: 9pt;
+      padding-bottom: 2px;
+      margin-bottom: 8px;
+    }
+    .resume-prose, .resume-bullets li, .resume-skills dd, .resume-entry-summary { font-size: 9.5pt; line-height: 1.4; }
+    .resume-entry-title { font-size: 10pt; color: black; }
+    .resume-entry-meta, .resume-entry-sub, .resume-skills dt { color: #333; font-size: 8.5pt; }
+    .resume-bullets li::before { background: black; }
+    @page { margin: 0.5in; }
+  }
+</style>

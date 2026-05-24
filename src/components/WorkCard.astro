@@ -8,9 +8,22 @@ export interface Props {
 const { caseStudy } = Astro.props;
 const { data, id } = caseStudy;
 const href = `/work/${id}`;
+
+// Concatenate searchable text (lowercased, HTML stripped) for client-side filter.
+const stripHtml = (s: string) => s.replace(/<[^>]+>/g, '');
+const searchText = [
+  data.title,
+  data.tagline ?? '',
+  data.tag,
+  data.client,
+  String(data.year),
+  data.stack.join(' '),
+  stripHtml(data.summary.problem),
+  stripHtml(data.summary.outcome),
+].join(' ').toLowerCase();
 ---
 
-<a class={`work-card work-card--${data.accent}`} href={href}>
+<a class={`work-card work-card--${data.accent}`} href={href} data-work-card data-search={searchText}>
   <div class="work-meta">
     <div class="work-tag">{data.tag}</div>
     <h3 class="work-title">

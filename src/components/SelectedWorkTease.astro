@@ -3,13 +3,17 @@ import { getCollection } from 'astro:content';
 import WorkCard from './WorkCard.astro';
 
 const all = await getCollection('case-studies');
+// Reverse chronological: newest year first; order field breaks ties within a year.
+const byYearDesc = (a: typeof all[number], b: typeof all[number]) =>
+  b.data.year - a.data.year || a.data.order - b.data.order;
+
 const featured = all
-  .sort((a, b) => a.data.order - b.data.order)
   .filter((c) => c.data.featured)
+  .sort(byYearDesc)
   .slice(0, 3);
 
-// If fewer than 3 are marked featured, fall back to first 3 by order
-const display = featured.length >= 3 ? featured : all.sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+// If fewer than 3 are marked featured, fall back to the 3 most recent overall.
+const display = featured.length >= 3 ? featured : all.sort(byYearDesc).slice(0, 3);
 ---
 
 <section class="section">

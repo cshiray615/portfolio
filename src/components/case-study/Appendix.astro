@@ -6,22 +6,28 @@ export interface Props {
 const { title, open = false } = Astro.props;
 ---
 
-<details class="cs-appendix" open={open}>
-  <summary class="cs-appendix-summary">
-    <span class="cs-appendix-tag">Appendix</span>
-    <span class="cs-appendix-title">{title}</span>
-    <span class="cs-appendix-chevron" aria-hidden="true">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </span>
-  </summary>
-  <div class="cs-appendix-body"><slot /></div>
-</details>
+<section class="cs-appendix-section">
+  <div class="container">
+    <details class="cs-appendix" open={open}>
+      <summary class="cs-appendix-summary">
+        <span class="cs-appendix-tag">Appendix</span>
+        <span class="cs-appendix-title">{title}</span>
+        <span class="cs-appendix-chevron" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </summary>
+      <div class="cs-appendix-body"><slot /></div>
+    </details>
+  </div>
+</section>
 
 <style>
+  .cs-appendix-section { padding: 16px 0; }
+
   .cs-appendix {
-    margin: 32px 0;
+    margin: 0;
     max-width: 720px;
     border: 1.5px solid var(--divider);
     border-radius: 12px;

@@ -1,0 +1,153 @@
+---
+// TODO: replace with real recommendations.
+// Paste from LinkedIn (linkedin.com/in/casey-shiray → "Received" recommendations)
+// or ask former colleagues / managers for a short quote + their title.
+const quotes = [
+  {
+    quote: '[Recommendation text goes here. Aim for 2–4 sentences that name something specific you did — a project, a behavior change, a result.]',
+    name: '[Name]',
+    title: '[Title]',
+    company: '[Company]',
+    relationship: 'Former manager',
+    linkedin: '',
+  },
+  {
+    quote: '[Second recommendation. Different voice, different angle. Maybe a peer or client this time, so the quotes triangulate rather than echo.]',
+    name: '[Name]',
+    title: '[Title]',
+    company: '[Company]',
+    relationship: 'Peer',
+    linkedin: '',
+  },
+  {
+    quote: '[Third recommendation. Two strong quotes is fine; three is comfortable; four+ starts feeling like the wall.]',
+    name: '[Name]',
+    title: '[Title]',
+    company: '[Company]',
+    relationship: 'Stakeholder',
+    linkedin: '',
+  },
+];
+---
+
+<section class="section" id="recommendations">
+  <div class="container">
+    <div class="section-hdr">
+      <span class="section-num">04</span>
+      <h2>What people <span class="hl hl--lime tilt-r">say</span>.</h2>
+    </div>
+
+    <p class="section-lead">
+      Selected recommendations from managers, peers, and stakeholders.
+      More on <a href="https://linkedin.com/in/casey-shiray" target="_blank" rel="noopener">LinkedIn</a>.
+    </p>
+
+    <div class="rec-grid">
+      {quotes.map((q) => (
+        <figure class="rec-card">
+          <span class="rec-mark" aria-hidden="true">“</span>
+          <blockquote class="rec-text">{q.quote}</blockquote>
+          <figcaption class="rec-attr">
+            <div class="rec-name">
+              {q.linkedin ? <a href={q.linkedin} target="_blank" rel="noopener">{q.name}</a> : q.name}
+            </div>
+            <div class="rec-role">{q.title} · {q.company}</div>
+            {q.relationship && <div class="rec-rel">{q.relationship}</div>}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-hdr { display: flex; align-items: baseline; gap: 18px; margin-bottom: 28px; }
+
+  .section-lead {
+    max-width: 780px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 48px;
+  }
+  .section-lead a {
+    color: var(--text);
+    border-bottom: 1.5px solid color-mix(in oklab, var(--lime) 60%, transparent);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .section-lead a:hover {
+    color: var(--lime);
+    border-bottom-color: var(--lime);
+  }
+
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 900px) {
+    .rec-grid { grid-template-columns: 1fr; }
+  }
+
+  .rec-card {
+    margin: 0;
+    padding: 28px 32px;
+    background: color-mix(in oklab, var(--text) 4%, var(--bg));
+    border-left: 4px solid var(--lime);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .rec-mark {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 56px;
+    line-height: 0.6;
+    color: var(--lime);
+    margin: 0 0 -6px;
+  }
+
+  .rec-text {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  .rec-attr {
+    border-top: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
+    padding-top: 14px;
+  }
+  .rec-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .rec-name a {
+    color: var(--text);
+    border-bottom: 1px solid color-mix(in oklab, var(--vermillion) 50%, transparent);
+  }
+  .rec-name a:hover { color: var(--vermillion); border-bottom-color: var(--vermillion); }
+  .rec-role {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-soft);
+    letter-spacing: 0.04em;
+  }
+  .rec-rel {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lime);
+  }
+</style>

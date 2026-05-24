@@ -54,6 +54,8 @@ const {
   .cs-pq--left  { grid-template-columns: 220px 1fr; }
   .cs-pq--right { grid-template-columns: 1fr 220px; }
   .cs-pq--right .cs-pq-media { order: 2; }
+  /* If no image is provided, drop the media column so the quote uses full width */
+  .cs-pq:not(:has(.cs-pq-media)) { grid-template-columns: 1fr; }
 
   @media (max-width: 720px) {
     .cs-pq--left,

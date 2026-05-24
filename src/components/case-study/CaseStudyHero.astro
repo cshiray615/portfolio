@@ -10,6 +10,19 @@ const { data } = caseStudy;
 const titleWords = data.title.split(' ');
 const last = titleWords.pop() ?? data.title;
 const rest = titleWords.join(' ');
+
+const quote = data.coverQuote;
+
+function highlightSplit(text: string, word?: string): string[] {
+  if (!word) return [text];
+  const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(`(\\b${escaped}\\b)`, 'gi');
+  return text.split(re).filter((part) => part !== '');
+}
+
+function isHighlight(part: string, word?: string): boolean {
+  return !!word && part.toLowerCase() === word.toLowerCase();
+}
 ---
 
 <header class="cs-hero">
@@ -36,18 +49,46 @@ const rest = titleWords.join(' ');
     </div>
 
     {data.cover && (
-      <figure class="cs-cover">
+      <figure class={`cs-cover ${quote ? 'cs-cover--with-quote' : ''}`}>
         <button
           type="button"
           class="cs-cover-trigger"
           data-lightbox-trigger
           data-src={data.cover}
-          data-caption={data.tagline ?? data.title}
+          data-caption={quote ? [...quote.lines, quote.coda].filter(Boolean).join(' ') : (data.tagline ?? data.title)}
           data-alt={data.title}
           style={data.coverBg ? `background:${data.coverBg}` : undefined}
           aria-label={`Open ${data.title} full size`}
         >
           <img src={data.cover} alt={data.title} loading="eager" />
+          {quote && (
+            <>
+              <span class="cs-cover-gradient" aria-hidden="true"></span>
+              <blockquote class={`cs-cover-quote cs-cover-quote--${data.accent}`}>
+                <span class="cs-cover-quote-mark" aria-hidden="true">“</span>
+                <span class="cs-cover-quote-lines">
+                  {quote.lines.map((line) => (
+                    <span class="cs-cover-quote-line">
+                      {highlightSplit(line, quote.highlight).map((part) =>
+                        isHighlight(part, quote.highlight)
+                          ? <strong class="cs-cover-quote-emph">{part}</strong>
+                          : part
+                      )}
+                    </span>
+                  ))}
+                </span>
+                {quote.coda && (
+                  <span class="cs-cover-quote-coda">
+                    {highlightSplit(quote.coda, quote.highlight).map((part) =>
+                      isHighlight(part, quote.highlight)
+                        ? <strong class="cs-cover-quote-emph">{part}</strong>
+                        : part
+                    )}
+                  </span>
+                )}
+              </blockquote>
+            </>
+          )}
         </button>
       </figure>
     )}
@@ -69,12 +110,13 @@ const rest = titleWords.join(' ');
 
   .cs-h1 { font-size: clamp(48px, 7vw, 84px); line-height: 0.92; max-width: 1000px; }
   .cs-tagline {
-    margin-top: 20px;
+    margin-top: 28px;
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: clamp(18px, 1.8vw, 22px);
-    color: var(--text-soft);
-    max-width: 720px;
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.35;
+    color: var(--text);
+    max-width: 760px;
   }
   .cs-meta {
     margin-top: 40px;
@@ -116,10 +158,90 @@ const rest = titleWords.join(' ');
   .cs-cover img {
     display: block;
     width: 100%;
-    aspect-ratio: 21 / 9;
-    object-fit: contain;
+    height: auto;
   }
+
+  /* Cover quote overlay — poster stack */
+  .cs-cover--with-quote .cs-cover-trigger { position: relative; cursor: default; }
+  .cs-cover--with-quote .cs-cover-trigger:hover,
+  .cs-cover--with-quote .cs-cover-trigger:focus-visible { transform: none; }
+  .cs-cover-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(28, 24, 32, 0) 28%,
+      rgba(28, 24, 32, 0.55) 64%,
+      rgba(28, 24, 32, 0.94) 100%);
+    pointer-events: none;
+  }
+  .cs-cover-quote {
+    position: absolute;
+    left: clamp(24px, 5%, 64px);
+    right: clamp(24px, 5%, 64px);
+    bottom: clamp(28px, 4%, 56px);
+    margin: 0;
+    color: #FAF3E0;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+    max-width: 920px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    text-align: left;
+  }
+  .cs-cover-quote-mark {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(60px, 8.5vw, 120px);
+    line-height: 0.55;
+    margin-bottom: 0.18em;
+    color: var(--vermillion);
+    text-shadow: 0 4px 22px rgba(0, 0, 0, 0.5);
+  }
+  .cs-cover-quote--lime .cs-cover-quote-mark { color: var(--lime); }
+  .cs-cover-quote--plum .cs-cover-quote-mark { color: var(--lavender); }
+
+  .cs-cover-quote-lines {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(30px, 5.2vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  .cs-cover-quote-line {
+    display: block;
+    padding-block: 0.02em;
+  }
+  .cs-cover-quote-coda {
+    display: block;
+    margin-top: 0.5em;
+    padding-top: 0.2em;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(18px, 2.4vw, 28px);
+    line-height: 1.35;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  /* Emphasized word inside the cover quote: accent color + bold, inherits italic from coda */
+  .cs-cover-quote-emph {
+    font-weight: 800;
+    font-style: inherit;
+    color: var(--vermillion);
+  }
+  .cs-cover-quote--lime .cs-cover-quote-emph { color: var(--lime); }
+  .cs-cover-quote--plum .cs-cover-quote-emph { color: var(--lavender); }
+
   @media (max-width: 640px) {
-    .cs-cover img { aspect-ratio: 4 / 3; }
+    .cs-cover-gradient {
+      background: linear-gradient(180deg,
+        rgba(28, 24, 32, 0) 12%,
+        rgba(28, 24, 32, 0.7) 50%,
+        rgba(28, 24, 32, 0.96) 100%);
+    }
+    .cs-cover-quote { gap: 0; }
   }
 </style>

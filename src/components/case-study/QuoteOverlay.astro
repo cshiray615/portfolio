@@ -1,0 +1,134 @@
+---
+export interface Props {
+  src: string;
+  alt?: string;
+  quote: string;
+  attribution?: string;
+  accent?: 'vermillion' | 'lime' | 'plum';
+  position?: 'bottom-left' | 'bottom-center';
+}
+const {
+  src,
+  alt,
+  quote,
+  attribution,
+  accent = 'vermillion',
+  position = 'bottom-left',
+} = Astro.props;
+---
+
+<figure class={`cs-quote-overlay cs-quote-overlay--${accent} cs-quote-overlay--${position}`}>
+  <button
+    type="button"
+    class="cs-quote-overlay-trigger"
+    data-lightbox-trigger
+    data-src={src}
+    data-caption={quote}
+    data-alt={alt ?? attribution ?? ''}
+    aria-label="Open image full size"
+  >
+    <img src={src} alt={alt ?? attribution ?? ''} loading="lazy" />
+    <span class="cs-quote-overlay-gradient" aria-hidden="true"></span>
+    <blockquote class="cs-quote-overlay-text">
+      <span class="cs-quote-overlay-mark" aria-hidden="true">“</span>
+      <span class="cs-quote-overlay-quote">{quote}</span>
+      {attribution && <cite class="cs-quote-overlay-attr">— {attribution}</cite>}
+    </blockquote>
+  </button>
+</figure>
+
+<style>
+  .cs-quote-overlay {
+    margin: 40px 0;
+    max-width: 860px;
+  }
+
+  .cs-quote-overlay-trigger {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1.5px solid var(--divider);
+    border-radius: 14px;
+    background: var(--surf);
+    overflow: hidden;
+    cursor: zoom-in;
+    line-height: 0;
+    transition: transform 0.2s ease;
+  }
+  .cs-quote-overlay-trigger:hover,
+  .cs-quote-overlay-trigger:focus-visible { transform: translateY(-3px); }
+
+  .cs-quote-overlay-trigger img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .cs-quote-overlay-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(28, 24, 32, 0) 35%,
+      rgba(28, 24, 32, 0.55) 70%,
+      rgba(28, 24, 32, 0.92) 100%);
+    pointer-events: none;
+  }
+
+  .cs-quote-overlay-text {
+    position: absolute;
+    left: clamp(20px, 4%, 40px);
+    right: clamp(20px, 4%, 40px);
+    bottom: clamp(20px, 3.5%, 36px);
+    margin: 0;
+    color: #FAF3E0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(18px, 2.2vw, 28px);
+    line-height: 1.32;
+    text-align: left;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
+  }
+  .cs-quote-overlay--bottom-center .cs-quote-overlay-text {
+    text-align: center;
+    left: clamp(20px, 8%, 64px);
+    right: clamp(20px, 8%, 64px);
+  }
+
+  .cs-quote-overlay-mark {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.4em;
+    line-height: 0;
+    vertical-align: -0.18em;
+    margin-right: 6px;
+    color: var(--vermillion);
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+  }
+  .cs-quote-overlay--lime .cs-quote-overlay-mark { color: var(--lime); }
+  .cs-quote-overlay--plum .cs-quote-overlay-mark { color: var(--lavender); }
+
+  .cs-quote-overlay-quote { display: inline; }
+
+  .cs-quote-overlay-attr {
+    display: block;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(250, 243, 224, 0.82);
+  }
+
+  @media (max-width: 640px) {
+    .cs-quote-overlay-gradient {
+      background: linear-gradient(180deg,
+        rgba(28, 24, 32, 0) 20%,
+        rgba(28, 24, 32, 0.65) 55%,
+        rgba(28, 24, 32, 0.94) 100%);
+    }
+  }
+</style>

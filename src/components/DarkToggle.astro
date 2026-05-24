@@ -10,8 +10,13 @@
   aria-label="Toggle dark mode"
   aria-pressed="false"
 >
-  <span class="icon icon--sun" aria-hidden="true">☀</span>
-  <span class="icon icon--moon" aria-hidden="true">☾</span>
+  <svg class="icon icon--sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+  <svg class="icon icon--moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
 </button>
 
 <style>
@@ -46,12 +51,11 @@
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
   }
 
-  .icon { font-size: 18px; line-height: 1; }
-  /* Show sun in light mode (current theme = light, click would go to dark) */
-  .icon--sun  { display: inline; }
-  .icon--moon { display: none; }
-  [data-theme="dark"] .icon--sun  { display: none; }
-  [data-theme="dark"] .icon--moon { display: inline; }
+  .icon { display: block; }
+  /* Show the destination icon: moon on light pages (click → dark), sun on dark pages (click → light) */
+  .icon--sun  { display: none; }
+  [data-theme="dark"] .icon--moon { display: none; }
+  [data-theme="dark"] .icon--sun  { display: block; }
 
   @media (max-width: 640px) {
     .dark-toggle { right: 18px; bottom: 18px; width: 42px; height: 42px; }

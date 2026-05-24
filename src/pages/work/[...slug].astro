@@ -19,6 +19,10 @@ import SparklineTrend from '~/components/case-study/SparklineTrend.astro';
 import LessonsBlock from '~/components/case-study/LessonsBlock.astro';
 import References from '~/components/case-study/References.astro';
 import Appendix from '~/components/case-study/Appendix.astro';
+import LearnerCard from '~/components/case-study/LearnerCard.astro';
+import InterventionMatrix from '~/components/case-study/InterventionMatrix.astro';
+import DownloadCard from '~/components/case-study/DownloadCard.astro';
+import QuoteOverlay from '~/components/case-study/QuoteOverlay.astro';
 
 export async function getStaticPaths() {
   const studies = await getCollection('case-studies');
@@ -30,5 +34,5 @@ const { Content } = await render(caseStudy);
 ---
 
 <CaseStudy caseStudy={caseStudy}>
-  <Content components={{ ProblemBlock, ProcessBlock, OutcomeBlock, ArtifactsGallery, Figure, CodeSample, BeforeAfter, PullQuote, ProcessDiagram, ScrollStory, ScrollScene, AnnotatedScreenshot, BigStat, BarChart, SparklineTrend, LessonsBlock, References, Appendix }} />
+  <Content components={{ ProblemBlock, ProcessBlock, OutcomeBlock, ArtifactsGallery, Figure, CodeSample, BeforeAfter, PullQuote, ProcessDiagram, ScrollStory, ScrollScene, AnnotatedScreenshot, BigStat, BarChart, SparklineTrend, LearnerCard, InterventionMatrix, LessonsBlock, References, Appendix, DownloadCard, QuoteOverlay }} />
 </CaseStudy>

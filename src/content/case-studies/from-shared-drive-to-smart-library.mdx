@@ -1,0 +1,114 @@
+---
+title: "From Shared Drive to Smart Library."
+tagline: "Final_final_v2 was killing us. So I built a system that remembered."
+role: "Full Stack Developer"
+year: 2025
+client: "Amazon · NA Customer Fulfillment"
+tag: "Content management · AWS · React"
+accent: plum
+stack: ["React", "AWS Amplify", "GraphQL", "Amazon S3", "Amazon Cognito", "DynamoDB"]
+summary:
+  problem: "Six languages of Storyline content lived on a team shared drive. Naming standards drifted year over year. Finding the latest version of a file was, charitably, archaeology."
+  solution: "The Vault: a Content Management System built for the way learning teams actually work. Course cards plus file cards, multi-language grouping, check-in/check-out, audit trail, and impact mapping when a module changes."
+  outcome: "Every version of every file automatically saved. Content updates are now faster and safer (the system shows which courses are affected when a module changes). The shared drive went from chaos to a structured, searchable, auditable library."
+order: 8
+featured: false
+cover: /case-studies/from-shared-drive-to-smart-library/cover.png
+next: tamrack-evaluation
+---
+
+<ProblemBlock>
+
+Have you ever opened a team shared drive and instantly lost faith in humanity?
+
+My team managed training content in six languages, most of it authored in Articulate Storyline. We had guidelines for naming conventions and file locations. We had standards. But standards drift year over year, and "drift" is the polite word for it. Finding the latest version of a file was, charitably, archaeology.
+
+So I set out to build a better system.
+
+</ProblemBlock>
+
+<ProcessBlock>
+
+I approached this the way I approach learning design: start with the user, clarify the workflow, prototype. I mapped how instructional designers actually search, upload, and update content, paying attention to the needs no generic Content Management System (CMS) accounts for. Then I translated those pain points into system behaviors: version control, metadata tagging, linking to Review 360 and the Learning Management System (LMS), and auto-generated course descriptions.
+
+The result is The Vault. A smart CMS built specifically for training files — PowerPoint, Storyline, and the metadata around them. Designed for how learning teams think about content, not how a generic file server does.
+
+<CodeSample
+  lang="yaml"
+  label="Stack"
+  caption="Modern web architecture with real-time sync, secure storage, and role-based access."
+  code={`stack:
+  frontend: React
+  api:      AWS Amplify + GraphQL  # real-time data sync
+  storage:  Amazon S3              # secure file storage + versioning
+  auth:     Amazon Cognito         # sign-on + role management
+  data:     DynamoDB               # course / module / file metadata`}
+/>
+
+<Figure
+  src="/case-studies/from-shared-drive-to-smart-library/architecture.png"
+  caption="Architecting The Vault. The same AWS backbone as the LXD Hub, so the two can be connected later."
+  alt="The Vault technical architecture diagram"
+/>
+
+As our content library expands, The Vault scales with more users, more languages, and larger files without losing performance.
+
+</ProcessBlock>
+
+<OutcomeBlock metrics={[
+  { value: 'every', label: 'Version automatically saved on upload' },
+  { value: '6', label: 'Languages managed in one grouped, structured library' },
+  { value: '0', label: 'Trips back to find_final_v2 to confirm it was the right one' },
+]}>
+
+Chaotic training-content storage became a structured, searchable, auditable library. Every version of every file is automatically saved (no more guessing whether `final_final_v2` was the right one). Check-in/check-out prevents the silent overwrites that used to eat our lunch.
+
+The feature the team uses every single day, and tells me they couldn't go back without, is the **check-out impact preview**: the moment you check a file out to edit, The Vault shows you every course and module that file is attached to, so you can see exactly what your change will affect *before* you save it. That single behavior turned a category of small disasters into a non-event.
+
+Four of the load-bearing features are below. Each one maps to a specific pain the old shared drive used to hand us every week.
+
+<Figure
+  src="/case-studies/from-shared-drive-to-smart-library/filtering.png"
+  alt="Filtering UI in The Vault"
+  caption="Advanced Filtering. Type, tag, language. Slice a six-language library down to the file you actually need without scrolling. The shared-drive era of Cmd+F-then-pray is over."
+/>
+
+<Figure
+  src="/case-studies/from-shared-drive-to-smart-library/impact-mapping.png"
+  alt="Impact mapping showing affected courses"
+  caption="Impact Mapping at check-out. The moment you check a file out to edit, The Vault shows every course and module attached to it, so you see exactly what your changes will impact before you save. Replaces the cross-referencing spreadsheet I used to maintain by hand."
+/>
+
+<Figure
+  src="/case-studies/from-shared-drive-to-smart-library/multi-language.png"
+  alt="Multi-language file grouping"
+  caption="Multi-Language Management. Related files across six languages are grouped and labeled so you don't have to hunt for the Hindi version of the safety module. Translation work used to be its own scavenger hunt."
+/>
+
+<Figure
+  src="/case-studies/from-shared-drive-to-smart-library/audit-trail.png"
+  alt="Audit trail showing change history"
+  caption="Audit Trail. Every change is logged automatically: who renamed what, who marked a file active, when. The compliance team stopped asking, because the answer is always one click away."
+/>
+
+</OutcomeBlock>
+
+<Appendix title="What's coming next">
+
+Now that The Vault securely stores every version of our Storyline and PowerPoint source files, the next step is to make those files *smarter*. The Vault and the LXD Hub already share the same AWS backbone, so the plan is to connect the two into one ecosystem.
+
+The goal: every time a new version of a file is uploaded, it triggers automated quality checks powered by AI.
+
+- **Automated QA Scoring** — each upload gets scanned for missing alt text, inconsistent fonts, broken links, and accessibility gaps, using the same Quality Assurance (QA) logic built into our Storyline inspection tools.
+- **Content Search Intelligence** — text extracted from source files feeds a searchable content index. No more *"which file mentions blue tape?"* moments.
+- **AI-Powered Summaries and Tags** — as files are processed, The Vault auto-generates descriptions and metadata, reducing manual data entry and improving searchability.
+
+Together these upgrades turn The Vault from storage into an intelligent CMS that actively supports design work: spotting issues, surfacing insights, reducing maintenance.
+
+</Appendix>
+
+<LessonsBlock>
+
+Building these applications reinforced a simple truth: good software design and good learning design share the same DNA. Both start by understanding human behavior. How people search, click, and get stuck. Then they design systems that remove the friction so users can concentrate on what actually matters. For instructional designers, that's designing learning experiences. For me, that's building the system that gets out of their way.
+
+</LessonsBlock>

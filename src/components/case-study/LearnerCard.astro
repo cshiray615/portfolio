@@ -1,0 +1,197 @@
+---
+export interface Props {
+  name: string;                              // e.g. "Tier 1 Associate"
+  setting?: string;                          // context line (org, environment)
+  daily?: string[];                          // day-to-day tasks
+  painPoints?: string[];                     // what they get stuck on
+  needs?: string[];                          // what would help them
+  accent?: 'vermillion' | 'lime' | 'plum';
+  caption?: string;
+}
+const {
+  name,
+  setting,
+  daily,
+  painPoints,
+  needs,
+  accent = 'vermillion',
+  caption,
+} = Astro.props;
+
+const initials = name
+  .split(/\s+/)
+  .map((w) => w[0]?.toUpperCase() ?? '')
+  .slice(0, 2)
+  .join('');
+---
+
+<figure class={`cs-learner cs-learner--${accent}`}>
+  <div class="cs-learner-card">
+    <div class="cs-learner-hdr">
+      <div class="cs-learner-avatar" aria-hidden="true">{initials}</div>
+      <div class="cs-learner-meta">
+        <div class="cs-learner-tag">Learner profile</div>
+        <div class="cs-learner-name">{name}</div>
+        {setting && <div class="cs-learner-setting">{setting}</div>}
+      </div>
+    </div>
+    <div class="cs-learner-body">
+      {daily && daily.length > 0 && (
+        <div class="cs-learner-col">
+          <div class="cs-learner-label">Day to day</div>
+          <ul>{daily.map((d) => <li>{d}</li>)}</ul>
+        </div>
+      )}
+      {painPoints && painPoints.length > 0 && (
+        <div class="cs-learner-col">
+          <div class="cs-learner-label">Stuck on</div>
+          <ul>{painPoints.map((p) => <li>{p}</li>)}</ul>
+        </div>
+      )}
+      {needs && needs.length > 0 && (
+        <div class="cs-learner-col">
+          <div class="cs-learner-label">What they need</div>
+          <ul>{needs.map((n) => <li>{n}</li>)}</ul>
+        </div>
+      )}
+    </div>
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .cs-learner {
+    margin: 32px 0;
+    max-width: 760px;
+    --cs-learner-accent: var(--vermillion);
+  }
+  .cs-learner--lime { --cs-learner-accent: var(--lime); }
+  .cs-learner--plum { --cs-learner-accent: var(--tertiary-loud); }
+
+  .cs-learner-card {
+    background: color-mix(in oklab, var(--text) 4%, var(--bg));
+    border: 1.5px solid color-mix(in oklab, var(--text) 12%, transparent);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .cs-learner-hdr {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 24px;
+    background: var(--cs-learner-accent);
+    color: var(--bg);
+  }
+  .cs-learner--lime .cs-learner-hdr { color: var(--text); }
+
+  .cs-learner-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--bg);
+    color: var(--cs-learner-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+  .cs-learner--lime .cs-learner-avatar { background: var(--text); color: var(--cs-learner-accent); }
+
+  .cs-learner-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .cs-learner-tag {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .cs-learner-name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -0.015em;
+  }
+  .cs-learner-setting {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    opacity: 0.9;
+  }
+
+  .cs-learner-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  @media (max-width: 720px) {
+    .cs-learner-body { grid-template-columns: 1fr; }
+  }
+
+  .cs-learner-col {
+    padding: 22px 22px 24px;
+    border-right: 1px solid color-mix(in oklab, var(--text) 12%, transparent);
+  }
+  .cs-learner-col:last-child { border-right: 0; }
+  @media (max-width: 720px) {
+    .cs-learner-col {
+      border-right: 0;
+      border-bottom: 1px solid color-mix(in oklab, var(--text) 12%, transparent);
+    }
+    .cs-learner-col:last-child { border-bottom: 0; }
+  }
+
+  .cs-learner-label {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cs-learner-accent);
+    margin-bottom: 12px;
+  }
+
+  .cs-learner-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cs-learner-col li {
+    position: relative;
+    padding-left: 18px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .cs-learner-col li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cs-learner-accent);
+  }
+
+  .cs-learner figcaption {
+    margin-top: 14px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-soft);
+  }
+</style>

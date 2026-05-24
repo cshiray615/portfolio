@@ -1,0 +1,165 @@
+---
+export interface Props {
+  href: string;
+  title: string;
+  description?: string;
+  thumb?: string;
+  thumbAlt?: string;
+  thumbBg?: string;
+  filetype?: string;
+  meta?: string[];
+  cta?: string;
+  accent?: 'vermillion' | 'lime' | 'plum';
+}
+const {
+  href,
+  title,
+  description,
+  thumb,
+  thumbAlt,
+  thumbBg,
+  filetype = 'PDF',
+  meta = [],
+  cta,
+  accent = 'vermillion',
+} = Astro.props;
+const metaLine = [filetype, ...meta].filter(Boolean).join(' · ');
+const ctaLabel = cta ?? `Download (${filetype})`;
+---
+
+<aside class={`cs-download cs-download--${accent}`}>
+  {thumb && (
+    <div class="cs-download-thumb">
+      <button
+        type="button"
+        class="cs-download-thumb-btn"
+        data-lightbox-trigger
+        data-src={thumb}
+        data-caption={title}
+        data-alt={thumbAlt ?? title}
+        style={thumbBg ? `background:${thumbBg}` : undefined}
+        aria-label={`Preview ${title}`}
+      >
+        <img src={thumb} alt={thumbAlt ?? title} loading="lazy" />
+      </button>
+    </div>
+  )}
+
+  <div class="cs-download-body">
+    {metaLine && <div class="cs-download-meta">{metaLine}</div>}
+    <h3 class="cs-download-title">{title}</h3>
+    {description && <p class="cs-download-desc">{description}</p>}
+    <a class="cs-download-cta" href={href} download>
+      <span aria-hidden="true" class="cs-download-cta-icon">↓</span>
+      <span>{ctaLabel}</span>
+    </a>
+  </div>
+</aside>
+
+<style>
+  .cs-download {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    align-items: center;
+    margin: 40px 0;
+    padding: 24px;
+    border: 1.5px solid var(--divider);
+    border-radius: 14px;
+    background: var(--surf);
+    max-width: 760px;
+  }
+  @media (max-width: 720px) {
+    .cs-download {
+      grid-template-columns: 1fr;
+      padding: 20px;
+      gap: 20px;
+    }
+  }
+  .cs-download:not(:has(.cs-download-thumb)) {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-download-thumb { margin: 0; }
+  .cs-download-thumb-btn {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1.5px solid var(--divider);
+    border-radius: 10px;
+    background: var(--bg);
+    cursor: zoom-in;
+    overflow: hidden;
+    line-height: 0;
+    transition: transform 0.2s ease;
+  }
+  .cs-download-thumb-btn:hover,
+  .cs-download-thumb-btn:focus-visible { transform: translateY(-3px); }
+  .cs-download-thumb-btn img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  .cs-download-body { display: flex; flex-direction: column; gap: 10px; }
+  .cs-download-meta {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .cs-download-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(22px, 2.2vw, 28px);
+    line-height: 1.15;
+    color: var(--text);
+  }
+  .cs-download-desc {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-soft);
+  }
+
+  .cs-download-cta {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: var(--vermillion);
+    color: var(--bg);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-bottom: 0;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+  .cs-download-cta:hover,
+  .cs-download-cta:focus-visible {
+    transform: translateY(-2px);
+    filter: brightness(0.96);
+  }
+  .cs-download-cta-icon {
+    display: inline-block;
+    font-weight: 900;
+    transition: transform 0.2s ease;
+  }
+  .cs-download-cta:hover .cs-download-cta-icon,
+  .cs-download-cta:focus-visible .cs-download-cta-icon {
+    transform: translateY(2px);
+  }
+
+  .cs-download--lime .cs-download-cta { background: var(--lime); color: var(--text); }
+  .cs-download--plum .cs-download-cta { background: var(--tertiary-loud); color: var(--bg); }
+</style>

@@ -1,0 +1,79 @@
+---
+title: "From Shared Drive to Shared Platform."
+tagline: "When scrappy tools become a real product."
+role: "Full Stack Developer"
+year: 2025
+client: "Amazon · NA Customer Fulfillment"
+tag: "Learning platform · AWS · React"
+accent: lime
+stack: ["React", "AWS Amplify", "Amazon Cognito", "Amazon Pinpoint", "Vite"]
+summary:
+  problem: "Our team built scrappy automation tools for translation, accessibility checks, and Storyline QA. Each one lived as code in someone's shared drive. Sharing meant downloading and running it locally. When the code updated, half the team never picked up the new version."
+  solution: "A centralized, authenticated portal where every tool runs in the browser. Single sign-on, modular apps that update without distribution, analytics to see what's actually being used. The technical scaffolding becomes invisible to the designer."
+  outcome: "Translation turnaround dropped from <b>3 days</b> per file to <b>2 to 4 hours</b>, with requestors self-serving end to end. The team reclaimed time previously spent installing, version-managing, and babysitting scripts. <b>19 source files</b> processed in one recent week without manual intervention."
+order: 7
+featured: true
+cover: /case-studies/from-shared-drive-to-platform/01-lxd-hub-dashboard.png
+next: from-shared-drive-to-smart-library
+---
+
+<ProblemBlock>
+
+Instructional designers are creative problem-solvers. We build Quality Assurance (QA) checklists when Storyline's spellcheck falls short. We design translation trackers when workflows break. We prototype workarounds when tools don't quite do what we need. The problem isn't a lack of solutions. It's that our best ones live in silos. Tucked away in spreadsheets, shared drives, and personal folders. Hard to share. Harder to maintain.
+
+Our team relied on passing scrappy tools around to speed up tedious work. Each one was a one-off. Sharing meant downloading code from someone's shared drive and running it locally. Updates were verbal: *"hey, grab the new version."* Half the team always ended up on a stale copy. We needed a system that made the technical power invisible to the end user.
+
+</ProblemBlock>
+
+<ProcessBlock>
+
+I built the Learning Experience Design (LXD) Hub. A centralized, authenticated portal for learning and development teams. A single dashboard where designers access automation tools in seconds, each appearing as a clean clickable card. Sign in once, every app launches from the browser. No installation. No version confusion. No technical hoops.
+
+From day one, the focus wasn't the code. It was the user experience. Instructional designers shouldn't need to learn command-line syntax to use a useful tool. They need something that behaves like good learning experiences: intuitive, accessible, friction-free.
+
+Each tool is its own self-contained web app, so we can update or replace any one of them in isolation without impacting the rest.
+
+<Figure
+  src="/case-studies/from-shared-drive-to-platform/02-technical-diagram.png"
+  caption="LXD Hub architecture. Modular web apps behind a single authenticated shell."
+  alt="LXD Hub technical architecture diagram"
+/>
+
+<CodeSample
+  lang="yaml"
+  label="Stack"
+  caption="Modular web apps behind a single authenticated shell."
+  code={`stack:
+  frontend: React
+  auth:     Amazon Cognito  # sign-on + role management
+  hosting:  AWS Amplify
+  analytics: Amazon Pinpoint  # usage tracking
+  build:    Vite
+architecture: modular web apps behind a single authenticated shell`}
+/>
+
+<Figure
+  src="/case-studies/from-shared-drive-to-platform/03-translate-tool.png"
+  caption="The translation tool inside the Hub. Requestors submit, track, and pick up translated files end to end."
+  alt="Translation tool inside the LXD Hub"
+/>
+
+</ProcessBlock>
+
+<OutcomeBlock metrics={[
+  { value: '3d → 2–4h', label: 'Translation turnaround per file (self-service)' },
+  { value: '19', label: 'Source files processed in one recent week with zero manual handoff' },
+  { value: '0', label: 'Install steps, version drift, or dependency errors' },
+]}>
+
+Before the LXD Hub, our team spent nearly as much time setting up tools as using them. Translation was the cleanest example: requests previously went to one team member, who ran the local version of a translation script. The standard service-level agreement was three days per file.
+
+With the Hub, requestors manage their own translation work from submission to completion, in two to four hours. That's not just faster delivery, it's an entire administrative tier removed from the team's plate. Nineteen source files moved through in a single recent week with no one being the bottleneck.
+
+</OutcomeBlock>
+
+<LessonsBlock>
+
+Technology doesn't necessarily empower people. Design does. By focusing on usability and centralization, we turned scattered, hard-to-maintain scripts into a cohesive ecosystem that supports creative work instead of distracting from it. When automation becomes effortless, instructional designers can finally spend their energy where it matters: building learning experiences worth shipping.
+
+</LessonsBlock>
