@@ -47,10 +47,13 @@ const { images } = Astro.props;
     border-radius: 12px;
     cursor: zoom-in;
     overflow: hidden;
-    transition: transform 0.2s ease;
+    transition: transform var(--dur-base) var(--ease-out);
   }
-  .gallery-trigger:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .gallery-trigger:hover { transform: translateY(-3px); }
+  }
   .gallery-trigger:focus-visible { transform: translateY(-3px); }
+  .gallery-trigger:active { transform: translateY(-1px) scale(0.99); }
 
   .gallery-trigger img {
     display: block;

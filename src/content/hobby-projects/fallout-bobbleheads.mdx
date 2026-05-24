@@ -1,0 +1,167 @@
+---
+title: "Fallout Bobbleheads."
+category: 3d-printing-laser-cutting
+year: 2026
+cover: "/hobbies/3d-printing-laser/fallout-bobblehead-family.jpg"
+coverPosition: "center"
+coverCaption: "The full set on display. Two scales: standard Fallout-bobblehead size, plus an oversized birthday-special edition."
+gallery:
+  - src: "/hobbies/3d-printing-laser/fallout-bobblehead-family.jpg"
+    caption: "The full set."
+  - src: "/hobbies/3d-printing-laser/fallout-bobblehead-casey-display.jpg"
+    caption: "Casey bobblehead on the shelf, alongside the Pip-Boy."
+  - src: "/hobbies/3d-printing-laser/fallout-bobblehead-stephen-display.jpg"
+    caption: "Stephen bobblehead on the corner shelf with the Nuka Tapper and the astronaut cat."
+  - src: "/hobbies/3d-printing-laser/fallout-bobblehead-stephen.jpg"
+    caption: "Stephen bobblehead, birthday-gift edition."
+  - src: "/hobbies/3d-printing-laser/fallout-bobblehead-casey-unpainted-print.jpg"
+    caption: "Casey head, fresh off the printer, pre-paint."
+  - src: "/hobbies/3d-printing-laser/fallout-bobblehead-stephen-unpainted-print.jpg"
+    caption: "Stephen head after filler primer and sanding — ready to paint."
+  - src: "/hobbies/3d-printing-laser/fallout-bobblehead-stephen-unpainted-print-2.jpg"
+    caption: "Scale check: factory bobblehead bodies in both sizes, with an unpainted printed head held next to the smaller one for fit."
+caption: "Custom portrait heads on store-bought Vault-Tec bobblehead bodies. 3D-modeled, printed at home, primed and painted to match, then head-swapped onto the existing figures. Made for Stephen's birthday, then a matching one for me."
+favorite: true
+order: 1
+medium: "3D print & paint"
+---
+import Carousel from '~/components/Carousel.astro';
+
+## The project
+
+The Vault-Tec bobbleheads in *Fallout* are a series of collectibles: blue jumpsuit, oversized head, white "VAULT-TEC" pedestal. I wanted custom versions with our actual faces, starting with one for Stephen's birthday. Then I made a matching one for myself. Then we wanted them in two sizes.
+
+Scope was the head only. The bodies and pedestals are factory Vault-Tec product. The trick was making a 3D-printed head that, once painted, looks like it shipped from the factory that way.
+
+## The build
+
+<section class="ws-steps" aria-label="Build process">
+  <article class="ws-step">
+    <span class="ws-step-num" aria-hidden="true">01</span>
+    <div class="ws-step-content">
+      <h3 class="ws-step-label">Sculpt</h3>
+      <p class="ws-step-text">Each head modeled in software from reference photos. Bobblehead style means exaggerated head-to-body ratio, simplified planes on the face, glasses sculpted as their own piece. Likeness needs to read at thumb-size.</p>
+    </div>
+  </article>
+
+  <article class="ws-step">
+    <span class="ws-step-num" aria-hidden="true">02</span>
+    <div class="ws-step-content">
+      <h3 class="ws-step-label">Print</h3>
+      <p class="ws-step-text">Resin-printed at two scales: a standard bobblehead size that matches the in-game props, plus a larger edition for the gift. Stephen's came off the printer first.</p>
+      <Carousel
+        images={[
+          { src: '/hobbies/3d-printing-laser/fallout-bobblehead-stephen-unpainted-print-2.jpg', caption: 'Scale check: factory Vault-Tec bobblehead bodies in both sizes, with an unpainted printed head held next to the smaller one for fit.', alt: 'Two original Vault-Tec bobblehead bodies side by side with a custom unpainted printed head held up next to the smaller one for scale' },
+          { src: '/hobbies/3d-printing-laser/fallout-bobblehead-casey-unpainted-print.jpg', caption: 'Casey head fresh off the printer, in black resin.', alt: 'Casey bobblehead head fresh from the printer, in black resin' },
+        ]}
+      />
+    </div>
+  </article>
+
+  <article class="ws-step">
+    <span class="ws-step-num" aria-hidden="true">03</span>
+    <div class="ws-step-content">
+      <h3 class="ws-step-label">Paint</h3>
+      <p class="ws-step-text">First step of painting is actually not paint: filler primer, then sand, then re-prime, then sand again until the resin print lines disappear. The head has to read as a smooth surface before any color touches it.</p>
+      <img class="ws-step-img" src="/hobbies/3d-printing-laser/fallout-bobblehead-stephen-unpainted-print.jpg" alt="Stephen head after filler primer and sanding, ready for paint" loading="lazy" />
+      <p class="ws-step-text">Then color: skin tone, hair, glasses, facial detail on the head. The bodies stay factory Vault-Tec, but I touched up the skin on the hands to match my paint mix — otherwise the new head is the wrong shade against the original arms and the swap reads as obvious.</p>
+      <img class="ws-step-img" src="/hobbies/3d-printing-laser/fallout-bobblehead-stephen.jpg" alt="Finished painted Stephen head" loading="lazy" />
+    </div>
+  </article>
+
+  <article class="ws-step">
+    <span class="ws-step-num" aria-hidden="true">04</span>
+    <div class="ws-step-content">
+      <h3 class="ws-step-label">Head swap</h3>
+      <p class="ws-step-text">The least glamorous step: pop the factory head off the body, glue the painted custom head on. If the paint matches, you can't see the seam. Then a clear coat to lock it.</p>
+    </div>
+  </article>
+
+  <article class="ws-step">
+    <span class="ws-step-num" aria-hidden="true">05</span>
+    <div class="ws-step-content">
+      <h3 class="ws-step-label">Display</h3>
+      <p class="ws-step-text">A good prop wants to live next to its friends. Mine ended up on the shelf with the Pip-Boy and the Vault Boy reference book. Stephen's holds court on a corner shelf with the Nuka Tapper prop and the astronaut cat.</p>
+      <div class="ws-step-pair">
+        <img class="ws-step-img" src="/hobbies/3d-printing-laser/fallout-bobblehead-casey-display.jpg" alt="Casey bobblehead displayed on a shelf with Pip-Boy and Fallout collectibles" loading="lazy" />
+        <img class="ws-step-img" src="/hobbies/3d-printing-laser/fallout-bobblehead-stephen-display.jpg" alt="Stephen bobblehead on a corner shelf alongside a Nuka Tapper prop and an astronaut cat figure" loading="lazy" />
+      </div>
+    </div>
+  </article>
+</section>
+
+<style>{`
+  .ws-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 32px 0 40px;
+    max-width: 720px;
+  }
+  .ws-step {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .ws-step-num {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--lime);
+    letter-spacing: -0.02em;
+  }
+  .ws-step-content { display: flex; flex-direction: column; gap: 10px; }
+  .ws-steps .ws-step .ws-step-label {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1.15;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .ws-steps .ws-step .ws-step-text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text);
+    max-width: none;
+  }
+  .ws-step-img {
+    display: block;
+    margin-top: 12px;
+    width: 100%;
+    max-width: 540px;
+    height: auto;
+    border-radius: 10px;
+    border: 1.5px solid var(--divider);
+    background: var(--surf);
+  }
+  /* Side-by-side image pair inside a step */
+  .ws-step-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+    max-width: 720px;
+  }
+  .ws-step-pair .ws-step-img {
+    margin-top: 0;
+    max-width: none;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+  @media (max-width: 640px) {
+    .ws-step-pair { grid-template-columns: 1fr; }
+    .ws-step-pair .ws-step-img { aspect-ratio: auto; }
+  }
+  @media (max-width: 640px) {
+    .ws-step { grid-template-columns: 48px 1fr; gap: 14px; }
+    .ws-step-num { font-size: 32px; }
+    .ws-steps .ws-step .ws-step-label { font-size: 18px; }
+  }
+`}</style>

@@ -1,0 +1,119 @@
+---
+// Reusable image carousel for use inside hobby case studies (MDX) and
+// galleries. Same crossfade-stacked-slides pattern used in HobbyCategoryPage.
+// The Lightbox component (rendered globally in HobbyDetail) picks up the
+// data-carousel container automatically and shows its own prev/next + dots
+// when the user opens a slide full-size.
+export interface Props {
+  images: { src: string; caption?: string; alt?: string }[];
+  maxWidth?: string;
+}
+const { images, maxWidth = '540px' } = Astro.props;
+const first = images[0];
+---
+
+<figure class="cx" data-carousel style={`--cx-max:${maxWidth}`}>
+  <div class="cx-frame">
+    {images.map((f, i) => (
+      <button
+        type="button"
+        class="cx-slide"
+        data-carousel-slide
+        data-index={i}
+        data-active={i === 0 ? '' : undefined}
+        data-lightbox-trigger
+        data-src={f.src}
+        data-caption={f.caption ?? ''}
+        data-alt={f.alt ?? f.caption ?? ''}
+        aria-label={`Open ${f.alt ?? f.caption ?? 'image'} full size`}
+        aria-hidden={i === 0 ? 'false' : 'true'}
+      >
+        <img src={f.src} alt={f.alt ?? f.caption ?? ''} loading="lazy" />
+      </button>
+    ))}
+  </div>
+  {images.length > 1 && (
+    <div class="cx-controls">
+      <button type="button" class="cx-arrow" data-carousel-prev aria-label="Previous image">‹</button>
+      <div class="cx-dots" role="tablist">
+        {images.map((_, i) => (
+          <button
+            type="button"
+            class="cx-dot"
+            data-carousel-dot
+            data-index={i}
+            data-active={i === 0 ? '' : undefined}
+            role="tab"
+            aria-label={`Show image ${i + 1} of ${images.length}`}
+          ></button>
+        ))}
+      </div>
+      <button type="button" class="cx-arrow" data-carousel-next aria-label="Next image">›</button>
+    </div>
+  )}
+  {first?.caption && (
+    <figcaption class="cx-cap" data-carousel-caption>{first.caption}</figcaption>
+  )}
+</figure>
+
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    if (root.dataset.cxBound) return;
+    root.dataset.cxBound = '1';
+
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('[data-carousel-slide]'));
+    const dots = Array.from(root.querySelectorAll<HTMLElement>('[data-carousel-dot]'));
+    const caption = root.querySelector<HTMLElement>('[data-carousel-caption]');
+    const prevBtn = root.querySelector<HTMLButtonElement>('[data-carousel-prev]');
+    const nextBtn = root.querySelector<HTMLButtonElement>('[data-carousel-next]');
+
+    function applyAspect(slide: HTMLElement) {
+      const img = slide.querySelector<HTMLImageElement>('img');
+      if (!img) return;
+      const set = () => {
+        if (img.naturalWidth && img.naturalHeight) {
+          root.style.setProperty('--cx-ar', `${img.naturalWidth} / ${img.naturalHeight}`);
+        }
+      };
+      if (img.complete) set();
+      else img.addEventListener('load', set, { once: true });
+    }
+
+    let active = 0;
+    function setActive(next: number) {
+      const total = slides.length;
+      if (total === 0) return;
+      active = ((next % total) + total) % total;
+      slides.forEach((s, i) => {
+        if (i === active) {
+          s.setAttribute('data-active', '');
+          s.setAttribute('aria-hidden', 'false');
+        } else {
+          s.removeAttribute('data-active');
+          s.setAttribute('aria-hidden', 'true');
+        }
+      });
+      dots.forEach((d, i) => {
+        if (i === active) d.setAttribute('data-active', '');
+        else d.removeAttribute('data-active');
+      });
+      if (caption) {
+        const activeSlide = slides[active];
+        caption.textContent = activeSlide.dataset.caption ?? '';
+      }
+      applyAspect(slides[active]);
+    }
+
+    if (slides[0]) applyAspect(slides[0]);
+
+    dots.forEach((d, i) => d.addEventListener('click', () => setActive(i)));
+    prevBtn?.addEventListener('click', () => setActive(active - 1));
+    nextBtn?.addEventListener('click', () => setActive(active + 1));
+
+    root.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') { setActive(active - 1); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { setActive(active + 1); e.preventDefault(); }
+    });
+  });
+</script>

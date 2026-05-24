@@ -113,7 +113,7 @@ const total = all.length;
     border: 2.5px solid var(--text);
     border-radius: 999px;
     padding: 4px 8px 4px 22px;
-    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
   }
   .work-search-field:focus-within {
     border-color: var(--vermillion);
@@ -154,9 +154,12 @@ const total = all.length;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.15s ease;
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
-  .work-search-clear:hover { background: var(--vermillion); }
+  @media (hover: hover) and (pointer: fine) {
+    .work-search-clear:hover { background: var(--vermillion); }
+  }
+  .work-search-clear:active { transform: scale(0.93); }
 
   .work-search-row {
     display: flex;
@@ -193,14 +196,21 @@ const total = all.length;
     padding: 4px 12px;
     border-radius: 999px;
     cursor: pointer;
-    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
-  .work-search-chip:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .work-search-chip:hover {
+      border-color: var(--vermillion);
+      color: var(--vermillion);
+      background: color-mix(in oklab, var(--vermillion) 8%, transparent);
+    }
+  }
   .work-search-chip:focus-visible {
     border-color: var(--vermillion);
     color: var(--vermillion);
     background: color-mix(in oklab, var(--vermillion) 8%, transparent);
   }
+  .work-search-chip:active { transform: scale(0.97); }
 
   .work-search-meta {
     font-family: var(--font-mono);

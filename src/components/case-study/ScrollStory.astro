@@ -41,7 +41,7 @@ const { mediaSide = 'left', ratio = '4 / 3' } = Astro.props;
     border: 1.5px solid var(--divider);
     overflow: hidden;
     background: var(--surf);
-    transition: background 0.5s ease;
+    transition: background var(--dur-slow) var(--ease-out);
   }
   .cs-scroll-media :global(img) {
     position: absolute;
@@ -50,7 +50,7 @@ const { mediaSide = 'left', ratio = '4 / 3' } = Astro.props;
     height: 100%;
     object-fit: contain;
     opacity: 0;
-    transition: opacity 0.45s ease;
+    transition: opacity var(--dur-slow) var(--ease-out);
   }
   .cs-scroll-media :global(img.is-active) { opacity: 1; }
 

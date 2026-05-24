@@ -23,6 +23,19 @@ html { scroll-behavior: smooth; }
   --font-hand:    'Caveat', cursive;
 }
 
+/* --- Motion tokens ---
+   Custom easing curves (strong ease-out + ease-in-out) and duration tokens.
+   Built-in CSS easings are too weak; these are the punchy variants used
+   across the site. Durations stay under 300ms for everyday UI. */
+:root {
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-fast:    160ms;
+  --dur-base:    220ms;
+  --dur-slow:    350ms;
+}
+
 /* --- Brand accent colors — surface-independent --- */
 :root {
   --vermillion:      #FF5E3A;
@@ -66,7 +79,7 @@ body {
   font-size: 16px;
   line-height: 1.65;
   overflow-x: hidden;
-  transition: background 0.35s ease, color 0.35s ease;
+  transition: background var(--dur-slow) var(--ease-out), color var(--dur-slow) var(--ease-out);
   padding-top: 64px;
 }
 
@@ -184,7 +197,7 @@ em { font-family: var(--font-serif); font-style: italic; }
   padding: 12px 18px;
   border-radius: 6px;
   text-decoration: none;
-  transition: top 0.15s ease;
+  transition: top var(--dur-fast) var(--ease-out);
 }
 .skip-link:focus { top: 16px; }
 
@@ -195,4 +208,126 @@ em { font-family: var(--font-serif); font-style: italic; }
     animation-duration: 0.001s !important;
     transition-duration: 0.001s !important;
   }
+}
+
+/* --- Carousel (src/components/Carousel.astro) ---
+   Lives here (not in the component) so the styles load reliably on every
+   page, including MDX-imported usage. The crossfade frame morphs its
+   aspect-ratio (--cx-ar set by the component script) to match the active
+   slide's natural dimensions so no image gets cropped. */
+.cx {
+  margin: 12px 0 0;
+  max-width: var(--cx-max, 540px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cx-frame {
+  position: relative;
+  background: var(--surf);
+  border: 1.5px solid var(--divider);
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: var(--cx-ar, 3 / 4);
+  transition: aspect-ratio var(--dur-slow) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .cx-frame:hover { transform: translateY(-3px); }
+}
+.cx-frame:focus-within { transform: translateY(-3px); }
+.cx-frame:active { transform: translateY(-1px) scale(0.99); }
+.cx-slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: zoom-in;
+  line-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+.cx-slide:hover,
+.cx-slide:focus-visible,
+.cx-slide:active { transform: none; }
+.cx-slide[data-active] {
+  opacity: 1;
+  pointer-events: auto;
+}
+.cx-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.cx-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.cx-arrow {
+  font: inherit;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--divider);
+  border-radius: 50%;
+  background: var(--surf);
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: transform var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .cx-arrow:hover { border-color: var(--tertiary-loud); }
+}
+.cx-arrow:active { transform: scale(0.93); }
+.cx-arrow:focus-visible { outline: 2px solid var(--vermillion); outline-offset: 2px; }
+.cx-dots {
+  display: inline-flex;
+  gap: 8px;
+}
+.cx-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--text) 22%, transparent);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .cx-dot:hover { background: color-mix(in oklab, var(--text) 40%, transparent); }
+}
+.cx-dot[data-active] {
+  background: var(--tertiary-loud);
+  transform: scale(1.15);
+}
+.cx-dot:active { transform: scale(0.9); }
+.cx-dot:focus-visible { outline: 2px solid var(--vermillion); outline-offset: 3px; }
+.cx-cap {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  color: var(--text-soft);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cx-slide { transition: opacity 80ms linear; }
+  .cx-arrow, .cx-dot { transition: none; }
 }

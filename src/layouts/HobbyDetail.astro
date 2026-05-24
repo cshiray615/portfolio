@@ -53,6 +53,24 @@ const category = await getEntry('hobby-categories', project.data.category);
   }
   .hd-body :global(em) { font-family: var(--font-serif); font-style: italic; }
   .hd-body :global(strong) { font-weight: 700; }
+  .hd-body :global(a) {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--vermillion) 60%, transparent);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    transition: color var(--dur-fast) var(--ease-out), text-decoration-color var(--dur-fast) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .hd-body :global(a:hover) {
+      color: var(--vermillion);
+      text-decoration-color: var(--vermillion);
+    }
+  }
+  .hd-body :global(a:focus-visible) {
+    color: var(--vermillion);
+    text-decoration-color: var(--vermillion);
+  }
   .hd-body :global(ul),
   .hd-body :global(ol) {
     max-width: 720px;

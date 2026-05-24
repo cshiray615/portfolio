@@ -21,6 +21,7 @@ const caseStudies = defineCollection({
     featured: z.boolean().default(false),
     cover: z.string().optional(),
     coverBg: z.string().optional(),
+    coverCaption: z.string().optional(),
     coverQuote: z.object({
       lines: z.array(z.string()),
       coda: z.string().optional(),
@@ -36,8 +37,24 @@ const hobbyCategories = defineCollection({
     name: z.string(),
     intro: z.string(),
     cover: z.string().optional(),
+    coverPosition: z.string().optional(),  // CSS object-position override for the category tile crop
     accent: z.enum(['vermillion', 'lime', 'plum']),
     order: z.number(),
+    // 'projects' (default) renders hobby-projects tiles; 'gallery' renders a simple image grid.
+    layout: z.enum(['projects', 'gallery']).default('projects'),
+    // Gallery items used when layout === 'gallery'.
+    // An item is either a single image (src) or a carousel (images: [...]).
+    gallery: z.array(z.object({
+      src: z.string().optional(),
+      caption: z.string().optional(),
+      alt: z.string().optional(),
+      // When present, the item renders as a carousel — user can cycle through the images
+      images: z.array(z.object({
+        src: z.string(),
+        caption: z.string().optional(),
+        alt: z.string().optional(),
+      })).optional(),
+    })).optional(),
   }),
 });
 
@@ -48,6 +65,9 @@ const hobbyProjects = defineCollection({
     category: z.string(),
     year: z.number(),
     cover: z.string(),
+    coverCaption: z.string().optional(),
+    coverPosition: z.string().optional(),  // CSS object-position override for the tile crop, e.g. "center" or "center bottom"
+    medium: z.string().optional(),
     gallery: z.array(z.object({
       src: z.string(),
       caption: z.string().optional(),

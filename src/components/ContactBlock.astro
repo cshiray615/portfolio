@@ -8,7 +8,7 @@
     </h2>
     <p class="contact-sub">Let's figure out if training is actually the answer — together.</p>
     <div class="contact-actions">
-      <a class="cta cta--primary" href="mailto:casey@caseyshiray.com">Email Casey</a>
+      <button class="cta cta--primary" type="button" data-copy-email data-email="casey@caseyshiray.com">Email Casey</button>
       <a class="cta cta--ghost" href="/resume">View resume</a>
       <a class="cta cta--ghost" href="https://www.linkedin.com/in/caseyshiray" target="_blank" rel="noopener">LinkedIn</a>
     </div>
@@ -32,6 +32,7 @@
     flex-wrap: wrap;
   }
   .cta {
+    font: inherit;
     font-family: var(--font-mono);
     font-size: 13px;
     font-weight: 700;
@@ -39,8 +40,15 @@
     text-transform: uppercase;
     padding: 16px 28px;
     border-radius: 8px;
+    cursor: pointer;
+    transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
   }
+  button.cta { border: 0; }
+  .cta:active { transform: scale(0.97); }
   .cta--primary { background: var(--vermillion); color: var(--bg); }
   .cta--ghost { background: transparent; border: 1.5px solid var(--divider); color: var(--text); }
-  .cta--ghost:hover { border-color: var(--vermillion); }
+  @media (hover: hover) and (pointer: fine) {
+    .cta--primary:hover { filter: brightness(0.96); }
+    .cta--ghost:hover { border-color: var(--vermillion); }
+  }
 </style>

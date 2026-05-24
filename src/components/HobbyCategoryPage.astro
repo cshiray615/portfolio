@@ -2,6 +2,8 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import HobbyTile from './HobbyTile.astro';
+import Carousel from './Carousel.astro';
+import Lightbox from './case-study/Lightbox.astro';
 
 export interface Props {
   category: CollectionEntry<'hobby-categories'>;
@@ -27,7 +29,41 @@ const projects = allProjects
 
     <p class="section-lead">{category.data.intro}</p>
 
-    {projects.length === 0 ? (
+    {category.data.layout === 'gallery' ? (
+      category.data.gallery && category.data.gallery.length > 0 ? (
+        <div class={`hobby-gallery hobby-gallery--${category.data.accent}`}>
+          {category.data.gallery.map((g) => {
+            const isCarousel = g.images && g.images.length > 1;
+            if (isCarousel) {
+              return (
+                <div class="hobby-gallery-cell hobby-gallery-cell--carousel">
+                  <Carousel images={g.images!} maxWidth="100%" />
+                </div>
+              );
+            }
+            // Single-image item
+            return (
+              <figure class="hobby-gallery-cell">
+                <button
+                  type="button"
+                  class="hobby-gallery-trigger"
+                  data-lightbox-trigger
+                  data-src={g.src}
+                  data-caption={g.caption ?? ''}
+                  data-alt={g.alt ?? g.caption ?? ''}
+                  aria-label={`Open ${g.alt ?? g.caption ?? 'image'} full size`}
+                >
+                  <img src={g.src} alt={g.alt ?? g.caption ?? ''} loading="lazy" />
+                </button>
+                {g.caption && <figcaption class="hobby-gallery-cap">{g.caption}</figcaption>}
+              </figure>
+            );
+          })}
+        </div>
+      ) : (
+        <p class="empty">Gallery is empty for now.</p>
+      )
+    ) : projects.length === 0 ? (
       <p class="empty">Casey hasn't added projects to this category yet.</p>
     ) : (
       <div class="hobby-list">
@@ -36,6 +72,8 @@ const projects = allProjects
     )}
   </div>
 </section>
+
+<Lightbox />
 
 <style>
   .cs-breadcrumb {
@@ -73,5 +111,60 @@ const projects = allProjects
     color: var(--text-soft);
     text-align: center;
     padding: 64px 0;
+  }
+
+  /* Gallery layout (used by categories with layout: gallery).
+     Cells flow as flex items so each one widens to its natural image
+     aspect, but all share the same --gallery-cell-max upper bound so
+     the row stays visually even. */
+  .hobby-gallery {
+    --gallery-cell-max: 360px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    align-items: flex-start;
+  }
+  .hobby-gallery-cell {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 0 1 var(--gallery-cell-max);
+    max-width: var(--gallery-cell-max);
+  }
+  .hobby-gallery-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    background: var(--surf);
+    border: 1.5px solid var(--divider);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: zoom-in;
+    line-height: 0;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .hobby-gallery-trigger:hover { transform: translateY(-3px); }
+  }
+  .hobby-gallery-trigger:focus-visible { transform: translateY(-3px); }
+  .hobby-gallery-trigger:active { transform: translateY(-1px) scale(0.99); }
+  .hobby-gallery-trigger img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .hobby-gallery-cap {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+    color: var(--text-soft);
+  }
+
+  /* Carousel cell: the Carousel component fills the cell width.
+     Frame hover-lift sits inside the Carousel component itself. */
+  .hobby-gallery-cell--carousel {
+    margin: 0;
   }
 </style>

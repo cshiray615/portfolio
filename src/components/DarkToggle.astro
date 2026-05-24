@@ -36,17 +36,25 @@
     justify-content: center;
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
   }
-  .dark-toggle:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .dark-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    }
+    [data-theme="dark"] .dark-toggle:hover {
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
+    }
+  }
   .dark-toggle:focus-visible {
     transform: translateY(-2px);
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
   }
+  .dark-toggle:active { transform: scale(0.93); }
   [data-theme="dark"] .dark-toggle {
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   }
-  [data-theme="dark"] .dark-toggle:hover,
   [data-theme="dark"] .dark-toggle:focus-visible {
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
   }

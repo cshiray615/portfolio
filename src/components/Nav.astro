@@ -27,7 +27,7 @@ function isActive(href: string): boolean {
     </div>
 
     <div class="nav-right">
-      <a class="nav-cta" href="/about#contact">Get in touch</a>
+      <button class="nav-cta" type="button" data-copy-email data-email="casey.shiray@gmail.com">Get in touch</button>
     </div>
 
     <button
@@ -49,7 +49,7 @@ function isActive(href: string): boolean {
       {links.map((l) => (
         <a class={`nav-drawer-link${isActive(l.href) ? ' nav-drawer-link--active' : ''}`} href={l.href} data-nav-link>{l.label}</a>
       ))}
-      <a class="nav-drawer-cta" href="/about#contact" data-nav-link>Get in touch</a>
+      <button class="nav-drawer-cta" type="button" data-copy-email data-nav-link data-email="casey.shiray@gmail.com">Get in touch</button>
     </div>
   </div>
 </nav>
@@ -92,24 +92,35 @@ function isActive(href: string): boolean {
     color: var(--text-soft);
     padding: 8px 12px;
     border-radius: 6px;
-    transition: color 0.15s, background 0.15s;
+    transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
-  .nav-link:hover { color: var(--text); background: rgba(0,0,0,0.05); }
-  [data-theme="dark"] .nav-link:hover { background: rgba(255,255,255,0.06); }
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link:hover { color: var(--text); background: rgba(0,0,0,0.05); }
+    [data-theme="dark"] .nav-link:hover { background: rgba(255,255,255,0.06); }
+  }
+  .nav-link:active { transform: scale(0.97); }
   .nav-link--active { color: var(--text); }
 
   .nav-right { display: flex; align-items: center; gap: 12px; }
   .nav-cta {
+    font: inherit;
     font-family: var(--font-mono);
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     padding: 9px 16px;
+    border: 0;
     border-radius: 6px;
     background: var(--vermillion);
     color: var(--bg);
+    cursor: pointer;
+    transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
   }
+  @media (hover: hover) and (pointer: fine) {
+    .nav-cta:hover { filter: brightness(0.96); }
+  }
+  .nav-cta:active { transform: scale(0.97); }
   @media (max-width: 640px) { .nav-cta { display: none; } }
 
   /* ---------------- Hamburger (mobile only) ---------------- */
@@ -133,7 +144,7 @@ function isActive(href: string): boolean {
     height: 2px;
     background: var(--text);
     border-radius: 2px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
   }
   .nav-burger[aria-expanded="true"] .nav-burger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav-burger[aria-expanded="true"] .nav-burger-line:nth-child(2) { opacity: 0; }
@@ -162,22 +173,82 @@ function isActive(href: string): boolean {
     color: var(--text-soft);
     padding: 12px 6px;
     border-radius: 6px;
+    transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
-  .nav-drawer-link:hover { color: var(--text); background: rgba(0,0,0,0.05); }
-  [data-theme="dark"] .nav-drawer-link:hover { background: rgba(255,255,255,0.06); }
+  @media (hover: hover) and (pointer: fine) {
+    .nav-drawer-link:hover { color: var(--text); background: rgba(0,0,0,0.05); }
+    [data-theme="dark"] .nav-drawer-link:hover { background: rgba(255,255,255,0.06); }
+  }
+  .nav-drawer-link:active { transform: scale(0.97); }
   .nav-drawer-link--active { color: var(--vermillion); }
   .nav-drawer-cta {
     margin-top: 8px;
+    font: inherit;
     font-family: var(--font-mono);
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     padding: 14px 16px;
+    border: 0;
     border-radius: 6px;
     background: var(--vermillion);
     color: var(--bg);
     text-align: center;
+    cursor: pointer;
+    transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .nav-drawer-cta:active { transform: scale(0.97); }
+
+  /* ---------------- Toast (clipboard confirmation) ---------------- */
+  /* Lives at the document level once created; styles ride alongside Nav for
+     proximity to the trigger logic. Animation follows the Sonner principle:
+     transition (interruptible) instead of keyframes, transform + opacity only,
+     start from translateY (not scale(0)), strong ease-out curve. */
+  /* Position-aware toast: JS anchors it next to whichever button was clicked.
+     Placement (above vs below the trigger) is decided based on viewport space.
+     Animation is transform + opacity only (GPU-friendly) with a strong ease-out
+     curve. Transitions (not keyframes) so a rapid second click retargets the
+     existing animation instead of restarting from zero. */
+  :global(.nav-toast) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    padding: 10px 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--bg);
+    background: var(--text);
+    border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    pointer-events: none;
+    /* Default: drop from above (used when toast sits below the trigger) */
+    transform: translate(-50%, -8px);
+    transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1),
+                opacity 220ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  /* When placed above the trigger, rise from below */
+  :global(.nav-toast[data-placement="above"]) {
+    transform: translate(-50%, 8px);
+  }
+  :global(.nav-toast[data-visible="true"]) {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.nav-toast) {
+      transition: opacity 150ms ease;
+      transform: translate(-50%, 0);
+    }
+    :global(.nav-toast[data-placement="above"]) {
+      transform: translate(-50%, 0);
+    }
   }
 </style>
 
@@ -215,5 +286,64 @@ function isActive(href: string): boolean {
   const mq = window.matchMedia('(min-width: 641px)');
   mq.addEventListener('change', (e) => {
     if (e.matches) setOpen(false);
+  });
+
+  // ---- Copy-email-to-clipboard with toast ----
+  // Single toast element, reused across triggers. Uses transition (not keyframes)
+  // so a rapid second click retargets the timer instead of re-animating from zero.
+  let toastEl: HTMLDivElement | null = null;
+  let toastTimer: number | null = null;
+
+  function showToast(message: string, anchor?: HTMLElement) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.className = 'nav-toast';
+      toastEl.setAttribute('role', 'status');
+      toastEl.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = message;
+
+    // Anchor the toast next to the trigger button. Pick above vs below based
+    // on whether there's room below before the viewport edge.
+    if (anchor) {
+      const rect = anchor.getBoundingClientRect();
+      const triggerCenter = rect.left + rect.width / 2;
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const placeAbove = spaceBelow < 120;
+
+      toastEl.style.left = `${triggerCenter}px`;
+      if (placeAbove) {
+        toastEl.style.top = `${rect.top - 48}px`;
+        toastEl.setAttribute('data-placement', 'above');
+      } else {
+        toastEl.style.top = `${rect.bottom + 12}px`;
+        toastEl.setAttribute('data-placement', 'below');
+      }
+    }
+
+    // Force reflow so transition fires on first show
+    void toastEl.offsetWidth;
+    toastEl.setAttribute('data-visible', 'true');
+    if (toastTimer !== null) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => {
+      toastEl?.setAttribute('data-visible', 'false');
+    }, 2200);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-copy-email]').forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = btn.dataset.email ?? 'casey.shiray@gmail.com';
+      try {
+        await navigator.clipboard.writeText(email);
+        showToast('Email copied to clipboard', btn);
+      } catch {
+        // Fallback: surface the address so the user can copy it manually
+        showToast(email, btn);
+      }
+      // Close the mobile drawer if the click came from inside it
+      if (btn.hasAttribute('data-nav-link')) setOpen(false);
+    });
   });
 </script>

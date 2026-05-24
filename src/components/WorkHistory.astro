@@ -200,9 +200,11 @@ const memberships = [
   .history-link {
     color: var(--text);
     border-bottom: 1.5px solid color-mix(in oklab, var(--vermillion) 50%, transparent);
-    transition: border-color 0.15s ease, color 0.15s ease;
+    transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
   }
-  .history-link:hover { border-bottom-color: var(--vermillion); color: var(--vermillion); }
+  @media (hover: hover) and (pointer: fine) {
+    .history-link:hover { border-bottom-color: var(--vermillion); color: var(--vermillion); }
+  }
   .history-link-arrow { color: var(--vermillion); margin-left: 4px; }
   .history-org {
     font-family: var(--font-mono);
@@ -219,11 +221,13 @@ const memberships = [
     user-select: none;
     padding: 14px 0;
     border-bottom: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
-    transition: background 0.15s ease;
+    transition: background var(--dur-fast) var(--ease-out);
   }
   .history-summary::-webkit-details-marker { display: none; }
   .history-summary::marker { content: ''; }
-  .history-summary:hover { background: color-mix(in oklab, var(--text) 3%, transparent); }
+  @media (hover: hover) and (pointer: fine) {
+    .history-summary:hover { background: color-mix(in oklab, var(--text) 3%, transparent); }
+  }
 
   .history-row {
     display: grid;
@@ -237,7 +241,7 @@ const memberships = [
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease, color 0.2s ease;
+    transition: transform var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
     align-self: center;
     margin-top: 4px;
   }

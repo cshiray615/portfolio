@@ -1,9 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 
+type CaseEntry = CollectionEntry<'case-studies'>;
+
 export interface Props {
-  prev: CollectionEntry<'case-studies'> | null;
-  next: CollectionEntry<'case-studies'> | null;
+  prev: CaseEntry | null;
+  next: CaseEntry | null;
 }
 const { prev, next } = Astro.props;
 ---
@@ -58,7 +60,7 @@ const { prev, next } = Astro.props;
     background: var(--card-dark-bg);
     color: var(--card-dark-text);
     text-decoration: none;
-    transition: background 0.3s ease;
+    transition: background var(--dur-slow) var(--ease-out);
   }
   .cs-nav-card--next {
     padding: 56px 32px;

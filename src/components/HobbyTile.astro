@@ -14,14 +14,21 @@ const Tag = href ? 'a' : 'div';
 
 <Tag class={`hobby-tile hobby-tile--${accent}`} {...(href ? { href } : {})}>
   <div class="hobby-tile-media">
-    <img src={project.data.cover} alt={project.data.title} loading="lazy" />
+    <img
+      src={project.data.cover}
+      alt={project.data.title}
+      loading="lazy"
+      style={project.data.coverPosition ? `object-position: ${project.data.coverPosition}` : undefined}
+    />
   </div>
   <div class="hobby-tile-body">
     <div class="hobby-tile-meta">
       <span class="hobby-tile-year">{project.data.year}</span>
-      {project.data.favorite && <span class="hobby-tile-fav">Favorite</span>}
     </div>
-    <h3 class="hobby-tile-title">{project.data.title}</h3>
+    <h3 class="hobby-tile-title">
+      {project.data.title.split(' ').slice(0, -1).join(' ')}{' '}
+      <span class={`hl hl--${accent} tilt-l`}>{project.data.title.split(' ').slice(-1)[0]}</span>
+    </h3>
     <p class="hobby-tile-cap">{project.data.caption}</p>
     {href && <span class="hobby-tile-link">Read more →</span>}
   </div>
@@ -36,10 +43,13 @@ const Tag = href ? 'a' : 'div';
     color: var(--card-dark-text);
     border-radius: 18px;
     padding: 36px;
-    transition: transform 0.25s ease;
+    transition: transform var(--dur-base) var(--ease-out);
   }
-  a.hobby-tile:hover,
+  @media (hover: hover) and (pointer: fine) {
+    a.hobby-tile:hover { transform: translateY(-3px); }
+  }
   a.hobby-tile:focus-visible { transform: translateY(-3px); }
+  a.hobby-tile:active { transform: translateY(-1px) scale(0.99); }
   @media (max-width: 1024px) {
     .hobby-tile { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
   }
@@ -54,6 +64,8 @@ const Tag = href ? 'a' : 'div';
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
+    /* Anchor crop at top so portrait-orientation photos keep heads / subject in frame */
+    object-position: center top;
   }
 
   .hobby-tile-body {

@@ -50,11 +50,13 @@ const quotes = [
   .section-lead a {
     color: var(--text);
     border-bottom: 1.5px solid color-mix(in oklab, var(--lime) 60%, transparent);
-    transition: border-color 0.15s ease, color 0.15s ease;
+    transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
   }
-  .section-lead a:hover {
-    color: var(--lime);
-    border-bottom-color: var(--lime);
+  @media (hover: hover) and (pointer: fine) {
+    .section-lead a:hover {
+      color: var(--lime);
+      border-bottom-color: var(--lime);
+    }
   }
 
   .rec-grid {

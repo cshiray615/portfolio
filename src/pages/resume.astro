@@ -3,8 +3,8 @@ import Base from '~/layouts/Base.astro';
 
 const contact = {
   email: 'casey.shiray@gmail.com',
-  phone: '+1 (513) 470-1223',
   linkedin: 'linkedin.com/in/casey-shiray',
+  github: 'github.com/cshiray615',
   site: 'caseyshiray.com',
 };
 
@@ -147,7 +147,7 @@ const affiliations = [
       <h1 class="resume-name">Casey Shiray</h1>
       <p class="resume-headline">{headline}</p>
       <p class="resume-contact">
-        <a href={`mailto:${contact.email}`}>{contact.email}</a> · {contact.phone} · <a href={`https://${contact.linkedin}`}>{contact.linkedin}</a> · <a href={`https://${contact.site}`}>{contact.site}</a>
+        <a href={`mailto:${contact.email}`} data-copy-email data-email={contact.email}>{contact.email}</a> · <a href={`https://${contact.linkedin}`}>{contact.linkedin}</a> · <a href={`https://${contact.github}`}>{contact.github}</a> · <a href={`https://${contact.site}`}>{contact.site}</a>
       </p>
     </header>
 
@@ -266,9 +266,12 @@ const affiliations = [
     color: var(--bg);
     cursor: pointer;
     border: 0;
-    transition: filter 0.15s ease;
+    transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
-  .resume-print:hover { filter: brightness(0.92); }
+  @media (hover: hover) and (pointer: fine) {
+    .resume-print:hover { filter: brightness(0.92); }
+  }
+  .resume-print:active { transform: scale(0.97); }
 
   .resume {
     max-width: 820px;

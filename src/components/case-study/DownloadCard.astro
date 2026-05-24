@@ -91,10 +91,13 @@ const ctaLabel = cta ?? `Download (${filetype})`;
     cursor: zoom-in;
     overflow: hidden;
     line-height: 0;
-    transition: transform 0.2s ease;
+    transition: transform var(--dur-base) var(--ease-out);
   }
-  .cs-download-thumb-btn:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .cs-download-thumb-btn:hover { transform: translateY(-3px); }
+  }
   .cs-download-thumb-btn:focus-visible { transform: translateY(-3px); }
+  .cs-download-thumb-btn:active { transform: translateY(-1px) scale(0.99); }
   .cs-download-thumb-btn img {
     display: block;
     width: 100%;
@@ -143,21 +146,29 @@ const ctaLabel = cta ?? `Download (${filetype})`;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     border-bottom: 0;
-    transition: transform 0.2s ease, filter 0.2s ease;
+    transition: transform var(--dur-base) var(--ease-out), filter var(--dur-base) var(--ease-out);
   }
-  .cs-download-cta:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .cs-download-cta:hover {
+      transform: translateY(-2px);
+      filter: brightness(0.96);
+    }
+    .cs-download-cta:hover .cs-download-cta-icon {
+      transform: translateY(2px);
+    }
+  }
   .cs-download-cta:focus-visible {
     transform: translateY(-2px);
     filter: brightness(0.96);
   }
+  .cs-download-cta:focus-visible .cs-download-cta-icon {
+    transform: translateY(2px);
+  }
+  .cs-download-cta:active { transform: scale(0.97); }
   .cs-download-cta-icon {
     display: inline-block;
     font-weight: 900;
-    transition: transform 0.2s ease;
-  }
-  .cs-download-cta:hover .cs-download-cta-icon,
-  .cs-download-cta:focus-visible .cs-download-cta-icon {
-    transform: translateY(2px);
+    transition: transform var(--dur-base) var(--ease-out);
   }
 
   .cs-download--lime .cs-download-cta { background: var(--lime); color: var(--text); }

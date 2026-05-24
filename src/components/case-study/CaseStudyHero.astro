@@ -90,6 +90,7 @@ function isHighlight(part: string, word?: string): boolean {
             </>
           )}
         </button>
+        {data.coverCaption && <figcaption class="cs-cover-cap">{data.coverCaption}</figcaption>}
       </figure>
     )}
   </div>
@@ -151,14 +152,25 @@ function isHighlight(part: string, word?: string): boolean {
     border: 1.5px solid var(--divider);
     overflow: hidden;
     cursor: zoom-in;
-    transition: transform 0.25s ease;
+    transition: transform var(--dur-base) var(--ease-out);
   }
-  .cs-cover-trigger:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .cs-cover-trigger:hover { transform: translateY(-3px); }
+  }
   .cs-cover-trigger:focus-visible { transform: translateY(-3px); }
+  .cs-cover-trigger:active { transform: translateY(-1px) scale(0.99); }
   .cs-cover img {
     display: block;
     width: 100%;
     height: auto;
+  }
+  .cs-cover-cap {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    color: var(--text-soft);
   }
 
   /* Cover quote overlay — poster stack */

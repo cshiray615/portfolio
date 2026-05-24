@@ -33,7 +33,7 @@ const computedMax = max ?? (Math.max(...data.map((d) => d.value)) * 1.1 || 100);
         <li class="cs-bc-row">
           <span class="cs-bc-label">{d.label}</span>
           <span class="cs-bc-track">
-            <span class={`cs-bc-fill cs-bc-fill--${fillAccent}`} style={`width:${pct}%`}></span>
+            <span class={`cs-bc-fill cs-bc-fill--${fillAccent}`} style={`transform:scaleX(${pct / 100})`}></span>
           </span>
           <span class="cs-bc-value">
             {d.value}
@@ -100,9 +100,11 @@ const computedMax = max ?? (Math.max(...data.map((d) => d.value)) * 1.1 || 100);
   }
   .cs-bc-fill {
     display: block;
+    width: 100%;
     height: 100%;
     border-radius: 3px;
-    transition: width 0.4s ease;
+    transform-origin: left center;
+    transition: transform var(--dur-slow) var(--ease-out);
   }
   .cs-bc-fill--vermillion { background: var(--vermillion); }
   .cs-bc-fill--lime       { background: var(--lime); }

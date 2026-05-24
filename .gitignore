@@ -32,6 +32,10 @@ Thumbs.db
 # Reference assets pulled from old portfolio (too large for repo)
 Old Portfolio/
 
+# Local-only staging area for assets that aren't web-ready yet
+# (oversized originals, HEIC files awaiting conversion, etc.)
+_pending/
+
 # wrangler files
 .wrangler
 .dev.vars*

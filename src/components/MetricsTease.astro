@@ -1,9 +1,9 @@
 ---
 const metrics = [
-  { num: '$38',   unit: 'M',  label: 'AI-enabled certification (annualized impact)', accent: 'vermillion' },
-  { num: '$12.6', unit: 'M',  label: 'JIT savings across 7 countries',               accent: 'lime'       },
-  { num: '~95',   unit: '%',  label: 'Translation turnaround reduction (LXD Hub)',   accent: 'plum'       },
-  { num: '100',   unit: 'k+', label: 'Learners reached via Spain JIT expansion',     accent: 'vermillion' },
+  { num: '$38',   unit: 'M',  label: 'AI-enabled certification (annualized impact)', accent: 'vermillion', href: '/resume' },
+  { num: '$12.6', unit: 'M',  label: 'JIT savings across 7 countries',               accent: 'lime',       href: '/resume' },
+  { num: '~95',   unit: '%',  label: 'Translation turnaround reduction (LXD Hub)',   accent: 'plum',       href: '/work/from-shared-drive-to-platform' },
+  { num: '100',   unit: 'k+', label: 'Learners reached via Spain JIT expansion',     accent: 'vermillion', href: '/resume' },
 ] as const;
 ---
 
@@ -17,14 +17,18 @@ const metrics = [
       Outcomes from the last <strong>five years</strong>: onboarding, tool adoption, content systems, and enterprise leadership.
     </p>
     <div class="metrics-grid">
-      {metrics.map((m) => (
-        <div class="metric">
-          <div class="metric-num">
-            {m.num}<span class={`metric-unit metric-unit--${m.accent}`}>{m.unit}</span>
-          </div>
-          <div class="metric-lbl">{m.label}</div>
-        </div>
-      ))}
+      {metrics.map((m) => {
+        const Tag = m.href ? 'a' : 'div';
+        return (
+          <Tag class={`metric metric--${m.accent}${m.href ? ' metric--link' : ''}`} {...(m.href ? { href: m.href } : {})}>
+            <div class="metric-num">
+              {m.num}<span class={`metric-unit metric-unit--${m.accent}`}>{m.unit}</span>
+            </div>
+            <div class="metric-lbl">{m.label}</div>
+            {m.href && <span class="metric-arrow" aria-hidden="true">→</span>}
+          </Tag>
+        );
+      })}
     </div>
   </div>
 </section>
@@ -49,12 +53,40 @@ const metrics = [
   }
   @media (max-width: 1024px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 640px)  { .metrics-grid { grid-template-columns: 1fr; } }
+
   .metric {
     background: var(--surf);
     border: 1.5px solid var(--divider);
     border-radius: 14px;
     padding: 28px 22px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
+  a.metric--link {
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    a.metric--link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    }
+    a.metric--vermillion:hover { border-color: var(--vermillion); }
+    a.metric--lime:hover       { border-color: var(--lime); }
+    a.metric--plum:hover       { border-color: var(--tertiary-loud); }
+  }
+  a.metric--link:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+  }
+  a.metric--vermillion:focus-visible { border-color: var(--vermillion); }
+  a.metric--lime:focus-visible       { border-color: var(--lime); }
+  a.metric--plum:focus-visible       { border-color: var(--tertiary-loud); }
+  a.metric--link:active { transform: translateY(-1px) scale(0.99); }
+
   .metric-num {
     font-family: var(--font-display);
     font-weight: 900;
@@ -76,4 +108,18 @@ const metrics = [
     color: var(--text-soft);
     line-height: 1.5;
   }
+  .metric-arrow {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--vermillion);
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .metric--lime .metric-arrow { color: var(--lime); }
+  .metric--plum .metric-arrow { color: var(--tertiary-loud); }
+  @media (hover: hover) and (pointer: fine) {
+    a.metric--link:hover .metric-arrow { transform: translateX(3px); }
+  }
+  a.metric--link:focus-visible .metric-arrow { transform: translateX(3px); }
 </style>

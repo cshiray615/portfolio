@@ -116,13 +116,20 @@ const {
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 0 3px var(--bg), 0 4px 12px rgba(0, 0, 0, 0.25);
-    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
     z-index: 2;
   }
   .cs-annot--lime .cs-annot-marker { color: var(--text); }
-  .cs-annot-marker:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .cs-annot-marker:hover {
+      transform: translate(-50%, -50%) scale(1.18);
+    }
+  }
   .cs-annot-marker:focus-visible {
     transform: translate(-50%, -50%) scale(1.18);
+  }
+  .cs-annot-marker:active {
+    transform: translate(-50%, -50%) scale(0.96);
   }
   .cs-annot-marker.is-active {
     transform: translate(-50%, -50%) scale(1.25);
@@ -150,10 +157,12 @@ const {
     background: transparent;
     text-align: left;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background var(--dur-base) var(--ease-out);
   }
-  .cs-annot-item:hover {
-    background: color-mix(in oklab, var(--cs-annot-accent) 6%, var(--bg));
+  @media (hover: hover) and (pointer: fine) {
+    .cs-annot-item:hover {
+      background: color-mix(in oklab, var(--cs-annot-accent) 6%, var(--bg));
+    }
   }
   .cs-annot-item.is-active {
     background: color-mix(in oklab, var(--cs-annot-accent) 12%, var(--bg));

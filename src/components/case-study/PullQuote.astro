@@ -74,10 +74,13 @@ const {
     background: var(--surf);
     cursor: zoom-in;
     overflow: hidden;
-    transition: transform 0.2s ease;
+    transition: transform var(--dur-base) var(--ease-out);
   }
-  .cs-pq-trigger:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .cs-pq-trigger:hover { transform: translateY(-3px); }
+  }
   .cs-pq-trigger:focus-visible { transform: translateY(-3px); }
+  .cs-pq-trigger:active { transform: translateY(-1px) scale(0.99); }
   .cs-pq-trigger img {
     display: block;
     width: 100%;

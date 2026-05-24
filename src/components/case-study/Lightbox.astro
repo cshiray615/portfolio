@@ -1,14 +1,22 @@
 ---
-// Page-wide lightbox dialog. Place once per case study (via CaseStudy layout).
+// Page-wide lightbox dialog. Place once per page.
 // Any element with [data-lightbox-trigger] data-src="..." data-caption="..." data-alt="..."
-// will open this dialog when clicked.
+// will open this dialog when clicked. If the trigger lives inside a [data-carousel]
+// container with siblings, the lightbox renders its own prev/next + dots so the user
+// can keep cycling at full size.
 ---
 
 <dialog class="lightbox" data-lightbox>
   <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close">×</button>
+
   <figure class="lightbox-figure">
     <img data-lightbox-img alt="" />
     <figcaption data-lightbox-caption></figcaption>
+    <div class="lightbox-controls" data-lightbox-controls hidden>
+      <button type="button" class="lightbox-arrow" data-lightbox-prev aria-label="Previous image">‹</button>
+      <div class="lightbox-dots" data-lightbox-dots role="tablist"></div>
+      <button type="button" class="lightbox-arrow" data-lightbox-next aria-label="Next image">›</button>
+    </div>
   </figure>
 </dialog>
 
@@ -65,25 +73,174 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
-  .lightbox-close:hover { background: var(--vermillion); color: var(--bg); }
+  @media (hover: hover) and (pointer: fine) {
+    .lightbox-close:hover { background: var(--vermillion); color: var(--bg); }
+  }
+  .lightbox-close:active { transform: scale(0.93); }
+
+  /* Controls row (prev, dots, next) lives under the caption.
+     Hidden entirely for single-image triggers; shown for carousel groups. */
+  .lightbox-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .lightbox-controls[hidden] { display: none; }
+
+  /* Match the inline carousel buttons: bordered circle, border-color shifts
+     to --tertiary-loud on hover, scale on press. Keeps behavior consistent
+     between the page-level carousel and the lightbox carousel. */
+  .lightbox-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--divider);
+    background: var(--surf);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .lightbox-arrow:hover { border-color: var(--tertiary-loud); }
+  }
+  .lightbox-arrow:active { transform: scale(0.93); }
+  .lightbox-arrow:focus-visible { outline: 2px solid var(--vermillion); outline-offset: 3px; }
+
+  .lightbox-dots {
+    display: inline-flex;
+    gap: 10px;
+  }
+  .lightbox-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--bg) 40%, transparent);
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .lightbox-dot:hover { background: color-mix(in oklab, var(--bg) 65%, transparent); }
+  }
+  .lightbox-dot[data-active] {
+    background: var(--tertiary-loud);
+    transform: scale(1.15);
+  }
+  .lightbox-dot:active { transform: scale(0.88); }
+  .lightbox-dot:focus-visible { outline: 2px solid var(--vermillion); outline-offset: 3px; }
 </style>
 
 <script>
+  // ----- Lightbox with optional carousel grouping -----
+  // A trigger inside a [data-carousel] container opens with prev/next + dots
+  // showing all sibling triggers. A standalone trigger opens single-image.
+  type Slide = { src: string; alt: string; caption: string };
+
   const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
   if (dialog) {
     const img = dialog.querySelector<HTMLImageElement>('[data-lightbox-img]');
     const cap = dialog.querySelector<HTMLElement>('[data-lightbox-caption]');
+    const prevBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-prev]');
+    const nextBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-next]');
+    const dotsRoot = dialog.querySelector<HTMLElement>('[data-lightbox-dots]');
+    const controlsRoot = dialog.querySelector<HTMLElement>('[data-lightbox-controls]');
+
+    let slides: Slide[] = [];
+    let index = 0;
+
+    function renderDots() {
+      if (!dotsRoot) return;
+      dotsRoot.innerHTML = '';
+      if (slides.length <= 1) return;
+      slides.forEach((_, i) => {
+        const d = document.createElement('button');
+        d.type = 'button';
+        d.className = 'lightbox-dot';
+        d.setAttribute('role', 'tab');
+        d.setAttribute('aria-label', `Show image ${i + 1} of ${slides.length}`);
+        if (i === index) d.setAttribute('data-active', '');
+        d.addEventListener('click', () => setActive(i));
+        dotsRoot.appendChild(d);
+      });
+    }
+
+    function setActive(next: number) {
+      if (slides.length === 0) return;
+      const total = slides.length;
+      index = ((next % total) + total) % total;
+      const s = slides[index];
+      if (img) {
+        img.src = s.src;
+        img.alt = s.alt;
+      }
+      if (cap) cap.textContent = s.caption;
+      // Update dot states without rebuilding the row
+      dotsRoot?.querySelectorAll<HTMLElement>('.lightbox-dot').forEach((d, i) => {
+        if (i === index) d.setAttribute('data-active', '');
+        else d.removeAttribute('data-active');
+      });
+    }
+
+    function gatherSlides(trigger: HTMLElement): { slides: Slide[]; startIndex: number } {
+      const carousel = trigger.closest<HTMLElement>('[data-carousel]');
+      if (carousel) {
+        const triggers = Array.from(carousel.querySelectorAll<HTMLElement>('[data-lightbox-trigger]'));
+        const collected: Slide[] = triggers.map((t) => ({
+          src: t.dataset.src ?? '',
+          alt: t.dataset.alt ?? '',
+          caption: t.dataset.caption ?? '',
+        }));
+        return { slides: collected, startIndex: Math.max(0, triggers.indexOf(trigger)) };
+      }
+      return {
+        slides: [{
+          src: trigger.dataset.src ?? '',
+          alt: trigger.dataset.alt ?? '',
+          caption: trigger.dataset.caption ?? '',
+        }],
+        startIndex: 0,
+      };
+    }
+
+    function updateControlsVisibility() {
+      if (!controlsRoot) return;
+      if (slides.length > 1) controlsRoot.removeAttribute('hidden');
+      else controlsRoot.setAttribute('hidden', '');
+    }
 
     document.querySelectorAll<HTMLElement>('[data-lightbox-trigger]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        if (img) {
-          img.src = btn.dataset.src ?? '';
-          img.alt = btn.dataset.alt ?? '';
-        }
-        if (cap) cap.textContent = btn.dataset.caption ?? '';
+        const { slides: collected, startIndex } = gatherSlides(btn);
+        slides = collected;
+        index = startIndex;
+        updateControlsVisibility();
+        renderDots();
+        setActive(index);
         dialog.showModal();
       });
+    });
+
+    prevBtn?.addEventListener('click', () => setActive(index - 1));
+    nextBtn?.addEventListener('click', () => setActive(index + 1));
+
+    // Keyboard nav when the dialog is open
+    dialog.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (slides.length <= 1) return;
+      if (e.key === 'ArrowLeft') { setActive(index - 1); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { setActive(index + 1); e.preventDefault(); }
     });
 
     dialog.querySelector<HTMLButtonElement>('[data-lightbox-close]')?.addEventListener('click', () => dialog.close());

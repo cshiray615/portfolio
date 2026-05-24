@@ -1,0 +1,151 @@
+---
+title: "Arthur Morgan Doll."
+category: figures-miniatures-models
+year: 2023
+cover: "/hobbies/figures/arthur-morgan-finished.JPG"
+gallery:
+  - src: "/hobbies/figures/arthur-morgan-character-comparison.JPG"
+    caption: "Game render vs the doll."
+  - src: "/hobbies/figures/arthur-morgan-face-painting-1.JPG"
+    caption: "Head-sculpt by Rocco Tartamella, mid-paint."
+  - src: "/hobbies/figures/arthur-morgan-face-painting-2.JPG"
+    caption: "Closer to finished. Most of what makes it look like Arthur happens in the paint."
+  - src: "/hobbies/figures/arthur-morgan-shirt-drafting.JPG"
+    caption: "Shirt drafted and sewn at 1/6 scale."
+  - src: "/hobbies/figures/arthur-morgan-vest-drafting.JPG"
+    caption: "Vest in progress with contrast stitching on the lapel."
+  - src: "/hobbies/figures/arthur-morgan-finished.JPG"
+    caption: "Finished doll on the display: barrel, lever-action, lantern, hat."
+caption: "Custom 1/6 scale Arthur Morgan from Red Dead Redemption 2. Head-sculpt by Rocco Tartamella, hand-painted by Casey. Hand-dyed and sewn shirt and vest. Tiny hand-made spurs. Sourced accessories from Stevo's Toys and BattleGear Toys."
+favorite: true
+order: 1
+medium: "3D print, paint, & sewing"
+---
+import Carousel from '~/components/Carousel.astro';
+
+## The character
+
+Arthur Morgan, outlaw with a heart, from *Red Dead Redemption 2*. The character is iconic enough that "almost right" reads as wrong on sight. So the build needed three things to land: the face, the silhouette of the clothes, and the staging.
+
+## The build
+
+<section class="ws-steps" aria-label="Build process">
+  <article class="ws-step">
+    <span class="ws-step-num" aria-hidden="true">01</span>
+    <div class="ws-step-content">
+      <h3 class="ws-step-label">Head (sourced and painted)</h3>
+      <p class="ws-step-text">Head-sculpt by Rocco Tartamella. He gave me the bone structure; I did the paint. Skin tone first, then the brow, then the beard one direction at a time. The eyes are last because once they're in, the whole head reads as a person staring back at you.</p>
+      <Carousel
+        images={[
+          { src: '/hobbies/figures/arthur-morgan-face-painting-1.JPG', caption: 'Tartamella head-sculpt, mid-paint.', alt: 'Tartamella head-sculpt, mid-paint' },
+          { src: '/hobbies/figures/arthur-morgan-face-painting-2.JPG', caption: 'Closer to finished — most of the likeness comes from the paint.', alt: 'Closer-to-finished face paint' },
+        ]}
+      />
+    </div>
+  </article>
+
+  <article class="ws-step">
+    <span class="ws-step-num" aria-hidden="true">02</span>
+    <div class="ws-step-content">
+      <h3 class="ws-step-label">Hand-dyed and sewn clothing</h3>
+      <p class="ws-step-text">Hand-dyed and sewn all of it at 1/6 scale. Shirt in plain muslin, vest in red brocade body with contrast stitching down the lapel. Doll-scale sewing is a different sport. Every seam is shorter than your pinky and twice as picky.</p>
+      <Carousel
+        images={[
+          { src: '/hobbies/figures/arthur-morgan-shirt-drafting.JPG', caption: 'Shirt drafted and sewn at 1/6 scale.', alt: 'Shirt pattern at 1/6 scale' },
+          { src: '/hobbies/figures/arthur-morgan-vest-drafting.JPG', caption: 'Vest in progress with contrast stitching on the lapel.', alt: 'Red brocade vest in progress with contrast stitching' },
+        ]}
+      />
+    </div>
+  </article>
+
+  <article class="ws-step">
+    <span class="ws-step-num" aria-hidden="true">03</span>
+    <div class="ws-step-content">
+      <h3 class="ws-step-label">Details: spurs, boots, accessories</h3>
+      <p class="ws-step-text">Made the tiny spurs myself. Boots are from <strong>BattleGear Toys</strong>, painted to add wear and detail. Holster, satchel, and bandolier are from <a href="https://www.stevostoys.com" target="_blank" rel="noopener">Stevo's Toys</a>. The right outsourcing makes the rest of the build look better than it would have on its own.</p>
+    </div>
+  </article>
+
+  <article class="ws-step">
+    <span class="ws-step-num" aria-hidden="true">04</span>
+    <div class="ws-step-content">
+      <h3 class="ws-step-label">Staging</h3>
+      <p class="ws-step-text">A great doll on a bare shelf is a sad doll. Wooden barrel, lever-action, lantern, hat. The staging is the difference between "an action figure I made" and "a scene from the game."</p>
+      <img class="ws-step-img" src="/hobbies/figures/arthur-morgan-finished.JPG" alt="Finished Arthur Morgan staged with barrel, gun, and lantern" loading="lazy" />
+    </div>
+  </article>
+</section>
+
+## Reference vs result
+
+<Figure
+  src="/hobbies/figures/arthur-morgan-character-comparison.JPG"
+  alt="Side by side: in-game Arthur Morgan render and the finished doll's vest"
+  caption="The vest pattern and the moustache were the two beats I needed to get right. The rest gets carried by the lighting."
+  align="left"
+/>
+
+## Credits
+
+- **Head-sculpt:** Rocco Tartamella
+- **Holster, satchel, bandolier:** [Stevo's Toys](https://www.stevostoys.com)
+- **Boots:** BattleGear Toys (painted by me)
+- **Everything else (paint, dye, sew, spurs, staging):** Casey
+
+<style>{`
+  .ws-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 32px 0 40px;
+    max-width: 720px;
+  }
+  .ws-step {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .ws-step-num {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--vermillion);
+    letter-spacing: -0.02em;
+  }
+  .ws-step-content { display: flex; flex-direction: column; gap: 10px; }
+  .ws-steps .ws-step .ws-step-label {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1.15;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .ws-steps .ws-step .ws-step-text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text);
+    max-width: none;
+  }
+  .ws-step-img {
+    display: block;
+    margin-top: 12px;
+    width: 100%;
+    max-width: 540px;
+    height: auto;
+    border-radius: 10px;
+    border: 1.5px solid var(--divider);
+    background: var(--surf);
+  }
+  @media (max-width: 640px) {
+    .ws-step { grid-template-columns: 48px 1fr; gap: 14px; }
+    .ws-step-num { font-size: 32px; }
+    .ws-steps .ws-step .ws-step-label { font-size: 18px; }
+  }
+`}</style>

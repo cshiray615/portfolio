@@ -56,10 +56,13 @@ const searchText = [
     color: var(--card-dark-text);
     border-radius: 18px;
     padding: 36px;
-    transition: transform 0.25s ease;
+    transition: transform var(--dur-base) var(--ease-out);
   }
-  .work-card:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .work-card:hover { transform: translateY(-3px); }
+  }
   .work-card:focus-visible { transform: translateY(-3px); }
+  .work-card:active { transform: translateY(-1px) scale(0.99); }
   @media (max-width: 1024px) {
     .work-card { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
   }

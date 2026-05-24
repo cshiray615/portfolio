@@ -41,11 +41,14 @@ const { src, caption, alt, bg, align = 'left' } = Astro.props;
     border-radius: 12px;
     overflow: hidden;
     cursor: zoom-in;
-    transition: transform 0.2s ease;
+    transition: transform var(--dur-base) var(--ease-out);
     line-height: 0;
   }
-  .cs-figure-trigger:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .cs-figure-trigger:hover { transform: translateY(-3px); }
+  }
   .cs-figure-trigger:focus-visible { transform: translateY(-3px); }
+  .cs-figure-trigger:active { transform: translateY(-1px) scale(0.99); }
 
   .cs-figure-trigger img {
     display: block;

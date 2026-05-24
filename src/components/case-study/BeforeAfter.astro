@@ -8,9 +8,18 @@ export interface Props {
   before: Side;
   after: Side;
   caption?: string;
-  ratio?: string;   // e.g. "16/9" (default), "4/3", "3/2"
+  ratio?: string;        // e.g. "16/9" (default), "4/3", "3/2"
+  beforeLabel?: string;  // override the "BEFORE" tag text
+  afterLabel?: string;   // override the "AFTER" tag text
 }
-const { before, after, caption, ratio = '16/9' } = Astro.props;
+const {
+  before,
+  after,
+  caption,
+  ratio = '16/9',
+  beforeLabel = 'Before',
+  afterLabel = 'After',
+} = Astro.props;
 ---
 
 <figure class="cs-ba">
@@ -26,8 +35,8 @@ const { before, after, caption, ratio = '16/9' } = Astro.props;
       <img src={before.src} alt={before.alt ?? 'Before'} loading="lazy" draggable="false" />
     </div>
 
-    <span class="cs-ba-tag cs-ba-tag--before">Before</span>
-    <span class="cs-ba-tag cs-ba-tag--after">After</span>
+    <span class="cs-ba-tag cs-ba-tag--before">{beforeLabel}</span>
+    <span class="cs-ba-tag cs-ba-tag--after">{afterLabel}</span>
 
     <div class="cs-ba-line" aria-hidden="true"></div>
     <button
@@ -128,10 +137,13 @@ const { before, after, caption, ratio = '16/9' } = Astro.props;
     align-items: center;
     justify-content: center;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
-    transition: transform 0.15s ease;
+    transition: transform var(--dur-fast) var(--ease-out);
   }
-  .cs-ba-handle:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .cs-ba-handle:hover { transform: scale(1.08); }
+  }
   .cs-ba-handle:focus-visible { transform: scale(1.08); }
+  .cs-ba-handle:active { transform: scale(0.96); }
   .cs-ba-handle:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 
   .cs-ba figcaption {

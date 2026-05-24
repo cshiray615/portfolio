@@ -70,7 +70,7 @@ const { title, open = false } = Astro.props;
     color: var(--text-soft);
     display: inline-flex;
     align-items: center;
-    transition: transform 0.2s ease;
+    transition: transform var(--dur-base) var(--ease-out);
     flex-shrink: 0;
   }
   .cs-appendix[open] .cs-appendix-chevron { transform: rotate(180deg); }

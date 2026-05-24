@@ -11,14 +11,26 @@ const cats = (await getCollection('hobby-categories')).sort((a, b) => a.data.ord
       <h2>Outside of <span class="hl hl--plum tilt-l">work</span>.</h2>
     </div>
     <p class="section-lead">
-      What I make when nobody's grading me. Costumes, furniture, paintings, games. Each tile is a category — click for the build log.
+      What I make when nobody's grading me. Costumes, furniture, paintings, games. Each tile is a category. Click for the build log.
     </p>
     <div class="cat-grid">
       {cats.map((c) => (
-        <a class={`cat-tile cat-tile--${c.data.accent}`} href={`/hobbies/${c.id}`}>
-          <div class="cat-name">{c.data.name}</div>
-          <div class="cat-intro">{c.data.intro}</div>
-          <div class="cat-arrow">→</div>
+        <a class={`cat-tile cat-tile--${c.data.accent} ${c.data.cover ? 'cat-tile--has-cover' : ''}`} href={`/hobbies/${c.id}`}>
+          {c.data.cover && (
+            <div class="cat-media">
+              <img
+                src={c.data.cover}
+                alt=""
+                loading="lazy"
+                style={c.data.coverPosition ? `object-position: ${c.data.coverPosition}` : undefined}
+              />
+            </div>
+          )}
+          <div class="cat-body">
+            <div class="cat-name">{c.data.name}</div>
+            <div class="cat-intro">{c.data.intro}</div>
+            <div class="cat-arrow">→</div>
+          </div>
         </a>
       ))}
     </div>
@@ -42,24 +54,62 @@ const cats = (await getCollection('hobby-categories')).sort((a, b) => a.data.ord
   .cat-tile {
     background: var(--surf);
     border: 1.5px solid var(--divider);
-    border-radius: 14px;
-    padding: 28px;
     border-top: 6px solid var(--vermillion);
-    transition: transform 0.2s ease, border-top-color 0.2s ease;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
     display: flex;
     flex-direction: column;
-    gap: 12px;
     min-height: 200px;
   }
   .cat-tile--lime { border-top-color: var(--lime); }
   .cat-tile--plum { border-top-color: var(--tertiary-loud); }
-  .cat-tile:hover,
-  .cat-tile:focus-visible { transform: translateY(-3px); }
+  @media (hover: hover) and (pointer: fine) {
+    .cat-tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+    }
+  }
+  .cat-tile:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  }
+  .cat-tile:active { transform: translateY(-1px) scale(0.99); }
+
+  /* Cover media: top of the card, fixed aspect ratio, anchored top so subjects with heads at the top stay in frame. */
+  .cat-media {
+    overflow: hidden;
+    background: color-mix(in oklab, var(--text) 6%, var(--bg));
+    border-bottom: 1.5px solid var(--divider);
+  }
+  .cat-media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .cat-tile:hover .cat-media img { transform: scale(1.03); }
+  }
+  .cat-tile:focus-visible .cat-media img { transform: scale(1.03); }
+
+  .cat-body {
+    padding: 24px 28px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+  .cat-tile--has-cover .cat-body { padding-top: 22px; }
+  .cat-tile:not(.cat-tile--has-cover) .cat-body { padding: 28px; }
 
   .cat-name {
     font-family: var(--font-display);
     font-weight: 800;
     font-size: clamp(24px, 2.6vw, 32px);
+    line-height: 1;
     text-transform: uppercase;
     letter-spacing: -0.015em;
   }

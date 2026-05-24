@@ -6,19 +6,24 @@ import Lightbox from '~/components/case-study/Lightbox.astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection, getEntry } from 'astro:content';
 
+type CaseEntry = CollectionEntry<'case-studies'>;
+
 export interface Props {
-  caseStudy: CollectionEntry<'case-studies'>;
+  caseStudy: CaseEntry;
 }
 
 const { caseStudy } = Astro.props;
 const { data } = caseStudy;
 
 // "Next" is the explicit pointer set in frontmatter.
-const nextEntry = data.next ? await getEntry('case-studies', data.next) : null;
+const nextEntry: CaseEntry | null = data.next
+  ? ((await getEntry('case-studies', data.next)) as CaseEntry | undefined) ?? null
+  : null;
 
 // "Previous" is whichever other case study points TO this one via its `next` field.
 const allCases = await getCollection('case-studies');
-const prevEntry = allCases.find((c) => c.data.next === caseStudy.id) ?? null;
+const prevEntry: CaseEntry | null =
+  (allCases.find((c) => c.data.next === caseStudy.id) as CaseEntry | undefined) ?? null;
 ---
 
 <Base title={`${data.title} — Casey Shiray`} description={data.tagline ?? data.summary.problem}>

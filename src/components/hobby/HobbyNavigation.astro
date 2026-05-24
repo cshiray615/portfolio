@@ -13,8 +13,11 @@ const siblings = allProjects
   .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 
 const currentIndex = siblings.findIndex((p) => p.id === project.id);
-const prev = currentIndex > 0 ? siblings[currentIndex - 1] : null;
-const next = currentIndex >= 0 && currentIndex < siblings.length - 1 ? siblings[currentIndex + 1] : null;
+const total = siblings.length;
+// Wrap around: first project's prev = last, last project's next = first.
+// With only one favorite in the category, prev/next stay null (no nav needed).
+const prev = currentIndex >= 0 && total > 1 ? siblings[(currentIndex - 1 + total) % total] : null;
+const next = currentIndex >= 0 && total > 1 ? siblings[(currentIndex + 1) % total] : null;
 
 const category = await getEntry('hobby-categories', project.data.category);
 const accent: 'vermillion' | 'lime' | 'plum' = category?.data.accent ?? 'vermillion';
@@ -75,7 +78,7 @@ const categoryName = category?.data.name ?? project.data.category;
     background: var(--card-dark-bg);
     color: var(--card-dark-text);
     text-decoration: none;
-    transition: background 0.3s ease;
+    transition: background var(--dur-slow) var(--ease-out);
   }
   .cs-nav-card--next {
     padding: 56px 32px;

@@ -85,17 +85,38 @@
   .hero-bloom--1 {
     top: -120px; right: -120px;
     width: 680px; height: 680px;
-    background: radial-gradient(circle, rgba(255, 94, 58, 0.32) 0%, rgba(255, 94, 58, 0.10) 45%, transparent 75%);
+    background: radial-gradient(circle, rgba(255, 94, 58, 0.15) 0%, transparent 70%);
   }
   .hero-bloom--2 {
     bottom: -160px; left: 25%;
     width: 520px; height: 520px;
-    background: radial-gradient(circle, rgba(75, 44, 90, 0.18) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 94, 58, 0.18) 0%, transparent 70%);
+  }
+  /* Dark-mode blooms use a small solid-color disc with a heavy Gaussian blur
+     instead of a radial gradient. A gradient has a literal edge — alpha hits
+     zero at the box boundary, and against a dark surface even alpha 0.005→0
+     reads as a visible curve. Blur produces a Gaussian falloff that
+     asymptotically approaches 0 — perceptually edgeless.
+
+     Tune the look by editing the four vars below in one place; both blooms
+     read from them. Only per-bloom positions are defined separately. */
+  [data-theme="dark"] .hero-bloom {
+    --bloom-rgb: 200, 180, 208;  /* lavender — low contrast against dark bg keeps edge soft */
+    --bloom-alpha: 0.13;          /* peak source alpha; perceived brightness scales linearly */
+    --bloom-size: 320px;          /* disc diameter before blur */
+    --bloom-blur: 120px;          /* blur radius; bigger = softer falloff and wider visible glow */
+
+    width: var(--bloom-size);
+    height: var(--bloom-size);
+    background: rgba(var(--bloom-rgb), var(--bloom-alpha));
+    filter: blur(var(--bloom-blur));
   }
   [data-theme="dark"] .hero-bloom--1 {
-    background: radial-gradient(circle, rgba(255, 94, 58, 0.20) 0%, rgba(255, 94, 58, 0.06) 45%, transparent 80%);
+    top: -80px;
+    right: -80px;
   }
   [data-theme="dark"] .hero-bloom--2 {
-    background: radial-gradient(circle, rgba(200, 180, 208, 0.14) 0%, rgba(200, 180, 208, 0.04) 45%, transparent 80%);
+    bottom: -100px;
+    left: 22%;
   }
 </style>

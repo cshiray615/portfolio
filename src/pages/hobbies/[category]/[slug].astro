@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import HobbyDetail from '~/layouts/HobbyDetail.astro';
+import BeforeAfter from '~/components/case-study/BeforeAfter.astro';
+import Figure from '~/components/case-study/Figure.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('hobby-projects');
@@ -17,5 +19,5 @@ const { Content } = await render(project);
 ---
 
 <HobbyDetail project={project}>
-  <Content />
+  <Content components={{ BeforeAfter, Figure }} />
 </HobbyDetail>
