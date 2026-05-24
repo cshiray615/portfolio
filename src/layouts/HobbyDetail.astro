@@ -1,5 +1,8 @@
 ---
 import Base from '~/layouts/Base.astro';
+import HobbyHero from '~/components/hobby/HobbyHero.astro';
+import HobbyNavigation from '~/components/hobby/HobbyNavigation.astro';
+import Lightbox from '~/components/case-study/Lightbox.astro';
 import type { CollectionEntry } from 'astro:content';
 import { getEntry } from 'astro:content';
 
@@ -15,60 +18,50 @@ const category = await getEntry('hobby-categories', project.data.category);
   title={`${project.data.title} — ${category?.data.name ?? 'Hobby'} — Casey Shiray`}
   description={project.data.caption}
 >
-  <header class="hd-hero">
-    <div class="container">
-      <div class="cs-breadcrumb">
-        <a href="/hobbies">Hobbies</a>
-        <span aria-hidden="true">/</span>
-        <a href={`/hobbies/${project.data.category}`}>{category?.data.name ?? project.data.category}</a>
-        <span aria-hidden="true">/</span>
-        <span>{project.data.title}</span>
-      </div>
-      <div class="eyebrow">Favorite · {project.data.year}</div>
-      <h1 class="hd-h1">{project.data.title}</h1>
-      <img class="hd-cover" src={project.data.cover} alt={project.data.title} />
-    </div>
-  </header>
-
+  <HobbyHero project={project} />
   <section class="hd-body">
     <div class="container">
       <slot />
     </div>
   </section>
+  <HobbyNavigation project={project} />
+  <Lightbox />
 </Base>
 
 <style>
-  .hd-hero { padding: 64px 0 32px; }
-  .cs-breadcrumb {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-    display: inline-flex; gap: 8px; align-items: center;
-  }
-  .cs-breadcrumb a { color: var(--text-soft); }
-  .cs-breadcrumb a:hover { color: var(--text); }
-  .cs-breadcrumb span[aria-hidden] { color: var(--tertiary-loud); }
-  .hd-h1 { font-size: clamp(40px, 6vw, 72px); margin-top: 14px; }
-  .hd-cover {
-    margin-top: 32px;
-    width: 100%;
-    border-radius: 14px;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    border: 1.5px solid var(--divider);
-  }
-  .hd-body { padding: 48px 0 96px; }
+  .hd-body { padding: 64px 0 32px; }
   .hd-body :global(h2) {
-    margin-top: 40px;
-    margin-bottom: 16px;
-    font-size: clamp(24px, 2.4vw, 32px);
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+    margin: 40px 0 16px;
+  }
+  .hd-body :global(h3) {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    font-size: clamp(20px, 2vw, 26px);
   }
   .hd-body :global(p) {
     font-size: 17px;
     line-height: 1.7;
     margin-bottom: 16px;
     max-width: 720px;
+    color: var(--text);
+  }
+  .hd-body :global(em) { font-family: var(--font-serif); font-style: italic; }
+  .hd-body :global(strong) { font-weight: 700; }
+  .hd-body :global(ul),
+  .hd-body :global(ol) {
+    max-width: 720px;
+    margin: 0 0 16px;
+    padding-left: 22px;
+  }
+  .hd-body :global(li) {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 6px;
   }
 </style>

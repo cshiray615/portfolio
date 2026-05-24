@@ -1,0 +1,122 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
+
+export interface Props {
+  project: CollectionEntry<'hobby-projects'>;
+}
+const { project } = Astro.props;
+const { data } = project;
+const category = await getEntry('hobby-categories', data.category);
+const accent: 'vermillion' | 'lime' | 'plum' = category?.data.accent ?? 'vermillion';
+const titleWords = data.title.split(' ');
+const last = titleWords.pop() ?? data.title;
+const rest = titleWords.join(' ');
+---
+
+<header class="cs-hero">
+  <div class="container">
+    <div class="cs-breadcrumb">
+      <a href={`/hobbies/${data.category}`}>← {category?.data.name ?? 'Hobbies'}</a>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom: 14px;">
+      {category?.data.name ?? 'Hobby'} · {data.year}
+    </div>
+
+    <h1 class="cs-h1">
+      {rest && <>{rest}{' '}</>}
+      <span class={`hl hl--${accent} tilt-l`}>{last}</span>
+    </h1>
+
+    {data.caption && <p class="cs-tagline">{data.caption}</p>}
+
+    <div class="cs-meta">
+      <div><strong>Year</strong>{data.year}</div>
+      <div><strong>Category</strong>{category?.data.name ?? data.category}</div>
+      {data.favorite && <div><strong>Status</strong>Favorite</div>}
+    </div>
+
+    {data.cover && (
+      <figure class="cs-cover">
+        <button
+          type="button"
+          class="cs-cover-trigger"
+          data-lightbox-trigger
+          data-src={data.cover}
+          data-caption={data.caption ?? data.title}
+          data-alt={data.title}
+          aria-label={`Open ${data.title} full size`}
+        >
+          <img src={data.cover} alt={data.title} loading="eager" />
+        </button>
+      </figure>
+    )}
+  </div>
+</header>
+
+<style>
+  .cs-hero { padding: 80px 0 48px; }
+  .cs-breadcrumb {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: inline-flex; gap: 8px; align-items: center;
+  }
+  .cs-breadcrumb a { color: var(--text-soft); }
+  .cs-breadcrumb a:hover { color: var(--text); }
+
+  .cs-h1 { font-size: clamp(48px, 7vw, 84px); line-height: 0.92; max-width: 1000px; }
+  .cs-tagline {
+    margin-top: 20px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(18px, 1.8vw, 22px);
+    color: var(--text-soft);
+    max-width: 720px;
+  }
+  .cs-meta {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1.5px solid var(--divider);
+    border-bottom: 1.5px solid var(--divider);
+  }
+  @media (max-width: 640px) { .cs-meta { grid-template-columns: 1fr; gap: 16px; } }
+  .cs-meta > div { font-family: var(--font-mono); font-size: 14px; }
+  .cs-meta strong {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .cs-cover { margin: 48px 0 0; }
+  .cs-cover-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    background: var(--surf);
+    border-radius: 16px;
+    border: 1.5px solid var(--divider);
+    overflow: hidden;
+    cursor: zoom-in;
+    transition: transform 0.25s ease;
+  }
+  .cs-cover-trigger:hover,
+  .cs-cover-trigger:focus-visible { transform: translateY(-3px); }
+  .cs-cover img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    object-fit: contain;
+  }
+  @media (max-width: 640px) { .cs-cover img { aspect-ratio: 4 / 3; } }
+</style>
