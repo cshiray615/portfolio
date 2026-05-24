@@ -31,3 +31,9 @@ Thumbs.db
 
 # Reference assets pulled from old portfolio (too large for repo)
 Old Portfolio/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
