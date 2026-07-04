@@ -11,6 +11,9 @@ const caseStudies = defineCollection({
     client: z.string(),
     tag: z.string(),
     accent: z.enum(['vermillion', 'lime', 'plum']),
+    // Exact phrase within `title` to highlight in the hero + work card.
+    // Defaults to the last word of the title when omitted.
+    highlight: z.string().optional(),
     stack: z.array(z.string()),
     summary: z.object({
       problem: z.string(),

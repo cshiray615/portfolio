@@ -38,15 +38,19 @@ const { prev, next } = Astro.props;
 
 <style>
   .cs-nav {
-    background: var(--card-dark-bg);
-    color: var(--card-dark-text);
+    /* Fixed dark band in both themes (does not invert to cream in dark mode) */
+    --nav-bg: #201A28;
+    --nav-text: #FAF3E0;
+    background: var(--nav-bg);
+    color: var(--nav-text);
+    border-top: 1px solid rgba(250, 243, 224, 0.14);
     margin-top: 64px;
   }
   .cs-nav-grid {
     display: grid;
     grid-template-columns: 1fr 2.4fr;
     gap: 1px;
-    background: color-mix(in oklab, var(--card-dark-text) 18%, transparent);
+    background: color-mix(in oklab, var(--nav-text) 18%, transparent);
     padding: 0;
   }
   @media (max-width: 720px) {
@@ -57,8 +61,8 @@ const { prev, next } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background: var(--card-dark-bg);
-    color: var(--card-dark-text);
+    background: var(--nav-bg);
+    color: var(--nav-text);
     text-decoration: none;
     transition: background var(--dur-slow) var(--ease-out);
   }
@@ -79,7 +83,7 @@ const { prev, next } = Astro.props;
 
   a.cs-nav-card:hover,
   a.cs-nav-card:focus-visible {
-    background: color-mix(in oklab, var(--card-dark-bg) 88%, var(--card-dark-text));
+    background: color-mix(in oklab, var(--nav-bg) 88%, var(--nav-text));
   }
 
   .cs-nav-eyebrow {
@@ -92,7 +96,7 @@ const { prev, next } = Astro.props;
   .cs-nav-card--next .cs-nav-eyebrow { font-size: 14px; }
   .cs-nav-card--prev .cs-nav-eyebrow { font-size: 14px; opacity: 0.85; }
   .cs-nav-card--lime .cs-nav-eyebrow { color: var(--lime); }
-  .cs-nav-card--plum .cs-nav-eyebrow { color: var(--tertiary-soft); }
+  .cs-nav-card--plum .cs-nav-eyebrow { color: var(--lavender); }
 
   .cs-nav-title {
     font-family: var(--font-display);
@@ -107,7 +111,7 @@ const { prev, next } = Astro.props;
   .cs-nav-tag {
     font-family: var(--font-mono);
     letter-spacing: 0.1em;
-    color: color-mix(in oklab, var(--card-dark-text) 60%, transparent);
+    color: color-mix(in oklab, var(--nav-text) 60%, transparent);
   }
   .cs-nav-card--next .cs-nav-tag { font-size: 14px; }
   .cs-nav-card--prev .cs-nav-tag { font-size: 14px; }

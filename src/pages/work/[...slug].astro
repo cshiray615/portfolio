@@ -13,6 +13,8 @@ import ProcessDiagram from '~/components/case-study/ProcessDiagram.astro';
 import ScrollStory from '~/components/case-study/ScrollStory.astro';
 import ScrollScene from '~/components/case-study/ScrollScene.astro';
 import AnnotatedScreenshot from '~/components/case-study/AnnotatedScreenshot.astro';
+import Passage from '~/components/case-study/Passage.astro';
+import QuoteCard from '~/components/case-study/QuoteCard.astro';
 import BigStat from '~/components/case-study/BigStat.astro';
 import BarChart from '~/components/case-study/BarChart.astro';
 import SparklineTrend from '~/components/case-study/SparklineTrend.astro';
@@ -34,5 +36,5 @@ const { Content } = await render(caseStudy);
 ---
 
 <CaseStudy caseStudy={caseStudy}>
-  <Content components={{ ProblemBlock, ProcessBlock, OutcomeBlock, ArtifactsGallery, Figure, CodeSample, BeforeAfter, PullQuote, ProcessDiagram, ScrollStory, ScrollScene, AnnotatedScreenshot, BigStat, BarChart, SparklineTrend, LearnerCard, InterventionMatrix, LessonsBlock, References, Appendix, DownloadCard, QuoteOverlay }} />
+  <Content components={{ ProblemBlock, ProcessBlock, OutcomeBlock, ArtifactsGallery, Figure, CodeSample, BeforeAfter, PullQuote, ProcessDiagram, ScrollStory, ScrollScene, AnnotatedScreenshot, Passage, QuoteCard, BigStat, BarChart, SparklineTrend, LearnerCard, InterventionMatrix, LessonsBlock, References, Appendix, DownloadCard, QuoteOverlay }} />
 </CaseStudy>

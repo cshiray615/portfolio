@@ -5,33 +5,50 @@ export interface Props {
   alt?: string;
   bg?: string;
   align?: 'left' | 'right' | 'center';
+  // When true, the figure breaks out of the 720px reading column and spans the
+  // full content width (up to the page container). Use for wide/detailed images
+  // that would be illegible when shrunk into the narrow column.
+  wide?: boolean;
 }
-const { src, caption, alt, bg, align = 'left' } = Astro.props;
+const { src, caption, alt, bg, align = 'left', wide = false } = Astro.props;
 ---
 
-<figure class={`cs-figure cs-figure--${align}`}>
-  <button
-    type="button"
-    class="cs-figure-trigger"
-    data-lightbox-trigger
-    data-src={src}
-    data-caption={caption ?? ''}
-    data-alt={alt ?? caption ?? ''}
-    style={bg ? `background:${bg}` : undefined}
-    aria-label={`Open ${alt ?? caption ?? 'image'} full size`}
-  >
-    <img src={src} alt={alt ?? caption ?? ''} loading="lazy" />
-  </button>
-  {caption && <figcaption>{caption}</figcaption>}
-</figure>
+<div class={wide ? 'container cs-figure-widewrap' : 'cs-figure-bare'}>
+  <figure class={wide ? 'cs-figure cs-figure--wide' : `cs-figure cs-figure--${align}`}>
+    <button
+      type="button"
+      class="cs-figure-trigger"
+      data-lightbox-trigger
+      data-src={src}
+      data-caption={caption ?? ''}
+      data-alt={alt ?? caption ?? ''}
+      style={bg ? `background:${bg}` : undefined}
+      aria-label={`Open ${alt ?? caption ?? 'image'} full size`}
+    >
+      <img src={src} alt={alt ?? caption ?? ''} loading="lazy" />
+    </button>
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+</div>
 
 <style>
+  /* Non-wide wrapper is transparent so existing inline behavior is unchanged */
+  .cs-figure-bare { display: contents; }
+  .cs-figure-widewrap { margin: 40px auto; }
+
   .cs-figure {
     margin: 32px 0;
     max-width: 720px;
     width: fit-content;
   }
   .cs-figure--center { margin-left: auto; margin-right: auto; }
+
+  /* Wide: fill the content container (never upscaled past the image's own size) */
+  .cs-figure--wide {
+    margin: 0;
+    max-width: 100%;
+    width: 100%;
+  }
 
   .cs-figure-trigger {
     display: block;
@@ -55,6 +72,9 @@ const { src, caption, alt, bg, align = 'left' } = Astro.props;
     max-width: 100%;
     height: auto;
   }
+  /* Wide figures: let the image fill the container width */
+  .cs-figure--wide .cs-figure-trigger img { width: 100%; }
+  .cs-figure--wide figcaption { text-align: center; }
 
   .cs-figure figcaption {
     margin-top: 10px;

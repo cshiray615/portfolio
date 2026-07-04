@@ -7,9 +7,23 @@ export interface Props {
 
 const { caseStudy } = Astro.props;
 const { data } = caseStudy;
-const titleWords = data.title.split(' ');
-const last = titleWords.pop() ?? data.title;
-const rest = titleWords.join(' ');
+
+// Split the title into [before, highlighted phrase, after]. When `highlight`
+// is set and found in the title, that phrase is emphasized; otherwise the
+// last word is (the original behavior).
+const hlPhrase = data.highlight;
+const hlIndex = hlPhrase ? data.title.indexOf(hlPhrase) : -1;
+let before: string, last: string, after: string;
+if (hlPhrase && hlIndex !== -1) {
+  before = data.title.slice(0, hlIndex);
+  last = hlPhrase;
+  after = data.title.slice(hlIndex + hlPhrase.length);
+} else {
+  const titleWords = data.title.split(' ');
+  last = titleWords.pop() ?? data.title;
+  before = titleWords.length ? titleWords.join(' ') + ' ' : '';
+  after = '';
+}
 
 const quote = data.coverQuote;
 
@@ -36,8 +50,7 @@ function isHighlight(part: string, word?: string): boolean {
     </div>
 
     <h1 class="cs-h1">
-      {rest}{' '}
-      <span class={`hl hl--${data.accent} tilt-l`}>{last}</span>
+      {before}<span class={`hl hl--${data.accent} tilt-l`}>{last}</span>{after}
     </h1>
 
     {data.tagline && <p class="cs-tagline">{data.tagline}</p>}
