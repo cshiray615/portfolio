@@ -27,7 +27,7 @@ function isActive(href: string): boolean {
     </div>
 
     <div class="nav-right">
-      <button class="nav-cta" type="button" data-copy-email data-email="casey.shiray@gmail.com">Get in touch</button>
+      <button class="nav-cta" type="button" data-copy-email data-email="casey@caseyshiray.com">Get in touch</button>
     </div>
 
     <button
@@ -49,7 +49,7 @@ function isActive(href: string): boolean {
       {links.map((l) => (
         <a class={`nav-drawer-link${isActive(l.href) ? ' nav-drawer-link--active' : ''}`} href={l.href} data-nav-link>{l.label}</a>
       ))}
-      <button class="nav-drawer-cta" type="button" data-copy-email data-nav-link data-email="casey.shiray@gmail.com">Get in touch</button>
+      <button class="nav-drawer-cta" type="button" data-copy-email data-nav-link data-email="casey@caseyshiray.com">Get in touch</button>
     </div>
   </div>
 </nav>
@@ -334,7 +334,7 @@ function isActive(href: string): boolean {
   document.querySelectorAll<HTMLElement>('[data-copy-email]').forEach((btn) => {
     btn.addEventListener('click', async (e) => {
       e.preventDefault();
-      const email = btn.dataset.email ?? 'casey.shiray@gmail.com';
+      const email = btn.dataset.email ?? 'casey@caseyshiray.com';
       try {
         await navigator.clipboard.writeText(email);
         showToast('Email copied to clipboard', btn);
