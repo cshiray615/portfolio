@@ -1,0 +1,166 @@
+---
+title: "What Two Days With Fable 5 Taught Me"
+tagline: "Two sittings, every token I had, three projects at very different stages of done."
+role: "Independent review"
+year: 2026
+client: "Self-directed"
+tag: "Field notes · AI model review"
+accent: vermillion
+highlight: "Fable 5"
+stack: ["Fable 5", "Claude Opus", "Claude Design", "GSAP", "HTML / JS"]
+summary:
+  problem: "I wanted to know if Fable 5 was the leap everyone said it was, so I gave it two days and every token I had across three projects at very different stages of done."
+  solution: "Three rounds: a code review of an app I'd already shipped, buildout of a half-finished 50-lesson course, and a from-scratch prototype of an iPad game."
+  outcome: "One clear pattern. Fable was worst on my most finished work and best on my least finished. The more rules it had to cling to, the harder it fought me."
+order: -1
+featured: false
+next: let-ai-do-the-heavy-lifting
+---
+
+<QuoteCard
+  eyebrow="The pattern"
+  headline="Worst on what I'd finished. Best on what I hadn't."
+  mark="hadn't"
+  quote="The more airtight the thing I brought it, the harder it fought me. The looser the idea, the more it delighted me."
+  aside="Everything below is me figuring that out in real time."
+/>
+
+<Passage label="The setup" accent="plum">
+
+I started at 9pm. Suddenly I looked up and it was 4am. I slept, got back on at 11 the next morning, and ran out of tokens around 11pm that night. Two sittings, every token I had, three completely different projects.
+
+I went in wanting to know one thing: is Fable 5 the leap everyone says it is? What I came out with was less about the model and more about me. Specifically, about which of my projects I should ever hand it again.
+
+</Passage>
+
+<QuoteCard
+  eyebrow="Round 1 · The live app"
+  headline="It fought me on everything I'd already shipped."
+  mark="fought me"
+  quote="It misread my whole permissioning model, flagged my private repo as public, and eventually admitted it hadn't connected dots I'd spelled out for humans."
+  aside="Mostly it just made me feel good about code I already trusted."
+/>
+
+<Passage accent="vermillion">
+
+I gave it something I know in and out. A live app I designed from the ground up, with multiple permission groups and varying degrees of admin access. I've spent close to 15 years in tech and I care a lot about security and least-privilege access, so I wanted a real gut check: how airtight is this, actually? And would it catch bugs I'd missed? I was excited to see what connections it would make or insights it would reveal. I ran the review on high effort, which I'd heard is where this model does its best work.
+
+It did the review. It also got a LOT wrong about how the app actually works, despite my heavy documentation. It threw red flags that my documents were public and that users could edit their own content. I had to explain two things. One, my repo is private, which it admitted it had missed. Two, it had completely misunderstood the content workflow and the permissioning. It eventually admitted it hadn't dug deep enough or connected dots I had literally laid out in my tech design docs.
+
+It did give me one genuinely useful pointer: permission-lock a feature even though users have no path to reach it. Not strictly necessary in code, but it's good defense in depth, and I'll go back and add it. That was the whole yield. I don't know how many tokens it cost me, but it didn't feel good.
+
+The other cost was legibility. The output was sometimes almost incomprehensible. More than once I copied a sentence it had just written, pasted it back, and asked what it meant.
+
+<Figure
+  src="/case-studies/two-days-with-fable-5/fable-incomprehensible.png"
+  alt="An excerpt of Fable 5's output referencing an 'overflow sweep at end-state' and a 'silence-map pass'"
+  caption="An actual excerpt. This is the kind of sentence I had to paste back and ask Fable to translate. I still can't tell you what a 'silence-map pass' is."
+  align="center"
+/>
+
+So, what did two days on my most finished project actually buy me? Mostly the smug satisfaction of watching a model concede, after I taught it, that my code was tighter than it first assumed. Which is either true, or Fable is following some weirdly strict rubric I can't see. I genuinely can't tell you which, and that uncertainty is kind of the point.
+
+</Passage>
+
+<QuoteCard
+  eyebrow="Round 2 · The 50-lesson course"
+  headline="It followed every rule and lost the point."
+  mark="every rule"
+  quote="It followed my guidelines so literally it sanded every judgment call out of the narration. No nuance, no back-and-forth, forest lost for the trees."
+  aside="It shined once I let it build from scratch."
+/>
+
+<Passage accent="lime">
+
+Next, I brought it something half-built. A 50-lesson instructional design course, already very mature:
+
+- A full course outline, mapped to Bloom's, DOK, Mager, Gagne, you name it
+- Learning objectives
+- Audience analysis
+- Lesson sequence
+- Activities
+- Tone and style guidance
+- Narration scripts
+- Storyboards
+- Three fully built modules
+- A robust style guide
+- An expert human performance improvement skill with 10 sub-skills, that has worked beautifully with Opus for months
+
+I wanted Fable to expand lessons, fill gaps, write activities, and help me visualize concepts for learners. I asked it to start by reviewing the objectives, then the script, then build the modules I'd outlined but not yet written.
+
+The narration writing was atrocious. Same writing skill. Same style guidelines. And I spent a long time backtracking to fix AI-slop that my design docs had already ruled out. Part of the problem turned out to be counterintuitive: Fable is much stricter about following guidelines than other models. Where Opus will make a judgment call and add the one line of humor that lands a concept, Fable had zero chill and zero nuance about applying a rule. Somehow it managed to be rigidly rule-bound and slop at the same time. It could not see the forest for the trees. It kept zeroing in on tiny details and losing the larger context, and I never got the back-and-forth that makes Opus feel like a collaborator.
+
+After hours of arguing, I got it to behave. It did a genuinely good job outlining the slides I hadn't started, and it used my slide templates correctly, which is such a low bar it's almost not worth mentioning. The real win came when I paired it with a few GSAP animation skills and some image-generation skills I'd been wanting to try. It brought my analogies to life in slide animations. Placement and a few other things still need tweaking, but I was happy with what it produced.
+
+<Figure
+  src="/case-studies/two-days-with-fable-5/course-slide-1.png"
+  alt="A course slide titled 'Same screen, different work' contrasting a 'Clicks' panel with a 'Thinks' panel"
+  caption="The bright spot of Round 2. Paired with a couple of GSAP and image-generation skills, Fable turned my written concepts into actual slide builds. Here, 'make learners do the thinking' as the same screen doing two different kinds of work."
+  align="center"
+/>
+
+<Figure
+  src="/case-studies/two-days-with-fable-5/course-slide-2.png"
+  alt="A course slide titled 'The three lenses' with animated line-art icons for Clarity and Balance"
+  caption="Another one. My 'three lenses' analogy, drawn out with animated line-art. Placement still needs tweaking, but it brought the idea to life."
+  align="center"
+/>
+
+</Passage>
+
+<QuoteCard
+  eyebrow="Round 3 · The iPad game"
+  headline="I gave it almost nothing. It gave me everything."
+  mark="everything"
+  quote="It built a full playable day-night cycle in an afternoon and wrote a lovely story I hadn't even begun to imagine yet."
+  aside="Bring it the things you haven't figured out yet."
+/>
+
+<Passage accent="plum">
+
+Last, I brought it almost nothing. A cozy, dreamy game about making found art. A side-scroller where you collect and craft. What I actually had was a loose spark: a few mechanics, a visual direction, a mood, some themes, and a rough idea of how the mechanics would evolve as the story went on. I handed it a vague, not-well-formed text outline and asked for a single day-night cycle prototype.
+
+<Figure
+  src="/case-studies/two-days-with-fable-5/game-title.png"
+  alt="Title screen for Pocketful, a found-art prototype, with a 'begin the walk' button"
+  caption="Pocketful. The title screen it generated from my rough outline, tagline and all: one day, one night, one morning after."
+  align="center"
+/>
+
+It built the whole thing, fast. A playable day-night cycle with the collecting mechanism, the main character's journey, their workplace, and the art creation piece. It wrote narrative elements I hadn't fleshed out at all, and they were lovely. It generated genuinely interesting ideas and, more than that, it let me feel what the game would be like, which surfaced weaknesses in my own design I hadn't considered.
+
+<Figure
+  src="/case-studies/two-days-with-fable-5/game-walk.png"
+  alt="Side-scroller gameplay: a character walking to work past watercolor buildings under a soft sun, with an inventory bar and countdown timer"
+  caption="The playable cycle, built in an afternoon. Day one is the walk to work: collect scraps, watch the clock. The watercolor world actually landed. The character standing in it is the problem, a flat little smudge that never got past stick-figure no matter how many times Fable said 'watercolor.'"
+  align="center"
+/>
+
+<Figure
+  src="/case-studies/two-days-with-fable-5/game-vignette.png"
+  alt="A narrative vignette titled 'Rosewood Care Home' with story text and two branching choices"
+  caption="And the writing. This vignette, Mr. Chen's butterscotch and the little paper boats, is the kind of thing it wrote that I hadn't even sketched."
+  align="center"
+/>
+
+The limits were real, and the most maddening one was the gap between what Fable told me it was doing and what it actually put on screen. I wanted a soft, watercolor-inspired sketch look. Loose, hand-painted, the kind of art direction that makes a game about found art actually feel found. Fable kept assuring me, round after round, that this was exactly what it was implementing. Then it would render something a half-step above stick figures. I'd point at the screen. It would agree with me, restate my watercolor direction back almost word for word, and hand me the same flat, cartoony shapes again.
+
+The root of it was that it wanted to stick to SVGs and stubbornly refused to try anything else, so "watercolor" was never on the table no matter how many times it said the word. It built everything in HTML and JavaScript and leaned hard into "this is just a prototype." I even fed it Claude Design mockups of the look I wanted (Claude Design didn't nail it too well either), and Fable rendered them badly. When I pushed on the feel, it acted like the current build was the only option. I eventually opened Opus just to research what engines and tools I'd actually need to make this a real game, and Fable pushed back on leaving the build we were in. It gets locked onto a decision, and the frustrating part is you often can't find the rule it's obeying, let alone talk it out of it.
+
+It was still my favorite round of the two days. The most fun by a wide margin. I honestly wish I'd spent my tokens here instead of on the course.
+
+</Passage>
+
+<Passage label="The gradient was the whole review" accent="vermillion">
+
+Put the three rounds in order of how finished the work was, and the model's usefulness runs in exactly the opposite direction.
+
+The reason is strictness. Fable follows rules harder than any model I've used. On a green-field idea, that's a gift: it fills every gap, commits to a direction, and hands you back a whole little world. On finished, documented, deliberate work, that same trait is a liability. It can't tell which of your rules are load-bearing and which were judgment calls you made and could unmake. So it treats a private repo like a public one, and a style guide like scripture with no room for the one joke that makes a lesson stick.
+
+It's the new hire who has read every manual cover to cover and hasn't worked the floor long enough to know when to break one.
+
+So here's what I'd tell you. Bring Fable the things you haven't figured out yet. The sparks, the blank modules, the worlds that don't exist. Keep the finished, load-bearing, judgment-heavy work with a model that will argue with you.
+
+I burned every token I had in two days, and the best of it went to a cozy little game about found art that doesn't exist yet. Make of that what you will. Actually, that is the review.
+
+</Passage>

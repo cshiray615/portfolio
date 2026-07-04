@@ -9,6 +9,20 @@ const { caseStudy } = Astro.props;
 const { data, id } = caseStudy;
 const href = `/work/${id}`;
 
+// Split the title into [before, highlighted phrase, after]. When `highlight`
+// is set and found in the title, that phrase is emphasized; otherwise the
+// last word is (the original behavior).
+function splitTitle(title: string, phrase?: string) {
+  const i = phrase ? title.indexOf(phrase) : -1;
+  if (phrase && i !== -1) {
+    return { before: title.slice(0, i), match: phrase, after: title.slice(i + phrase.length) };
+  }
+  const words = title.split(' ');
+  const match = words.pop() ?? title;
+  return { before: words.length ? words.join(' ') + ' ' : '', match, after: '' };
+}
+const { before, match, after } = splitTitle(data.title, data.highlight);
+
 // Concatenate searchable text (lowercased, HTML stripped) for client-side filter.
 const stripHtml = (s: string) => s.replace(/<[^>]+>/g, '');
 const searchText = [
@@ -27,8 +41,7 @@ const searchText = [
   <div class="work-meta">
     <div class="work-tag">{data.tag}</div>
     <h3 class="work-title">
-      {data.title.split(' ').slice(0, -1).join(' ')}{' '}
-      <span class={`hl hl--${data.accent} tilt-l`}>{data.title.split(' ').slice(-1)[0]}</span>
+      {before}<span class={`hl hl--${data.accent} tilt-l`}>{match}</span>{after}
     </h3>
     <div class="work-stack">
       {data.stack.map((s) => <span class="chip">{s}</span>)}

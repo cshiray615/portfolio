@@ -1,0 +1,49 @@
+---
+// A generic, labeled reading-column section. Same visual grammar as
+// ProblemBlock / ProcessBlock / OutcomeBlock, but the label and accent are
+// caller-supplied so it works for essays and field notes, not just the
+// fixed Problem/Process/Outcome narrative.
+export interface Props {
+  label?: string;
+  accent?: 'vermillion' | 'lime' | 'plum';
+}
+const { label, accent = 'vermillion' } = Astro.props;
+---
+
+<section class={`cs-passage cs-passage--${accent}`}>
+  <div class="container">
+    {label && <h2 class="cs-passage-label">{label}</h2>}
+    <div class="cs-passage-body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cs-passage { padding: 48px 0; }
+
+  .cs-passage-label {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--vermillion);
+  }
+  .cs-passage--lime .cs-passage-label { color: var(--lime); }
+  .cs-passage--plum .cs-passage-label { color: var(--tertiary-loud); }
+
+  .cs-passage-body {
+    max-width: 720px;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .cs-passage-body :global(p) { margin-bottom: 16px; }
+  .cs-passage-body :global(p:last-child) { margin-bottom: 0; }
+  .cs-passage-body :global(em) { font-family: var(--font-serif); font-style: italic; }
+  .cs-passage-body :global(ul) { list-style: disc; margin: 0 0 16px; padding-left: 1.4em; }
+  .cs-passage-body :global(ol) { list-style: decimal; margin: 0 0 16px; padding-left: 1.4em; }
+  .cs-passage-body :global(li) { margin-bottom: 6px; padding-left: 0.2em; }
+  .cs-passage-body :global(strong) { font-weight: 700; }
+</style>
