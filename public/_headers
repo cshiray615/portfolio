@@ -1,0 +1,14 @@
+# Cloudflare Workers Assets / Pages _headers
+# Fixes the default "max-age=0, must-revalidate" on build assets.
+
+# Content-hashed build assets (e.g. /_astro/Base.B0x7zb1G.css) never change.
+# Cache them hard so returning visitors don't re-request them every page load.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Media changes rarely and filenames are stable. Cache a day at the browser,
+# still revalidating after, so updates are picked up without a hard purge.
+/case-studies/*
+  Cache-Control: public, max-age=86400
+/assets/*
+  Cache-Control: public, max-age=86400
