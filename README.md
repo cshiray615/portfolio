@@ -99,5 +99,5 @@ Long-form MDX body.
 - [ ] Replace `public/og-image.svg` with a real `og-image.png` (1200×630)
 - [ ] Replace placeholder hobby images in `public/assets/hobbies/`
 - [ ] Add real cover images for case studies in `public/assets/case-studies/`
-- [ ] Confirm `casey@caseyshiray.com` email forwarding works on Cloudflare
+- [x] Confirm `casey@caseyshiray.com` email forwarding works on Cloudflare
 - [ ] Lighthouse ≥95 on production preview, both light and dark surfaces
